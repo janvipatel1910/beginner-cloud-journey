@@ -2,7 +2,7 @@ const words = [
     "AWS",
     "DevOps",
     "Cloud Skills",
-    "Beginner Friendly Notes",
+    "cloud Engineering",
     "Real Cloud Projects"
 ];
 
