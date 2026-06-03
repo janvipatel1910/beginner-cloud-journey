@@ -1,74 +1,165 @@
 <!DOCTYPE html>
+
 <html lang="en">
 
 <head>
-
     <meta charset="UTF-8">
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>AWS EC2 Notes</title>
-
+    <title>Amazon EC2 | Tech Learning Hub</title>
     <link rel="stylesheet" href="style.css">
-
 </head>
 
 <body>
 
-    <nav class="navbar">
-  <div class="logo">☁️ Beginner Cloud Journey</div>
+```
+<nav class="navbar">
+    <div class="logo">Tech Learning Hub</div>
 
     <ul class="nav-links">
-
         <li><a href="index.html">Home</a></li>
-        <li><a href="cloudfront.html">Next Topic</a></li>
-
+        <li><a href="aws-learning.html">AWS Learning</a></li>
+        <li><a href="solutions-architect.html">Solutions Architect</a></li>
     </ul>
-        
+</nav>
 
-    </nav>
+<section class="lesson-content">
 
-    <section class="notes">
+    <h1>Amazon Elastic Compute Cloud (EC2)</h1>
 
-        <h2>What is AWS EC2?</h2>
+    <div class="lesson-header">
 
-        <div class="project-box">
+        <span>Compute Service</span>
 
-            <p>
-                Amazon EC2 (Elastic Compute Cloud) provides virtual servers in AWS.
-            </p>
+        <span>Core AWS Service</span>
 
-            <br>
+        <span>AWS Solutions Architect Associate</span>
 
-            <h3>Why EC2 is Used</h3>
+        <span>High Exam Importance</span>
 
-            <br>
+    </div>
 
-            <ul style="text-align:left; line-height:2;">
+    <div class="lesson-nav">
 
-                <li>Website Hosting</li>
+        <a href="#overview">Overview</a>
 
-                <li>Application Deployment</li>
+        <a href="#features">Features</a>
 
-                <li>Cloud Computing</li>
+        <a href="#types">Instance Types</a>
 
-                <li>Linux Server Practice</li>
+        <a href="#storage">Storage</a>
 
-            </ul>
+        <a href="#security">Security</a>
 
-            <br>
+        <a href="#architecture">Architecture</a>
 
-            <h3>My Learning</h3>
+        <a href="#exam">Exam Notes</a>
 
-            <br>
+    </div>
 
-            <p>
-                I launched my first EC2 instance and deployed a web application.
-            </p>
+    <h2 id="overview">Service Overview</h2>
 
-        </div>
+    <p>
+        Amazon Elastic Compute Cloud (EC2) is a web service that provides
+        secure and resizable virtual servers in the AWS Cloud.
+    </p>
 
-    </section>
+    <p>
+        EC2 allows organizations to deploy applications without purchasing
+        and managing physical hardware.
+    </p>
+
+    <h2 id="features">Key Features</h2>
+
+    <ul>
+        <li>On-demand virtual servers</li>
+        <li>Auto Scaling support</li>
+        <li>Elastic Load Balancer integration</li>
+        <li>Multiple operating systems</li>
+        <li>Flexible pricing options</li>
+    </ul>
+
+    <h2 id="types">EC2 Instance Types</h2>
+
+    <p>
+        AWS provides different instance families for different workloads.
+    </p>
+
+    <ul>
+        <li>General Purpose (t3, t4g, m5)</li>
+        <li>Compute Optimized (c5, c6)</li>
+        <li>Memory Optimized (r5, x1)</li>
+        <li>Storage Optimized (i3, d2)</li>
+    </ul>
+
+    <h2 id="storage">Storage Options</h2>
+
+    <ul>
+        <li>Amazon EBS (Persistent Storage)</li>
+        <li>Instance Store (Temporary Storage)</li>
+        <li>Amazon EFS (Shared File Storage)</li>
+    </ul>
+
+    <h2 id="security">Security</h2>
+
+    <p>
+        Security Groups act as virtual firewalls that control inbound and outbound traffic.
+    </p>
+
+    <p>
+        IAM Roles should be used instead of storing AWS Access Keys inside EC2 instances.
+    </p>
+
+    <h2 id="architecture">Architecture Overview</h2>
+```
+
+<pre>
+Internet
+    │
+    ▼
+Security Group
+    │
+    ▼
+EC2 Instance
+    │
+    ▼
+EBS Volume
+</pre>
+
+```
+    <h2 id="exam">AWS Solutions Architect Exam Notes</h2>
+
+    <ul>
+        <li>EC2 is a regional AWS service.</li>
+        <li>Security Groups are stateful.</li>
+        <li>EBS provides persistent storage.</li>
+        <li>IAM Roles are preferred over access keys.</li>
+        <li>Auto Scaling improves availability.</li>
+    </ul>
+
+    <h2>Key Takeaways</h2>
+
+    <ul>
+        <li>EC2 provides virtual servers in AWS.</li>
+        <li>Security Groups control network traffic.</li>
+        <li>EBS stores data persistently.</li>
+        <li>IAM Roles improve security.</li>
+        <li>EC2 is a core AWS service.</li>
+    </ul>
+
+    <div class="navigation-buttons">
+
+        <a href="iam.html" class="nav-btn">
+            ← IAM
+        </a>
+
+        <a href="s3.html" class="nav-btn">
+            Next: S3 →
+        </a>
+
+    </div>
+
+</section>
+```
 
 </body>
 
