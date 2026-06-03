@@ -406,3 +406,31 @@ footer {
 .roadmap-box li{
     margin:10px 0;
 }
+.diagram-box{
+    background: rgba(255,255,255,0.08);
+    padding:20px;
+    border-radius:15px;
+    margin:20px 0;
+    backdrop-filter: blur(10px);
+}
+
+.diagram-box pre{
+    font-size:16px;
+    line-height:1.8;
+    overflow-x:auto;
+}
+.navigation-buttons{
+    display:flex;
+    justify-content:space-between;
+    margin-top:40px;
+    gap:20px;
+}
+
+.nav-btn{
+    text-decoration:none;
+    padding:12px 20px;
+    border-radius:10px;
+    background:#ff9900;
+    color:white;
+    font-weight:bold;
+}

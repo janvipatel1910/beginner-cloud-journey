@@ -62,6 +62,22 @@
         Availability Zones and Edge Locations.
     </p>
 
+    <div class="diagram-box">
+
+<h3>🌍 AWS Global Infrastructure</h3>
+
+<pre>
+AWS Region
+    │
+    ├── Availability Zone A
+    │
+    ├── Availability Zone B
+    │
+    └── Availability Zone C
+</pre>
+
+</div>
+
     <h2>Region</h2>
 
     <p>
@@ -86,7 +102,21 @@
         Edge Locations are used by CloudFront to cache content closer to users,
         reducing latency and improving performance.
     </p>
+<div class="diagram-box">
 
+<h3>⚡ CloudFront Content Delivery</h3>
+
+<pre>
+User
+  ↓
+Edge Location
+  ↓
+CloudFront
+  ↓
+S3 / EC2 Origin
+</pre>
+
+</div>
     <h2>Exam Tip</h2>
 
     <p>
@@ -96,6 +126,16 @@
     </p>
 
 </section>
+<div class="navigation-buttons">
 
+<a href="aws-learning.html" class="nav-btn">
+    ← AWS Learning Hub
+</a>
+
+<a href="solutions-architect.html" class="nav-btn">
+    Next: Solutions Architect →
+</a>
+
+</div>
 </body>
 </html>
