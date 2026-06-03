@@ -6,63 +6,49 @@
     <title>Cloud Fundamentals | Tech Learning Hub</title>
     <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
-
 <nav class="navbar">
-    <div class="logo">🚀 Tech Learning Hub</div>
+    <div class="logo">Tech Learning Hub</div>
 </nav>
-
-<section class="notes">
-
-    <h1>☁️ Cloud Fundamentals</h1>
-<div class="fundamentals-overview">
-
-    <div class="overview-card">
-        <h3>☁️ Cloud Basics</h3>
-        <p>
-            Understand what cloud computing is and why organizations use it.
-        </p>
-    </div>
-
-    <div class="overview-card">
-        <h3>📈 Cloud Benefits</h3>
-        <p>
-            Learn scalability, elasticity, pay-as-you-go pricing and global reach.
-        </p>
-    </div>
-
-    <div class="overview-card">
-        <h3>🏗️ Service Models</h3>
-        <p>
-            Understand IaaS, PaaS and SaaS with AWS examples.
-        </p>
-    </div>
-
-    <div class="overview-card">
-        <h3>🌍 AWS Infrastructure</h3>
-        <p>
-            Learn Regions, Availability Zones and Edge Locations.
-        </p>
-    </div>
-
+<section class="lesson-content">
+    <h1> Cloud Fundamentals</h1>
+<div class="lesson-header">
+    <span>Foundation Module</span>
+    <span>Beginner Level</span>
+    <span>AWS Solutions Architect Associate</span>
+    <span>Core Concepts</span>
 </div>
-
-
+<div class="lesson-nav">
+    <a href="#overview">Overview</a>
+    <a href="#benefits">Benefits</a>
+    <a href="#models">Service Models</a>
+    <a href="#deployment">Deployment Models</a>
+    <a href="#infrastructure">AWS Infrastructure</a>
+    <a href="#responsibility">Shared Responsibility</a>
+    <a href="#exam">Exam Notes</a>
+    </div>
     <p>
         Cloud Fundamentals is the foundation of AWS and one of the first topics
         for the AWS Solutions Architect Associate certification.
     </p>
-
-    <h2>What is Cloud Computing?</h2>
-
+   <h2 id="overview">What is Cloud Computing?</h2>
     <p>
         Cloud Computing is the delivery of computing services such as servers,
         storage, databases, networking and software over the internet.
     </p>
-
-    <h2>Benefits of Cloud Computing</h2>
-
+   <h2 id="benefits">Benefits of Cloud Computing</h2>
+<h2 id="models">Cloud Service Models</h2>
+<p>
+Cloud services are commonly categorized into three models:
+Infrastructure as a Service (IaaS),
+Platform as a Service (PaaS),
+and Software as a Service (SaaS).
+</p>
+<ul>
+    <li>IaaS – Amazon EC2</li>
+    <li>PaaS – AWS Elastic Beanstalk</li>
+    <li>SaaS – Gmail, Microsoft 365</li>
+</ul>
     <ul>
         <li>Pay only for what you use</li>
         <li>Scalability</li>
@@ -70,18 +56,27 @@
         <li>Global Reach</li>
         <li>Improved Security</li>
     </ul>
-
-    <h2>AWS Global Infrastructure</h2>
-
+<h2 id="deployment">Cloud Deployment Models</h2>
+<ul>
+<li>Public Cloud</li>
+<li>Private Cloud</li>
+<li>Hybrid Cloud</li>
+</ul>
+<h2 id="responsibility">AWS Shared Responsibility Model</h2>
+<p>
+AWS follows a Shared Responsibility Model.
+AWS is responsible for security <strong>of</strong> the cloud, including
+physical infrastructure, networking and hardware.
+Customers are responsible for security <strong>in</strong> the cloud,
+including IAM permissions, operating systems, applications and data.
+</p>
+   <h2 id="infrastructure">AWS Global Infrastructure</h2>
     <p>
         AWS provides infrastructure across the world through Regions,
         Availability Zones and Edge Locations.
     </p>
-
     <div class="diagram-box">
-
 <h3>🌍 AWS Global Infrastructure</h3>
-
 <pre>
 AWS Region
     │
@@ -119,9 +114,7 @@ AWS Region
         reducing latency and improving performance.
     </p>
 <div class="diagram-box">
-
 <h3>⚡ CloudFront Content Delivery</h3>
-
 <pre>
 User
   ↓
@@ -133,18 +126,17 @@ S3 / EC2 Origin
 </pre>
 
 </div>
-    <h2>Exam Tip</h2>
+   <h2 id="exam">AWS Solutions Architect Exam Notes</h2>
+   <ul>
+    <li>Regions contain multiple Availability Zones.</li>
+    <li>Availability Zones consist of one or more data centers.</li>
+    <li>CloudFront uses Edge Locations for content caching.</li>
+    <li>AWS follows the Shared Responsibility Model.</li>
+    <li>Cloud computing provides scalability, elasticity and pay-as-you-go pricing.</li>
+</ul>
 
-    <p>
-        Regions contain multiple Availability Zones.
-        CloudFront uses Edge Locations.
-        This is a very common AWS exam question.
-    </p>
-
-</section>
 <div class="navigation-buttons">
-
-<a href="aws-learning.html" class="nav-btn">
+    <a href="aws-learning.html" class="nav-btn">
     ← AWS Learning Hub
 </a>
 
@@ -153,5 +145,7 @@ S3 / EC2 Origin
 </a>
 
 </div>
+</section>
+
 </body>
 </html>
