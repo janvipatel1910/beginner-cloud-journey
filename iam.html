@@ -1,17 +1,189 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AWS IAM</title>
+    <title>AWS IAM | Tech Learning Hub</title>
+    <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
-<h1>🔐 AWS IAM</h1>
+```
+<!-- Navbar -->
 
-<p>
-Welcome to the IAM lesson.
-</p>
+<nav class="navbar">
+
+    <div class="logo">🚀 Tech Learning Hub</div>
+
+    <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="aws-learning.html">AWS Learning</a></li>
+        <li><a href="solutions-architect.html">Solutions Architect</a></li>
+    </ul>
+
+</nav>
+
+<!-- IAM Lesson -->
+
+<section class="notes">
+
+    <h1>🔐 AWS Identity and Access Management (IAM)</h1>
+
+    <p>
+        IAM is one of the most important AWS services and is heavily tested
+        in the AWS Solutions Architect Associate exam.
+    </p>
+
+    <div class="overview-card">
+
+        <h3>📚 Lesson Information</h3>
+
+        <p>⏱️ Estimated Study Time: 20 Minutes</p>
+        <p>🎯 Difficulty Level: Beginner</p>
+        <p>⭐ Exam Importance: Very High</p>
+
+    </div>
+
+    <h2>What is IAM?</h2>
+
+    <p>
+        AWS Identity and Access Management (IAM) allows you to securely
+        control access to AWS services and resources.
+    </p>
+
+    <p>
+        IAM helps you decide:
+    </p>
+
+    <ul>
+        <li>Who can access AWS?</li>
+        <li>What resources can they access?</li>
+        <li>What actions can they perform?</li>
+    </ul>
+
+    <h2>Why IAM Matters</h2>
+
+    <ul>
+        <li>🔒 Improve Security</li>
+        <li>👤 Manage Users</li>
+        <li>🎭 Create Temporary Access</li>
+        <li>📜 Control Permissions</li>
+        <li>🛡️ Apply Least Privilege Access</li>
+    </ul>
+
+    <h2>IAM Components</h2>
+
+    <h3>👤 Users</h3>
+
+    <p>
+        An IAM User represents a person or application that needs access to AWS.
+    </p>
+
+    <h3>👥 Groups</h3>
+
+    <p>
+        Groups are collections of users. Permissions can be assigned to a group
+        instead of assigning permissions individually.
+    </p>
+
+    <h3>🎭 Roles</h3>
+
+    <p>
+        Roles provide temporary permissions and are commonly used by AWS services
+        such as EC2 and Lambda.
+    </p>
+
+    <h3>📜 Policies</h3>
+
+    <p>
+        Policies are JSON documents that define permissions in AWS.
+    </p>
+
+    <div class="diagram-box">
+
+        <h3>🔐 IAM Structure</h3>
+```
+
+<pre>
+AWS Account
+     │
+     ├── Users
+     │
+     ├── Groups
+     │
+     ├── Roles
+     │
+     └── Policies
+</pre>
+
+```
+    </div>
+
+    <h2>Least Privilege Principle</h2>
+
+    <p>
+        Always give users only the permissions they need to perform their tasks.
+        Nothing more.
+    </p>
+
+    <p>
+        This reduces security risks and follows AWS best practices.
+    </p>
+
+    <h2>Real World Example</h2>
+
+    <p>
+        A Cloud Engineer may need access to EC2 and S3.
+    </p>
+
+    <p>
+        They should not automatically receive permissions for billing,
+        security administration or deleting production resources.
+    </p>
+
+    <h2>🎯 Exam Tips</h2>
+
+    <ul>
+        <li>Users represent people or applications.</li>
+        <li>Groups contain multiple users.</li>
+        <li>Roles provide temporary access.</li>
+        <li>Policies define permissions.</li>
+        <li>IAM is a Global AWS Service.</li>
+    </ul>
+
+    <h2>📝 Quick Quiz</h2>
+
+    <p>
+        Which IAM component defines permissions?
+    </p>
+
+    <p>
+        A. User<br>
+        B. Policy<br>
+        C. Group<br>
+        D. Role
+    </p>
+
+    <p>
+        <strong>Answer: B. Policy</strong>
+    </p>
+
+    <div class="navigation-buttons">
+
+        <a href="solutions-architect.html" class="nav-btn">
+            ← Back to Solutions Architect
+        </a>
+
+        <a href="ec2.html" class="nav-btn">
+            Next: EC2 →
+        </a>
+
+    </div>
+
+</section>
+```
 
 </body>
 </html>
