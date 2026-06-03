@@ -1,77 +1,104 @@
 <!DOCTYPE html>
+
 <html lang="en">
 
 <head>
-
     <meta charset="UTF-8">
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>AWS IAM Notes</title>
-
+    <title>AWS IAM | Tech Learning Hub</title>
     <link rel="stylesheet" href="style.css">
-
 </head>
 
 <body>
 
-   <nav class="navbar">
-
-    <div class="logo">☁️ Beginner Cloud Journey</div>
-
-    <ul class="nav-links">
-
-        <li><a href="index.html">Home</a></li>
-
-        <li><a href="vpc.html">Next Topic</a></li>
-
-    </ul>
-
+<nav class="navbar">
+    <div class="logo">🔐 AWS IAM</div>
 </nav>
 
-    <section class="notes">
+<section class="notes">
 
-        <h2>What is AWS IAM?</h2>
 
-        <div class="project-box">
+<h1>🔐 Identity and Access Management (IAM)</h1>
 
-            <p>
-                AWS IAM (Identity and Access Management)
-                helps control users, permissions and secure access in AWS.
-            </p>
+<p>
+    IAM allows you to securely manage access to AWS services and resources.
+</p>
 
-            <br>
+<div class="overview-card">
 
-            <h3>Main IAM Features</h3>
+    <h3>📚 Lesson Information</h3>
 
-            <br>
+    <p>⏱️ Estimated Time: 20 Minutes</p>
+    <p>🎯 Level: Beginner</p>
+    <p>📖 Exam Importance: Very High</p>
 
-            <ul style="text-align:left; line-height:2;">
+</div>
 
-                <li>Users and Groups</li>
+<h2>What is IAM?</h2>
 
-                <li>Roles and Policies</li>
+<p>
+    IAM is a global AWS service used to control who can access AWS resources
+    and what actions they can perform.
+</p>
 
-                <li>Permission Management</li>
+<h2>Why IAM Matters</h2>
 
-                <li>AWS Account Security</li>
+<ul>
+    <li>Control access to AWS resources</li>
+    <li>Improve security</li>
+    <li>Apply least privilege access</li>
+    <li>Manage users and permissions centrally</li>
+</ul>
+<div class="diagram-box">
 
-            </ul>
+<h3>🔐 IAM Structure</h3>
 
-            <br>
+<pre>
+AWS Account
+     │
+     ├── Users
+     │
+     ├── Groups
+     │
+     ├── Roles
+     │
+     └── Policies
+</pre>
+</div>
+<h2>🎯 Exam Tip</h2>
 
-            <h3>My Learning</h3>
+<p>
+Users = People
+Groups = Collection of Users
+Roles = Temporary permissions
+Policies = Permission documents
+</p>
+<h2>📝 Quick Quiz</h2>
 
-            <br>
+<p>
+Which IAM component provides permissions?
 
-            <p>
-                I learned how IAM users and policies help secure AWS resources.
-            </p>
+A. User
 
-        </div>
+B. Policy
 
-    </section>
+C. Group
+
+Answer: B
+</p>
+<div class="navigation-buttons">
+
+<a href="solutions-architect.html" class="nav-btn">
+    ← Back to Solutions Architect
+</a>
+
+<a href="ec2.html" class="nav-btn">
+    Next: EC2 →
+</a>
+
+</div>
+
+</section>
 
 </body>
-
 </html>
