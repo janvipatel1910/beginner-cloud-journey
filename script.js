@@ -1,9 +1,9 @@
 const words = [
-    "AWS",
-    "DevOps",
-    "Cloud Skills",
-    "cloud Engineering",
-    "Real Cloud Projects"
+    "Cloud Computing",
+    "Artificial Intelligence",
+    "Data Analytics",
+    "Modern Technology",
+    "Real Projects"
 ];
 
 let wordIndex = 0;
