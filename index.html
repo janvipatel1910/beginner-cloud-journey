@@ -1,51 +1,54 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tech Learning Hub</title>
 
-    <link rel="stylesheet" href="style.css" />
-    <link 
-rel="stylesheet" 
-href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
-/>
+    <link rel="stylesheet" href="style.css">
+
+    <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
 </head>
 
 <body>
 
     <!-- Navbar -->
     <nav class="navbar">
-      <div class="logo">🚀 Tech Learning Hub</div>
-     <button id="dark-mode-toggle">
-    🌙
-</button>
 
-       <ul class="nav-links">
-    <li><a href="#home">Home</a></li>
-    <li><a href="#cloud">Cloud</a></li>
-     <li><a href="#ai">AI</a></li>
-    <li><a href="#projects">Projects</a></li>
-    <li><a href="#contact">Contact</a></li>
-</ul>
+        <div class="logo">🚀 Tech Learning Hub</div>
+
+        <button id="dark-mode-toggle">
+            🌙
+        </button>
+
+        <ul class="nav-links">
+            <li><a href="#home">Home</a></li>
+            <li><a href="cloud-fundamentals.html">AWS Learning</a></li>
+            <li><a href="ai-learning.html">AI Learning</a></li>
+            <li><a href="#projects">Projects</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+
     </nav>
 
     <!-- Hero Section -->
-      <section class="hero" id="home">
-        <div class="overlay"></div> 
+    <section class="hero" id="home">
+
+        <div class="overlay"></div>
+
         <div class="hero-content">
 
             <h1>
-          Learn 
-    <span id="typing-text"></span>
-</h1>
+                Learn
+                <span id="typing-text"></span>
+            </h1>
 
-        <p>
-                
-           Learn Cloud Computing, Artificial Intelligence and Data Analytics
-           through beginner-friendly guides, practical projects and hands-on learning.
-        </p>
-            
+            <p>
+                Learn Cloud Computing and Artificial Intelligence
+                through structured learning paths and hands-on projects.
+            </p>
 
             <button>Start Learning</button>
 
@@ -53,129 +56,37 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
 
     </section>
 
-    <!-- Featured Notes -->
+    <!-- Learning Paths -->
 
-    <section id="ai" class="notes">
+    <section class="notes">
 
-    <h2>Artificial Intelligence</h2>
-
-    <div class="card-container">
-
-        <div class="card">
-            <h3>Introduction to AI</h3>
-            <p>Learn the fundamentals of Artificial Intelligence.</p>
-        </div>
-
-        <div class="card">
-            <h3>ChatGPT</h3>
-            <p>Discover how to use ChatGPT for learning and productivity.</p>
-        </div>
-
-        <div class="card">
-            <h3>Prompt Engineering</h3>
-            <p>Learn how to write effective prompts and get better results.</p>
-        </div>
-
-    </div>
-
-</section>
-
-<section id="cloud" class="notes">
-
-    <h2>Cloud Computing Learning Path</h2>
-
-    <p>
-        Learn AWS fundamentals through practical projects and beginner-friendly guides.
-    </p>
-
-</section>
-      
+        <h2>Learning Paths</h2>
 <div class="card-container">
 
-    <!-- S3 -->
-
-    <a href="s3.html" class="card-link">
+    <a href="cloud-fundamentals.html" class="card-link">
 
         <div class="card">
 
-            <i class="fa-solid fa-database"></i>
-
-            <h3>AWS S3</h3>
+            <h3>☁️ Cloud Fundamentals</h3>
 
             <p>
-                Learn static website hosting using AWS S3 step by step.
+                Learn cloud computing, regions, availability zones
+                and AWS global infrastructure.
             </p>
 
         </div>
 
     </a>
 
-    <!-- EC2 -->
-
-    <a href="ec2.html" class="card-link">
+    <a href="solutions-architect.html" class="card-link">
 
         <div class="card">
 
-            <i class="fa-solid fa-server"></i>
-
-            <h3>EC2 Basics</h3>
+            <h3>🏗️ AWS Solutions Architect Learning</h3>
 
             <p>
-                Understand AWS virtual servers and deployment basics.
-            </p>
-
-        </div>
-
-    </a>
-
-    <!-- CloudFront -->
-
-    <a href="cloudfront.html" class="card-link">
-
-        <div class="card">
-
-            <i class="fa-solid fa-globe"></i>
-
-            <h3>CloudFront</h3>
-
-            <p>
-                Learn how CDN improves website speed globally.
-            </p>
-
-        </div>
-
-    </a>
-
-    <!-- IAM -->
-
-    <a href="iam.html" class="card-link">
-
-        <div class="card">
-
-            <i class="fa-solid fa-user-shield"></i>
-
-            <h3>AWS IAM</h3>
-
-            <p>
-                Learn identity, access management and AWS permissions.
-            </p>
-
-        </div>
-
-    </a>
-
-    <!-- VPC -->
-
-    <a href="vpc.html" class="card-link">
-
-        <div class="card">
-
-            <i class="fa-solid fa-network-wired"></i>
-
-            <h3>AWS VPC</h3>
-
-            <p>
-                Understand networking, subnets and cloud infrastructure basics.
+                Learn AWS architecture, security, networking,
+                storage and compute services step by step.
             </p>
 
         </div>
@@ -183,171 +94,119 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
     </a>
 
 </div>
-
-
         
 
+    <!-- Projects -->
+
+    <section class="projects" id="projects">
+
+        <h2>Hands-On Projects</h2>
+
+        <div class="project-box">
+
+            <h3>Cloud Website Hosting Project</h3>
+
+            <p>
+                Hosted and deployed a responsive website using
+                AWS S3, CloudFront and GitHub Actions.
+            </p>
+
+        </div>
+
+        <div class="project-box">
+
+            <h3>Tech Learning Hub</h3>
+
+            <p>
+                Personal learning platform documenting AWS
+                Solutions Architect and AI learning journey.
+            </p>
+
+        </div>
     </section>
-   <!-- Projects Section -->
-<section class="projects" id="projects">
-    <h2>Hands-On Projects</h2>
-    <div class="project-box">
-        <h3>Cloud Website Hosting Project</h3>
-        <p>
-            Hosted and deployed a responsive website using AWS S3 and CloudFront.
-        </p>
-    </div>
-    <div class="project-box">
-        <h3>AI Learning Hub (Coming Soon)</h3>
-        <p>
-            Beginner-friendly AI tutorials covering ChatGPT and Prompt Engineering.
-        </p>
-    </div>
 
-</section>
-    <!-- Architecture Section -->
+    <!-- Contact -->
 
-<section class="architecture">
+    <section class="projects" id="contact">
 
-    <h2>AWS Architecture Flow</h2>
-    <div class="architecture-container">
-        <div class="architecture-box">
-            👤 User
-        </div>
-        <div class="arrow">
-           ➜
-        </div>
-        <div class="architecture-box">
-            ☁️ CloudFront
-        </div>
-        <div class="arrow">
-            ➜
-        </div>
-        <div class="architecture-box">
-            🪣 AWS S3
-        </div>
-    </div>
+        <h2>Contact</h2>
 
-</section>
-    <!-- Blog Section -->
+        <div class="project-box">
 
-<section class="notes" id="blog">
+            <p>
+                Email:
+                <a href="mailto:janvi001patel2001@gmail.com">
+                    janvi001patel2001@gmail.com
+                </a>
+            </p>
 
-    <h2>Latest Learning Blogs</h2>
+            <br>
 
-    <div class="card-container">
+            <p>
+                GitHub:
+                <a href="https://github.com/janvipatel1910" target="_blank">
+                    github.com/janvipatel1910
+                </a>
+            </p>
 
-        <div class="card">
-            <h3>What is AWS S3?</h3>
-            <p>Understanding AWS S3 in beginner-friendly language.</p>
+            <br>
+
+            <p>
+                LinkedIn:
+                <a href="https://www.linkedin.com/in/janvipatel-data" target="_blank">
+                    linkedin.com/in/janvipatel-data
+                </a>
+            </p>
+
         </div>
 
-        <div class="card">
-            <h3>My First CloudFront Setup</h3>
-            <p>How I connected CloudFront with my AWS website.</p>
-        </div>
-
-        <div class="card">
-            <h3>Beginner GitHub Actions</h3>
-            <p>Learning basic CI/CD using GitHub workflows.</p>
-        </div>
-
-    </div>
-
-</section>
-    
-
- <!-- Contact Section -->
-
-<section class="projects" id="contact">
-
-    <h2>Contact</h2>
-
-    <div class="project-box">
-
-        <p>
-            Email:
-            <a href="mailto:janvi001patel2001@gmail.com">
-                janvi001patel2001@gmail.com
-            </a>
-        </p>
-
-        <br>
-
-        <p>
-            GitHub:
-            <a href="https://github.com/janvipatel1910" target="_blank">
-                github.com/janvipatel1910
-            </a>
-        </p>
-
-        <br>
-
-        <p>
-            LinkedIn:
-            <a href="https://www.linkedin.com/in/janvipatel-data" target="_blank">
-                linkedin.com/in/janvipatel-data
-            </a>
-        </p>
-
-    </div>
-
-</section>
-
-    
+    </section>
 
     <!-- Footer -->
+
     <footer>
 
-    <div class="footer-container">
+        <div class="footer-container">
 
-        <div class="footer-logo">
-            🚀 Tech Learning Hub
-        </div>
+            <div class="footer-logo">
+                🚀 Tech Learning Hub
+            </div>
 
-        <div class="footer-links">
+            <div class="footer-links">
 
-            <a href="#home">Home</a>
-             <a href="#cloud">Cloud</a>
-            <a href="#ai">AI</a>
-            <a href="#projects">Projects</a>
-             <a href="#contact">Contact</a>
+                <a href="#home">Home</a>
+                <a href="cloud-fundamentals.html">AWS Learning</a>
+                <a href="ai-learning.html">AI Learning</a>
+                <a href="#projects">Projects</a>
+                <a href="#contact">Contact</a>
 
-        </div>
+            </div>
 
-       <div class="footer-socials">
+            <div class="footer-socials">
 
-    <a href="https://github.com/janvipatel1910" target="_blank">
+                <a href="https://github.com/janvipatel1910" target="_blank">
+                    <i class="fa-brands fa-github"></i>
+                </a>
 
-        <i class="fa-brands fa-github"></i>
+                <a href="https://www.linkedin.com/in/janvipatel-data" target="_blank">
+                    <i class="fa-brands fa-linkedin"></i>
+                </a>
 
-    </a>
+                <a href="mailto:janvi001patel2001@gmail.com">
+                    <i class="fa-solid fa-envelope"></i>
+                </a>
 
-    <a href="https://www.linkedin.com/in/janvipatel-data" target="_blank">
+            </div>
 
-        <i class="fa-brands fa-linkedin"></i>
-
-    </a>
-
-    <a href="mailto:janvi001patel2001@gmail.com">
-
-        <i class="fa-solid fa-envelope"></i>
-
-    </a>
-
-</div>
         </div>
 
         <p class="footer-copy">
             © 2026 Tech Learning Hub | Learn • Build • Grow 🚀
         </p>
 
-    </div>
- 
-</footer>
+    </footer>
 
     <script src="script.js"></script>
 
 </body>
 </html>
-<!-- updated -->

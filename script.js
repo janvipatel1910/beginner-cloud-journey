@@ -1,8 +1,8 @@
 const words = [
-    "Cloud Computing",
+    "AWS Solutions Architect",
     "Artificial Intelligence",
-    "Data Analytics",
-    "Modern Technology",
+    "Cloud Computing",
+    "Prompt Engineering",
     "Real Projects"
 ];
 
