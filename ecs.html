@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AWS ECS & Fargate | Tech Learning Hub</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+</head>
+<body>
+<nav class="navbar">
+    <div class="logo">🚀 Tech Learning Hub</div>
+    <button id="dark-mode-toggle">🌙</button>
+    <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="aws-learning.html">AWS Learning</a></li>
+        <li><a href="solutions-architect.html">Solutions Architect</a></li>
+    </ul>
+</nav>
+
+<section class="lesson-content">
+
+    <h1>🐳 Amazon ECS & AWS Fargate</h1>
+
+    <div class="lesson-header">
+        <span>Container Service</span>
+        <span>Serverless Option</span>
+        <span>AWS Solutions Architect Associate</span>
+        <span>High Exam Importance</span>
+    </div>
+
+    <div class="lesson-nav">
+        <a href="#overview">Overview</a>
+        <a href="#ecs">ECS</a>
+        <a href="#fargate">Fargate</a>
+        <a href="#eks">EKS</a>
+        <a href="#concepts">Core Concepts</a>
+        <a href="#security">Security</a>
+        <a href="#architecture">Architecture</a>
+        <a href="#exam">Exam Notes</a>
+        <a href="#summary">Summary</a>
+    </div>
+
+    <h2 id="overview">Service Overview</h2>
+    <p>
+        AWS provides fully managed container orchestration services so you can
+        run containerised applications without managing the underlying infrastructure.
+        The two main services are <strong>Amazon ECS</strong> (Elastic Container Service)
+        and <strong>Amazon EKS</strong> (Elastic Kubernetes Service).
+    </p>
+
+    <h2 id="ecs">Amazon ECS (Elastic Container Service)</h2>
+    <p>
+        ECS is AWS's own fully managed container orchestration service.
+        It runs Docker containers on a cluster of EC2 instances or on Fargate
+        (serverless). ECS is simpler than Kubernetes and tightly integrated with AWS services.
+    </p>
+    <h3>ECS Launch Types</h3>
+    <ul>
+        <li><strong>EC2 Launch Type</strong> — you provision and manage the EC2 instances in your cluster. More control, lower cost at scale.</li>
+        <li><strong>Fargate Launch Type</strong> — AWS manages the underlying infrastructure. You just define CPU and memory requirements. Serverless containers.</li>
+    </ul>
+
+    <h2 id="fargate">AWS Fargate</h2>
+    <p>
+        Fargate is a serverless compute engine for containers. You do not provision,
+        manage or scale EC2 instances — you simply define your container requirements
+        and Fargate runs them.
+    </p>
+    <h3>Key Fargate Features</h3>
+    <ul>
+        <li>No EC2 instances to manage — fully serverless</li>
+        <li>Pay only for the vCPU and memory your containers use</li>
+        <li>Works with both ECS and EKS</li>
+        <li>Each task runs in its own isolated compute environment</li>
+        <li>Ideal for intermittent workloads, batch jobs and microservices</li>
+    </ul>
+
+    <h2 id="eks">Amazon EKS (Elastic Kubernetes Service)</h2>
+    <p>
+        EKS is a fully managed Kubernetes service. Use EKS when your team
+        already uses Kubernetes, needs Kubernetes-specific features,
+        or is running a multi-cloud/hybrid Kubernetes strategy.
+    </p>
+    <ul>
+        <li>AWS manages the Kubernetes control plane</li>
+        <li>Runs on EC2 or Fargate (serverless nodes)</li>
+        <li>Use when you need <strong>Kubernetes compatibility</strong> or have existing K8s workloads</li>
+        <li>More complex than ECS but more portable across clouds</li>
+    </ul>
+
+    <h3>ECR (Elastic Container Registry)</h3>
+    <p>
+        Amazon ECR is a fully managed Docker container registry for storing,
+        managing and deploying container images. Integrates natively with ECS and EKS.
+        Images are encrypted at rest and scanned for vulnerabilities by Inspector.
+    </p>
+
+    <h2 id="concepts">Core Concepts (ECS)</h2>
+
+    <h3>Task Definition</h3>
+    <p>
+        A task definition is a blueprint for your application — it defines the Docker image,
+        CPU/memory, environment variables, port mappings, IAM role and networking mode.
+        Think of it as a Dockerfile for your entire application stack.
+    </p>
+
+    <h3>Task</h3>
+    <p>
+        A running instance of a task definition. One task can run multiple containers.
+    </p>
+
+    <h3>Service</h3>
+    <p>
+        An ECS Service ensures a specified number of tasks are always running.
+        If a task fails, the service replaces it automatically.
+        Services integrate with ALB for load balancing and Auto Scaling for elasticity.
+    </p>
+
+    <h3>Cluster</h3>
+    <p>
+        A cluster is a logical grouping of tasks or services.
+        For EC2 launch type, the cluster also groups the EC2 instances.
+    </p>
+
+    <h2 id="security">Security Considerations</h2>
+    <ul>
+        <li>Assign an <strong>IAM Task Role</strong> to each task — grants the container AWS service permissions</li>
+        <li>Use <strong>ECR image scanning</strong> (Inspector) to detect vulnerabilities before deployment</li>
+        <li>Run tasks in <strong>private subnets</strong> — expose only through ALB in public subnets</li>
+        <li>Use <strong>Secrets Manager or Parameter Store</strong> to inject secrets into containers as environment variables</li>
+        <li>Enable <strong>VPC Flow Logs</strong> to monitor container network traffic</li>
+    </ul>
+
+    <h2 id="architecture">Architecture Overview</h2>
+    <pre>
+Internet Traffic
+        │
+        ▼
+Application Load Balancer (public subnet)
+        │
+        ▼
+ECS Service (manages desired task count)
+        │
+        ├── ECS Task (Fargate) — Container A
+        ├── ECS Task (Fargate) — Container B
+        └── ECS Task (Fargate) — Container C
+
+Each task:
+  - Pulls image from ECR
+  - Assumes IAM Task Role
+  - Reads secrets from Secrets Manager
+  - Stores data in RDS / DynamoDB / S3
+    </pre>
+
+    <h2 id="exam">AWS Solutions Architect Exam Notes</h2>
+    <ul>
+        <li><strong>ECS</strong> = AWS-native container orchestration; simpler than Kubernetes</li>
+        <li><strong>Fargate</strong> = serverless containers — no EC2 management; pay per task CPU/memory</li>
+        <li><strong>EKS</strong> = managed Kubernetes — use when team already knows Kubernetes</li>
+        <li><strong>ECR</strong> = managed Docker registry — stores and scans container images</li>
+        <li>ECS EC2 launch type = you manage instances; Fargate = AWS manages infrastructure</li>
+        <li>Use <strong>IAM Task Roles</strong> (not instance roles) to grant containers AWS permissions</li>
+        <li>ECS integrates with <strong>ALB for load balancing</strong> and <strong>Auto Scaling for elasticity</strong></li>
+        <li>Fargate is best for <strong>variable or unpredictable workloads</strong> — no idle EC2 costs</li>
+        <li>For <strong>batch processing</strong>, use ECS Fargate or AWS Batch</li>
+    </ul>
+
+    <h2 id="summary">Key Takeaways</h2>
+    <ul>
+        <li>ECS manages Docker containers on AWS — choose EC2 or Fargate launch type</li>
+        <li>Fargate = serverless containers, no server management, pay per use</li>
+        <li>EKS = managed Kubernetes — use for teams with existing K8s expertise</li>
+        <li>Always use IAM Task Roles for containers, not hard-coded credentials</li>
+        <li>Store images in ECR and enable vulnerability scanning with Inspector</li>
+    </ul>
+
+    <div class="navigation-buttons">
+        <a href="solutions-architect.html" class="nav-btn">← Solutions Architect</a>
+        <a href="elastic-beanstalk.html" class="nav-btn">Next: Elastic Beanstalk →</a>
+    </div>
+
+</section>
+
+<footer>
+    <div class="footer-container">
+        <div class="footer-logo">🚀 Tech Learning Hub</div>
+        <div class="footer-links">
+            <a href="index.html">Home</a>
+            <a href="aws-learning.html">AWS Learning</a>
+            <a href="solutions-architect.html">Solutions Architect</a>
+        </div>
+        <div class="footer-socials">
+            <a href="https://github.com/janvipatel1910" target="_blank"><i class="fa-brands fa-github"></i></a>
+            <a href="https://www.linkedin.com/in/janvipatel-data" target="_blank"><i class="fa-brands fa-linkedin"></i></a>
+            <a href="mailto:janvi001patel2001@gmail.com"><i class="fa-solid fa-envelope"></i></a>
+        </div>
+    </div>
+    <p class="footer-copy">© 2026 Tech Learning Hub | Learn • Build • Grow 🚀</p>
+</footer>
+<script src="script.js"></script>
+</body>
+</html>

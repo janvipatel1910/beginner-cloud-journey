@@ -6,6 +6,31 @@
     <title>AWS Solutions Architect Path | Tech Learning Hub</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+    <style>
+        .section-heading {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #1e3a8a;
+            margin: 50px 0 20px 0;
+            padding: 12px 20px;
+            background: #eef3ff;
+            border-radius: 10px;
+            border-left: 5px solid #2563eb;
+            text-align: left;
+            width: 100%;
+        }
+        .dark-mode .section-heading {
+            background: #1e293b;
+            color: #60a5fa;
+            border-left-color: #60a5fa;
+        }
+        .card-container {
+            justify-content: flex-start;
+        }
+        .card {
+            width: 260px;
+        }
+    </style>
 </head>
 
 <body>
@@ -22,91 +47,147 @@
 <section class="notes">
 
     <h2>🏗️ AWS Solutions Architect Learning Path</h2>
+    <p>Complete exam-focused lessons covering all domains of the AWS Solutions Architect Associate certification.</p>
 
-    <p>
-        Learn AWS Solutions Architect concepts step by step
-        through structured lessons and hands-on projects.
-    </p>
-
+    <!-- COMPUTE -->
+    <div class="section-heading">⚙️ Compute</div>
     <div class="card-container">
-
-        <a href="iam.html" class="card-link">
-            <div class="card">
-                <h3>🔐 IAM</h3>
-                <p>Identity and Access Management — control who can access what in AWS.</p>
-            </div>
-        </a>
-
         <a href="ec2.html" class="card-link">
-            <div class="card">
-                <h3>🖥️ EC2</h3>
-                <p>Elastic Compute Cloud — virtual servers in the AWS Cloud.</p>
-            </div>
+            <div class="card"><h3>🖥️ EC2</h3><p>Virtual servers, instance types, pricing models, security groups.</p></div>
         </a>
-
-        <a href="s3.html" class="card-link">
-            <div class="card">
-                <h3>🪣 S3</h3>
-                <p>Simple Storage Service — scalable object storage for any data.</p>
-            </div>
-        </a>
-
-        <a href="vpc.html" class="card-link">
-            <div class="card">
-                <h3>🌐 VPC</h3>
-                <p>Virtual Private Cloud — isolated networking in AWS.</p>
-            </div>
-        </a>
-
-        <a href="cloudfront.html" class="card-link">
-            <div class="card">
-                <h3>⚡ CloudFront</h3>
-                <p>Global content delivery network for fast, secure content.</p>
-            </div>
-        </a>
-
-        <a href="route53.html" class="card-link">
-            <div class="card">
-                <h3>📡 Route 53</h3>
-                <p>DNS service — routing policies, health checks and domain registration.</p>
-            </div>
-        </a>
-
-        <a href="load-balancer.html" class="card-link">
-            <div class="card">
-                <h3>⚖️ Load Balancer</h3>
-                <p>Distribute traffic across instances for high availability — ALB and NLB.</p>
-            </div>
-        </a>
-
-        <a href="auto-scaling.html" class="card-link">
-            <div class="card">
-                <h3>📈 Auto Scaling</h3>
-                <p>Automatically scale EC2 capacity up or down based on demand.</p>
-            </div>
-        </a>
-
-        <a href="rds.html" class="card-link">
-            <div class="card">
-                <h3>🗄️ RDS</h3>
-                <p>Managed relational databases — Multi-AZ, Read Replicas, Aurora.</p>
-            </div>
-        </a>
-
-        <a href="dynamodb.html" class="card-link">
-            <div class="card">
-                <h3>⚡ DynamoDB</h3>
-                <p>Fully managed serverless NoSQL database with millisecond performance.</p>
-            </div>
-        </a>
-
         <a href="lambda.html" class="card-link">
-            <div class="card">
-                <h3>λ Lambda</h3>
-                <p>Serverless compute — run code without managing servers.</p>
-            </div>
+            <div class="card"><h3>λ Lambda</h3><p>Serverless compute, event-driven architecture, triggers.</p></div>
         </a>
+        <a href="ecs.html" class="card-link">
+            <div class="card"><h3>🐳 ECS & Fargate</h3><p>Container orchestration, task definitions, serverless containers.</p></div>
+        </a>
+        <a href="elastic-beanstalk.html" class="card-link">
+            <div class="card"><h3>🌱 Elastic Beanstalk</h3><p>PaaS deployment, deployment policies, zero-downtime updates.</p></div>
+        </a>
+    </div>
 
+    <!-- STORAGE -->
+    <div class="section-heading">🗂️ Storage</div>
+    <div class="card-container">
+        <a href="s3.html" class="card-link">
+            <div class="card"><h3>🪣 S3</h3><p>Object storage, storage classes, versioning, lifecycle policies.</p></div>
+        </a>
+        <a href="efs.html" class="card-link">
+            <div class="card"><h3>📁 EFS</h3><p>Shared file system for multiple EC2 instances across AZs.</p></div>
+        </a>
+        <a href="storage-gateway.html" class="card-link">
+            <div class="card"><h3>🔌 Storage Gateway & Snow</h3><p>Hybrid storage and large-scale data migration to AWS.</p></div>
+        </a>
+    </div>
+
+    <!-- DATABASE -->
+    <div class="section-heading">🗄️ Database</div>
+    <div class="card-container">
+        <a href="rds.html" class="card-link">
+            <div class="card"><h3>🗄️ RDS</h3><p>Managed relational databases, Multi-AZ, Read Replicas, Aurora.</p></div>
+        </a>
+        <a href="dynamodb.html" class="card-link">
+            <div class="card"><h3>⚡ DynamoDB</h3><p>Serverless NoSQL database, partition keys, DAX, Global Tables.</p></div>
+        </a>
+        <a href="elasticache.html" class="card-link">
+            <div class="card"><h3>🚀 ElastiCache</h3><p>In-memory caching with Redis and Memcached.</p></div>
+        </a>
+    </div>
+
+    <!-- NETWORKING & CDN -->
+    <div class="section-heading">🌐 Networking & CDN</div>
+    <div class="card-container">
+        <a href="vpc.html" class="card-link">
+            <div class="card"><h3>🌐 VPC</h3><p>Virtual Private Cloud, subnets, security groups, NACLs.</p></div>
+        </a>
+        <a href="route53.html" class="card-link">
+            <div class="card"><h3>📡 Route 53</h3><p>DNS, hosted zones, routing policies, health checks.</p></div>
+        </a>
+        <a href="cloudfront.html" class="card-link">
+            <div class="card"><h3>⚡ CloudFront</h3><p>CDN, edge locations, caching, signed URLs.</p></div>
+        </a>
+        <a href="load-balancer.html" class="card-link">
+            <div class="card"><h3>⚖️ Load Balancer</h3><p>ALB, NLB, target groups, health checks, high availability.</p></div>
+        </a>
+        <a href="auto-scaling.html" class="card-link">
+            <div class="card"><h3>📈 Auto Scaling</h3><p>Scaling policies, ASG, Target Tracking, Predictive Scaling.</p></div>
+        </a>
+        <a href="global-accelerator.html" class="card-link">
+            <div class="card"><h3>🌍 Global Accelerator</h3><p>Anycast IPs, AWS backbone routing, instant failover.</p></div>
+        </a>
+        <a href="direct-connect.html" class="card-link">
+            <div class="card"><h3>🔗 Direct Connect & VPN</h3><p>Hybrid connectivity, Site-to-Site VPN, Transit Gateway.</p></div>
+        </a>
+    </div>
+
+    <!-- SECURITY & COMPLIANCE -->
+    <div class="section-heading">🔐 Security & Compliance</div>
+    <div class="card-container">
+        <a href="iam.html" class="card-link">
+            <div class="card"><h3>🔐 IAM</h3><p>Identity and Access Management, users, roles, policies.</p></div>
+        </a>
+        <a href="kms.html" class="card-link">
+            <div class="card"><h3>🔑 KMS</h3><p>Encryption key management, envelope encryption, SSE.</p></div>
+        </a>
+        <a href="cloudtrail.html" class="card-link">
+            <div class="card"><h3>🔍 CloudTrail</h3><p>API audit logging, compliance, security investigations.</p></div>
+        </a>
+        <a href="secrets-manager.html" class="card-link">
+            <div class="card"><h3>🔒 Secrets Manager</h3><p>Secure credential storage and automatic rotation.</p></div>
+        </a>
+        <a href="security-services.html" class="card-link">
+            <div class="card"><h3>🛡️ Security Services</h3><p>GuardDuty, Macie, Inspector, WAF, Shield, Config.</p></div>
+        </a>
+    </div>
+
+    <!-- MESSAGING & INTEGRATION -->
+    <div class="section-heading">📨 Messaging & Integration</div>
+    <div class="card-container">
+        <a href="sqs.html" class="card-link">
+            <div class="card"><h3>📨 SQS</h3><p>Message queues, Standard vs FIFO, DLQ, decoupling.</p></div>
+        </a>
+        <a href="sns.html" class="card-link">
+            <div class="card"><h3>🔔 SNS</h3><p>Pub/Sub messaging, fanout pattern, push notifications.</p></div>
+        </a>
+        <a href="eventbridge.html" class="card-link">
+            <div class="card"><h3>🚌 EventBridge</h3><p>Event bus, rules, scheduled tasks, SaaS integrations.</p></div>
+        </a>
+        <a href="kinesis.html" class="card-link">
+            <div class="card"><h3>🌊 Kinesis</h3><p>Real-time streaming, Data Streams vs Firehose.</p></div>
+        </a>
+        <a href="step-functions.html" class="card-link">
+            <div class="card"><h3>🔄 Step Functions</h3><p>Serverless workflows, state machines, orchestration.</p></div>
+        </a>
+    </div>
+
+    <!-- MONITORING -->
+    <div class="section-heading">📊 Monitoring & Management</div>
+    <div class="card-container">
+        <a href="cloudwatch.html" class="card-link">
+            <div class="card"><h3>📊 CloudWatch</h3><p>Metrics, logs, alarms, dashboards, Logs Insights.</p></div>
+        </a>
+    </div>
+
+    <!-- CLOUD FUNDAMENTALS -->
+    <div class="section-heading">☁️ Cloud Fundamentals</div>
+    <div class="card-container">
+        <a href="cloud-fundamentals.html" class="card-link">
+            <div class="card"><h3>☁️ Cloud Fundamentals</h3><p>Cloud computing concepts, AWS global infrastructure, shared responsibility.</p></div>
+        </a>
+    </div>
+
+    <!-- ARCHITECTURE & BEST PRACTICES -->
+    <div class="section-heading">🏛️ Architecture & Best Practices</div>
+    <div class="card-container">
+        <a href="well-architected.html" class="card-link">
+            <div class="card"><h3>🏛️ Well-Architected Framework</h3><p>6 pillars: Security, Reliability, Performance, Cost, Operations, Sustainability.</p></div>
+        </a>
+        <a href="disaster-recovery.html" class="card-link">
+            <div class="card"><h3>🚨 Disaster Recovery</h3><p>RTO, RPO, Backup/Restore, Pilot Light, Warm Standby, Multi-Site.</p></div>
+        </a>
+        <a href="cost-optimization.html" class="card-link">
+            <div class="card"><h3>💰 Cost Optimization</h3><p>Reserved Instances, Spot, Savings Plans, Cost Explorer, Trusted Advisor.</p></div>
+        </a>
     </div>
 
 </section>
@@ -120,15 +201,9 @@
             <a href="solutions-architect.html">Solutions Architect</a>
         </div>
         <div class="footer-socials">
-            <a href="https://github.com/janvipatel1910" target="_blank">
-                <i class="fa-brands fa-github"></i>
-            </a>
-            <a href="https://www.linkedin.com/in/janvipatel-data" target="_blank">
-                <i class="fa-brands fa-linkedin"></i>
-            </a>
-            <a href="mailto:janvi001patel2001@gmail.com">
-                <i class="fa-solid fa-envelope"></i>
-            </a>
+            <a href="https://github.com/janvipatel1910" target="_blank"><i class="fa-brands fa-github"></i></a>
+            <a href="https://www.linkedin.com/in/janvipatel-data" target="_blank"><i class="fa-brands fa-linkedin"></i></a>
+            <a href="mailto:janvi001patel2001@gmail.com"><i class="fa-solid fa-envelope"></i></a>
         </div>
     </div>
     <p class="footer-copy">© 2026 Tech Learning Hub | Learn • Build • Grow 🚀</p>

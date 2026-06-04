@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AWS Storage Gateway & Snow Family | Tech Learning Hub</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+</head>
+<body>
+<nav class="navbar">
+    <div class="logo">🚀 Tech Learning Hub</div>
+    <button id="dark-mode-toggle">🌙</button>
+    <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="aws-learning.html">AWS Learning</a></li>
+        <li><a href="solutions-architect.html">Solutions Architect</a></li>
+    </ul>
+</nav>
+
+<section class="lesson-content">
+
+    <h1>🔌 AWS Storage Gateway & Snow Family</h1>
+
+    <div class="lesson-header">
+        <span>Hybrid Storage</span>
+        <span>Data Migration</span>
+        <span>AWS Solutions Architect Associate</span>
+        <span>Medium Exam Importance</span>
+    </div>
+
+    <div class="lesson-nav">
+        <a href="#gateway">Storage Gateway</a>
+        <a href="#snow">Snow Family</a>
+        <a href="#datasync">DataSync</a>
+        <a href="#exam">Exam Notes</a>
+        <a href="#summary">Summary</a>
+    </div>
+
+    <h2 id="gateway">AWS Storage Gateway</h2>
+    <p>
+        AWS Storage Gateway is a hybrid cloud storage service that gives your
+        on-premises applications access to virtually unlimited cloud storage.
+        It bridges on-premises environments with AWS cloud storage.
+    </p>
+
+    <h3>Gateway Types</h3>
+
+    <h4>S3 File Gateway</h4>
+    <ul>
+        <li>On-premises applications access S3 objects using NFS or SMB protocols</li>
+        <li>Files are stored as objects in S3 — accessed like a local file share</li>
+        <li>Use for: file backups, content repositories, tiered storage</li>
+    </ul>
+
+    <h4>FSx File Gateway</h4>
+    <ul>
+        <li>Low-latency access to Amazon FSx for Windows File Server from on-premises</li>
+        <li>Use for: Windows home directories, departmental shares</li>
+    </ul>
+
+    <h4>Volume Gateway</h4>
+    <ul>
+        <li>Presents iSCSI block storage volumes to on-premises applications</li>
+        <li><strong>Cached volumes</strong> — primary data in S3, frequently accessed data cached on-premises</li>
+        <li><strong>Stored volumes</strong> — primary data on-premises, async backup to S3 as EBS snapshots</li>
+    </ul>
+
+    <h4>Tape Gateway</h4>
+    <ul>
+        <li>Virtual tape library (VTL) interface to replace physical tape backups</li>
+        <li>Works with existing backup software (Veeam, Backup Exec, etc.)</li>
+        <li>Virtual tapes stored in S3 and archived to S3 Glacier for long-term retention</li>
+    </ul>
+
+    <h2 id="snow">AWS Snow Family</h2>
+    <p>
+        The Snow Family provides physical devices to collect and process data
+        at the edge and migrate large amounts of data into and out of AWS
+        when network transfer would be too slow or expensive.
+    </p>
+
+    <h3>Snowcone</h3>
+    <ul>
+        <li>Smallest device — 8TB HDD or 14TB SSD</li>
+        <li>Rugged, portable — fits in a backpack</li>
+        <li>Use for: edge computing in remote or harsh environments</li>
+        <li>Can send data to AWS via internet (DataSync) or by mailing the device back</li>
+    </ul>
+
+    <h3>Snowball Edge</h3>
+    <ul>
+        <li><strong>Storage Optimised</strong> — 80TB usable storage, 40 vCPU</li>
+        <li><strong>Compute Optimised</strong> — 28TB NVMe storage, 52 vCPU + optional GPU</li>
+        <li>Use for: large data migrations, edge computing, disconnected environments</li>
+        <li>Run EC2 instances and Lambda functions directly on the device at the edge</li>
+    </ul>
+
+    <h3>Snowmobile</h3>
+    <ul>
+        <li>Massive data transfer — up to <strong>100 petabytes</strong> per Snowmobile</li>
+        <li>A 45-foot shipping container pulled by a semi-truck</li>
+        <li>Use for: migrating entire data centres to AWS</li>
+        <li>AWS security personnel escort the truck and GPS tracking is included</li>
+    </ul>
+
+    <h3>Choosing the Right Snow Device</h3>
+    <pre>
+Data Size          Device
+────────────────────────────────
+&lt; 10TB             Use internet transfer
+10TB – 10PB        Snowball Edge (one or multiple)
+&gt; 10PB             Snowmobile
+Remote/harsh env   Snowcone
+    </pre>
+
+    <h2 id="datasync">AWS DataSync</h2>
+    <p>
+        DataSync is an online data transfer service that automates moving data
+        between on-premises storage and AWS storage services (S3, EFS, FSx).
+        It transfers data over the internet or Direct Connect,
+        using a lightweight agent installed on-premises.
+    </p>
+    <ul>
+        <li>Up to 10x faster than open-source tools</li>
+        <li>Handles scheduling, bandwidth throttling, encryption and data integrity checks</li>
+        <li>Use for: ongoing sync between on-premises and AWS, data migration, replication</li>
+        <li>DataSync = online transfer via network; Snow Family = offline transfer via physical device</li>
+    </ul>
+
+    <h2 id="exam">AWS Solutions Architect Exam Notes</h2>
+    <ul>
+        <li><strong>S3 File Gateway</strong> = on-premises apps access S3 via NFS/SMB — for file-based cloud tiering</li>
+        <li><strong>Volume Gateway</strong> = iSCSI block storage backed by S3 — for on-premises block storage with cloud backup</li>
+        <li><strong>Tape Gateway</strong> = replace physical tape library with virtual tapes in S3/Glacier</li>
+        <li><strong>Snowball Edge</strong> = physical device for migrating TBs–PBs to AWS offline</li>
+        <li><strong>Snowmobile</strong> = shipping container for petabyte-scale migrations (&gt;10PB)</li>
+        <li><strong>DataSync</strong> = online data transfer between on-premises and AWS — not for offline/large migrations</li>
+        <li>If the question mentions <strong>limited bandwidth</strong> or <strong>large data</strong> → Snow Family</li>
+        <li>If the question mentions <strong>ongoing sync</strong> or <strong>scheduled transfers</strong> → DataSync</li>
+        <li>Snow devices can run <strong>EC2 instances at the edge</strong> — useful for remote/disconnected processing</li>
+    </ul>
+
+    <h2 id="summary">Key Takeaways</h2>
+    <ul>
+        <li>Storage Gateway bridges on-premises storage with AWS cloud storage</li>
+        <li>S3 File Gateway, Volume Gateway and Tape Gateway cover files, blocks and backups</li>
+        <li>Snow Family physically ships data when network transfer is too slow or too expensive</li>
+        <li>Use DataSync for automated, ongoing online transfers between on-premises and AWS</li>
+        <li>Choose based on data size, connectivity and urgency</li>
+    </ul>
+
+    <div class="navigation-buttons">
+        <a href="efs.html" class="nav-btn">← EFS</a>
+        <a href="solutions-architect.html" class="nav-btn">← Solutions Architect</a>
+    </div>
+
+</section>
+
+<footer>
+    <div class="footer-container">
+        <div class="footer-logo">🚀 Tech Learning Hub</div>
+        <div class="footer-links">
+            <a href="index.html">Home</a>
+            <a href="aws-learning.html">AWS Learning</a>
+            <a href="solutions-architect.html">Solutions Architect</a>
+        </div>
+        <div class="footer-socials">
+            <a href="https://github.com/janvipatel1910" target="_blank"><i class="fa-brands fa-github"></i></a>
+            <a href="https://www.linkedin.com/in/janvipatel-data" target="_blank"><i class="fa-brands fa-linkedin"></i></a>
+            <a href="mailto:janvi001patel2001@gmail.com"><i class="fa-solid fa-envelope"></i></a>
+        </div>
+    </div>
+    <p class="footer-copy">© 2026 Tech Learning Hub | Learn • Build • Grow 🚀</p>
+</footer>
+<script src="script.js"></script>
+</body>
+</html>

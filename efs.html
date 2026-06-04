@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AWS EFS | Tech Learning Hub</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+</head>
+<body>
+<nav class="navbar">
+    <div class="logo">🚀 Tech Learning Hub</div>
+    <button id="dark-mode-toggle">🌙</button>
+    <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="aws-learning.html">AWS Learning</a></li>
+        <li><a href="solutions-architect.html">Solutions Architect</a></li>
+    </ul>
+</nav>
+
+<section class="lesson-content">
+
+    <h1>📁 Amazon Elastic File System (EFS)</h1>
+
+    <div class="lesson-header">
+        <span>Storage Service</span>
+        <span>Shared File Storage</span>
+        <span>AWS Solutions Architect Associate</span>
+        <span>Medium Exam Importance</span>
+    </div>
+
+    <div class="lesson-nav">
+        <a href="#overview">Overview</a>
+        <a href="#features">Features</a>
+        <a href="#storage-classes">Storage Classes</a>
+        <a href="#comparison">EFS vs EBS vs S3</a>
+        <a href="#security">Security</a>
+        <a href="#architecture">Architecture</a>
+        <a href="#exam">Exam Notes</a>
+        <a href="#summary">Summary</a>
+    </div>
+
+    <h2 id="overview">Service Overview</h2>
+    <p>
+        Amazon Elastic File System (EFS) is a fully managed, scalable shared file system
+        for use with AWS cloud services and on-premises resources.
+        EFS automatically grows and shrinks as you add or remove files —
+        you never need to provision capacity in advance.
+    </p>
+    <p>
+        EFS is a <strong>Network File System (NFS)</strong> — multiple EC2 instances
+        across multiple Availability Zones can read and write to the same EFS file system
+        simultaneously.
+    </p>
+
+    <h2 id="features">Key Features</h2>
+    <ul>
+        <li>Shared access — thousands of EC2 instances can access simultaneously</li>
+        <li>Automatically scales from gigabytes to petabytes with no pre-provisioning</li>
+        <li>Multi-AZ — data is stored redundantly across multiple Availability Zones</li>
+        <li>Compatible with Linux-based workloads (NFS protocol)</li>
+        <li>Supports both regional and One Zone storage classes</li>
+        <li>Lifecycle management — automatically move infrequent files to cheaper storage</li>
+        <li>Encryption at rest (KMS) and in transit (TLS)</li>
+    </ul>
+
+    <h2 id="storage-classes">EFS Storage Classes</h2>
+    <ul>
+        <li><strong>EFS Standard</strong> — for frequently accessed files, multi-AZ redundancy</li>
+        <li><strong>EFS Standard-IA (Infrequent Access)</strong> — lower cost for files not accessed daily, retrieval fee applies</li>
+        <li><strong>EFS One Zone</strong> — lower cost, single AZ, good for dev/test</li>
+        <li><strong>EFS One Zone-IA</strong> — cheapest option, single AZ, infrequent access</li>
+    </ul>
+    <p>Use <strong>EFS Lifecycle Management</strong> to automatically move files not accessed for a set period (7, 14, 30, 60, 90 days) to the IA storage class.</p>
+
+    <h2 id="comparison">EFS vs EBS vs S3</h2>
+    <pre>
+Feature          EFS                  EBS                  S3
+──────────────────────────────────────────────────────────────────────
+Type             Shared file system   Block storage        Object storage
+Protocol         NFS                  iSCSI                HTTP/S3 API
+Concurrent access  Multiple EC2 ✅    Single EC2 only ❌   Multiple clients ✅
+Scaling          Automatic            Manual (resize)      Unlimited
+Use case         Shared CMS, web,     OS, DBs, apps        Backups, media, web
+                 home dirs
+AZ               Multi-AZ             Single AZ            Regional (multi-AZ)
+Linux only       ✅ Yes               ❌ No (Win/Linux)     ✅ No (HTTP-based)
+    </pre>
+
+    <h2 id="security">Security Considerations</h2>
+    <ul>
+        <li>Control access using <strong>Security Groups</strong> on the EFS mount target</li>
+        <li>Use <strong>IAM policies</strong> and <strong>EFS access points</strong> for fine-grained file system access</li>
+        <li>Enable <strong>KMS encryption at rest</strong> — must be configured at creation</li>
+        <li>Enable <strong>TLS encryption in transit</strong> when mounting</li>
+        <li>Use <strong>VPC</strong> to isolate EFS — it is not accessible from the public internet</li>
+    </ul>
+
+    <h2 id="architecture">Architecture Overview</h2>
+    <pre>
+VPC
+├── AZ-A: EC2 Instance ─── Mount Target ─┐
+│                                        │
+├── AZ-B: EC2 Instance ─── Mount Target ─┤── EFS File System
+│                                        │   (shared, auto-scaling)
+└── AZ-C: EC2 Instance ─── Mount Target ─┘
+    </pre>
+
+    <h2 id="exam">AWS Solutions Architect Exam Notes</h2>
+    <ul>
+        <li>EFS = <strong>shared file system</strong> for multiple EC2 instances across multiple AZs</li>
+        <li>EBS = <strong>block storage</strong> attached to a single EC2 instance in one AZ</li>
+        <li>S3 = <strong>object storage</strong> accessible via API, not mountable as a file system</li>
+        <li>EFS is <strong>Linux only</strong> — uses NFS protocol; not compatible with Windows</li>
+        <li>EFS automatically scales — <strong>no need to provision capacity</strong></li>
+        <li>Use EFS for: shared content repositories, web serving, home directories, CMS</li>
+        <li>EFS One Zone is cheaper but loses data if the AZ fails — use for non-critical data</li>
+        <li>EFS is more expensive than EBS per GB — use only when shared access is needed</li>
+    </ul>
+
+    <h2 id="summary">Key Takeaways</h2>
+    <ul>
+        <li>EFS is a managed NFS file system shared across multiple EC2 instances and AZs</li>
+        <li>Scales automatically — no capacity planning needed</li>
+        <li>Use EFS when multiple instances need simultaneous read/write access to the same files</li>
+        <li>Use EBS for single-instance block storage; S3 for object storage via API</li>
+        <li>Enable lifecycle management to automatically reduce storage costs</li>
+    </ul>
+
+    <div class="navigation-buttons">
+        <a href="solutions-architect.html" class="nav-btn">← Solutions Architect</a>
+        <a href="storage-gateway.html" class="nav-btn">Next: Storage Gateway →</a>
+    </div>
+
+</section>
+
+<footer>
+    <div class="footer-container">
+        <div class="footer-logo">🚀 Tech Learning Hub</div>
+        <div class="footer-links">
+            <a href="index.html">Home</a>
+            <a href="aws-learning.html">AWS Learning</a>
+            <a href="solutions-architect.html">Solutions Architect</a>
+        </div>
+        <div class="footer-socials">
+            <a href="https://github.com/janvipatel1910" target="_blank"><i class="fa-brands fa-github"></i></a>
+            <a href="https://www.linkedin.com/in/janvipatel-data" target="_blank"><i class="fa-brands fa-linkedin"></i></a>
+            <a href="mailto:janvi001patel2001@gmail.com"><i class="fa-solid fa-envelope"></i></a>
+        </div>
+    </div>
+    <p class="footer-copy">© 2026 Tech Learning Hub | Learn • Build • Grow 🚀</p>
+</footer>
+<script src="script.js"></script>
+</body>
+</html>

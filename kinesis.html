@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AWS Kinesis | Tech Learning Hub</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+</head>
+<body>
+<nav class="navbar">
+    <div class="logo">🚀 Tech Learning Hub</div>
+    <button id="dark-mode-toggle">🌙</button>
+    <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="aws-learning.html">AWS Learning</a></li>
+        <li><a href="solutions-architect.html">Solutions Architect</a></li>
+    </ul>
+</nav>
+
+<section class="lesson-content">
+
+    <h1>🌊 Amazon Kinesis</h1>
+
+    <div class="lesson-header">
+        <span>Streaming Data</span>
+        <span>Real-Time Processing</span>
+        <span>AWS Solutions Architect Associate</span>
+        <span>High Exam Importance</span>
+    </div>
+
+    <div class="lesson-nav">
+        <a href="#overview">Overview</a>
+        <a href="#services">Kinesis Services</a>
+        <a href="#concepts">Core Concepts</a>
+        <a href="#security">Security</a>
+        <a href="#architecture">Architecture</a>
+        <a href="#usecases">Use Cases</a>
+        <a href="#exam">Exam Notes</a>
+        <a href="#summary">Summary</a>
+    </div>
+
+    <h2 id="overview">Service Overview</h2>
+    <p>
+        Amazon Kinesis is a platform for collecting, processing and analysing
+        real-time streaming data at massive scale. It enables you to get timely
+        insights and react to new information as it arrives, rather than waiting
+        for batch processing jobs to complete.
+    </p>
+
+    <h2 id="services">Kinesis Services</h2>
+
+    <h3>Kinesis Data Streams</h3>
+    <p>
+        Collects and stores streaming data for real-time processing.
+        Data is retained for 1–365 days (default 24 hours).
+        Consumers read from the stream and process data in real time.
+    </p>
+    <ul>
+        <li>Data divided into <strong>shards</strong> — each shard provides 1MB/s write and 2MB/s read</li>
+        <li>Multiple consumers can read the same stream simultaneously</li>
+        <li>Used when you need custom real-time processing with full control</li>
+    </ul>
+
+    <h3>Kinesis Data Firehose</h3>
+    <p>
+        The easiest way to load streaming data into data stores and analytics services.
+        Fully managed — no administration required.
+    </p>
+    <ul>
+        <li>Delivers data to: S3, Redshift, OpenSearch, Splunk, HTTP endpoints</li>
+        <li>Can transform data using Lambda before delivery</li>
+        <li>Near real-time (buffering up to 60 seconds or 1MB)</li>
+        <li><strong>No data retention</strong> — it delivers and moves on (not for replay)</li>
+    </ul>
+
+    <h3>Kinesis Data Analytics</h3>
+    <p>
+        Run SQL queries or Apache Flink applications on streaming data in real time.
+        Read from Kinesis Data Streams or Firehose and write results to S3, Redshift, or other streams.
+    </p>
+
+    <h3>Kinesis Video Streams</h3>
+    <p>
+        Ingest, process and store video streams from millions of devices.
+        Used for video playback, machine learning and analytics on video data.
+    </p>
+
+    <h2 id="concepts">Core Concepts</h2>
+
+    <h3>Shards (Data Streams)</h3>
+    <p>
+        A stream is divided into shards for parallel processing.
+        Each shard can ingest 1MB/s or 1,000 records/s, and deliver 2MB/s.
+        You scale throughput by increasing the number of shards.
+    </p>
+
+    <h3>Partition Key</h3>
+    <p>
+        Producers specify a partition key when writing records.
+        Kinesis uses the partition key to determine which shard the record goes to.
+        Records with the same partition key always go to the same shard,
+        maintaining ordering within that key.
+    </p>
+
+    <h3>Retention Period</h3>
+    <p>
+        Data Streams retains records for 24 hours by default, up to 365 days.
+        This allows consumers to replay data — useful for reprocessing after failures.
+    </p>
+
+    <h2 id="security">Security Considerations</h2>
+    <ul>
+        <li>Use <strong>IAM policies</strong> to control who can produce and consume from streams</li>
+        <li>Enable <strong>server-side encryption</strong> using AWS KMS for data at rest</li>
+        <li>Use <strong>VPC Endpoints</strong> to access Kinesis without internet traffic</li>
+        <li>Monitor stream metrics with <strong>CloudWatch</strong> — shard iterator age indicates consumer lag</li>
+    </ul>
+
+    <h2 id="architecture">Architecture Overview</h2>
+    <pre>
+Data Producers (IoT sensors / app logs / clickstreams)
+        │
+        ▼
+Kinesis Data Streams
+        │
+        ├── Lambda (real-time processing)
+        ├── EC2 Consumer Application
+        └── Kinesis Data Analytics (SQL/Flink)
+
+        OR
+
+Kinesis Data Firehose
+        │
+        ├── S3 (data lake)
+        ├── Redshift (data warehouse)
+        └── OpenSearch (search & analytics)
+    </pre>
+
+    <h2 id="usecases">Real-World Use Cases</h2>
+    <ul>
+        <li>Real-time application log processing and anomaly detection</li>
+        <li>IoT sensor data ingestion from millions of devices</li>
+        <li>Clickstream analytics for e-commerce websites</li>
+        <li>Financial fraud detection — analyse transactions in real time</li>
+        <li>Video streaming ingestion and processing</li>
+    </ul>
+
+    <h2 id="exam">AWS Solutions Architect Exam Notes</h2>
+    <ul>
+        <li><strong>Data Streams</strong> = real-time, custom processing, replay, multiple consumers, manage shards yourself</li>
+        <li><strong>Firehose</strong> = managed delivery to S3/Redshift/OpenSearch, near real-time, no shard management</li>
+        <li>Kinesis vs SQS: Kinesis for <strong>real-time ordered streaming</strong>; SQS for <strong>decoupling and async processing</strong></li>
+        <li>Kinesis Data Streams retains data for <strong>24 hours default</strong>, up to <strong>365 days</strong></li>
+        <li>Firehose has <strong>no data retention</strong> — once delivered it's gone</li>
+        <li>Scale Data Streams by <strong>adding shards</strong> — each shard = 1MB/s in, 2MB/s out</li>
+        <li><strong>Hot shard problem</strong> — poor partition key choice causes uneven load; use high-cardinality keys</li>
+        <li>Lambda can be triggered directly by <strong>Kinesis Data Streams</strong> records</li>
+    </ul>
+
+    <h2 id="summary">Key Takeaways</h2>
+    <ul>
+        <li>Kinesis Data Streams — real-time ingestion with replay, requires shard management</li>
+        <li>Kinesis Firehose — managed delivery to S3/Redshift/OpenSearch, near real-time, zero admin</li>
+        <li>Use Kinesis when you need to process high-volume streaming data in real time</li>
+        <li>Choose partition keys carefully to distribute load evenly across shards</li>
+        <li>Kinesis Analytics lets you run SQL queries on live streams without writing code</li>
+    </ul>
+
+    <div class="navigation-buttons">
+        <a href="eventbridge.html" class="nav-btn">← EventBridge</a>
+        <a href="solutions-architect.html" class="nav-btn">← Solutions Architect</a>
+    </div>
+
+</section>
+
+<footer>
+    <div class="footer-container">
+        <div class="footer-logo">🚀 Tech Learning Hub</div>
+        <div class="footer-links">
+            <a href="index.html">Home</a>
+            <a href="aws-learning.html">AWS Learning</a>
+            <a href="solutions-architect.html">Solutions Architect</a>
+        </div>
+        <div class="footer-socials">
+            <a href="https://github.com/janvipatel1910" target="_blank"><i class="fa-brands fa-github"></i></a>
+            <a href="https://www.linkedin.com/in/janvipatel-data" target="_blank"><i class="fa-brands fa-linkedin"></i></a>
+            <a href="mailto:janvi001patel2001@gmail.com"><i class="fa-solid fa-envelope"></i></a>
+        </div>
+    </div>
+    <p class="footer-copy">© 2026 Tech Learning Hub | Learn • Build • Grow 🚀</p>
+</footer>
+<script src="script.js"></script>
+</body>
+</html>

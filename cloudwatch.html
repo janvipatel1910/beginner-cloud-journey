@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AWS CloudWatch | Tech Learning Hub</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+</head>
+<body>
+<nav class="navbar">
+    <div class="logo">🚀 Tech Learning Hub</div>
+    <button id="dark-mode-toggle">🌙</button>
+    <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="aws-learning.html">AWS Learning</a></li>
+        <li><a href="solutions-architect.html">Solutions Architect</a></li>
+    </ul>
+</nav>
+
+<section class="lesson-content">
+
+    <h1>📊 Amazon CloudWatch</h1>
+
+    <div class="lesson-header">
+        <span>Monitoring & Observability</span>
+        <span>Core AWS Service</span>
+        <span>AWS Solutions Architect Associate</span>
+        <span>Very High Exam Importance</span>
+    </div>
+
+    <div class="lesson-nav">
+        <a href="#overview">Overview</a>
+        <a href="#metrics">Metrics</a>
+        <a href="#logs">Logs</a>
+        <a href="#alarms">Alarms</a>
+        <a href="#events">Events & Dashboards</a>
+        <a href="#security">Security</a>
+        <a href="#architecture">Architecture</a>
+        <a href="#exam">Exam Notes</a>
+        <a href="#summary">Summary</a>
+    </div>
+
+    <h2 id="overview">Service Overview</h2>
+    <p>
+        Amazon CloudWatch is a monitoring and observability service for AWS cloud resources
+        and applications. It collects metrics, logs and events, and gives you a
+        unified view of operational health. CloudWatch enables you to set alarms,
+        visualise logs and metrics, and automatically respond to changes.
+    </p>
+
+    <h2 id="metrics">CloudWatch Metrics</h2>
+    <p>
+        Metrics are time-series data points from AWS services and your applications.
+        AWS services automatically publish metrics to CloudWatch — no configuration needed.
+    </p>
+    <h3>Important Default Metrics</h3>
+    <ul>
+        <li><strong>EC2</strong>: CPUUtilization, NetworkIn/Out, DiskReadOps, StatusCheckFailed</li>
+        <li><strong>EBS</strong>: VolumeReadOps, VolumeWriteOps, BurstBalance</li>
+        <li><strong>RDS</strong>: CPUUtilization, FreeableMemory, DatabaseConnections, ReadLatency</li>
+        <li><strong>Lambda</strong>: Invocations, Duration, Errors, Throttles, ConcurrentExecutions</li>
+        <li><strong>ALB</strong>: RequestCount, TargetResponseTime, HTTP 4XX/5XX errors</li>
+        <li><strong>SQS</strong>: NumberOfMessagesSent, ApproximateAgeOfOldestMessage</li>
+    </ul>
+    <h3>EC2 Metrics NOT Available by Default</h3>
+    <p>
+        By default, EC2 does <strong>not</strong> publish memory utilisation, disk space
+        or swap metrics to CloudWatch — these require the <strong>CloudWatch Agent</strong>
+        installed on the instance.
+    </p>
+    <h3>Metric Resolution</h3>
+    <ul>
+        <li><strong>Standard resolution</strong> — 1-minute granularity (free for most services)</li>
+        <li><strong>High resolution</strong> — 1-second granularity (custom metrics, higher cost)</li>
+    </ul>
+
+    <h2 id="logs">CloudWatch Logs</h2>
+    <p>
+        CloudWatch Logs centralises log data from EC2 instances, Lambda functions,
+        ECS containers, CloudTrail, VPC Flow Logs and more.
+    </p>
+    <h3>Key Concepts</h3>
+    <ul>
+        <li><strong>Log Group</strong> — container for log streams from the same source (e.g. /aws/lambda/my-function)</li>
+        <li><strong>Log Stream</strong> — sequence of log events from a single source (one EC2 instance, one Lambda execution)</li>
+        <li><strong>Retention policy</strong> — set log retention from 1 day to never expire (default: never expire)</li>
+        <li><strong>CloudWatch Logs Insights</strong> — query log data using SQL-like syntax for fast analysis</li>
+        <li><strong>Metric Filters</strong> — extract metric data from log entries (e.g. count ERROR occurrences per minute)</li>
+    </ul>
+    <h3>CloudWatch Agent</h3>
+    <p>
+        Install the CloudWatch Agent on EC2 instances to collect:
+        memory usage, disk space, swap, custom application logs.
+        These are not available in CloudWatch by default.
+    </p>
+
+    <h2 id="alarms">CloudWatch Alarms</h2>
+    <p>
+        Alarms watch a single metric over a time period and perform actions
+        when the metric crosses a threshold.
+    </p>
+    <h3>Alarm States</h3>
+    <ul>
+        <li><strong>OK</strong> — metric within threshold</li>
+        <li><strong>ALARM</strong> — metric breached threshold</li>
+        <li><strong>INSUFFICIENT_DATA</strong> — not enough data to determine state</li>
+    </ul>
+    <h3>Alarm Actions</h3>
+    <ul>
+        <li>Send notification via <strong>SNS</strong> → email/SMS/Lambda</li>
+        <li>Trigger <strong>Auto Scaling</strong> actions</li>
+        <li>Stop, terminate, reboot or recover <strong>EC2 instances</strong></li>
+        <li>Trigger <strong>Systems Manager OpsItems</strong></li>
+    </ul>
+    <h3>Composite Alarms</h3>
+    <p>
+        Composite alarms combine multiple alarms using AND/OR logic.
+        Useful for reducing alarm noise — only alert when multiple conditions are met simultaneously.
+    </p>
+
+    <h2 id="events">CloudWatch Events & Dashboards</h2>
+    <h3>CloudWatch Events (now EventBridge)</h3>
+    <p>
+        CloudWatch Events delivers a stream of real-time events from AWS services.
+        This is now part of Amazon EventBridge — the same functionality with more features.
+    </p>
+    <h3>CloudWatch Dashboards</h3>
+    <ul>
+        <li>Create custom visualisations of metrics and alarms</li>
+        <li>Dashboards are global — you can display metrics from multiple regions</li>
+        <li>Share dashboards with stakeholders without giving AWS console access</li>
+    </ul>
+
+    <h2 id="security">Security Considerations</h2>
+    <ul>
+        <li>Use <strong>IAM policies</strong> to control who can view metrics, logs and alarms</li>
+        <li>Encrypt log data at rest using <strong>KMS</strong></li>
+        <li>Set <strong>log retention policies</strong> to avoid unnecessary storage costs</li>
+        <li>Use <strong>CloudWatch Logs Insights</strong> for fast log analysis without exporting data</li>
+        <li>Forward logs to <strong>S3</strong> for long-term archiving via subscription filters</li>
+    </ul>
+
+    <h2 id="architecture">Architecture Overview</h2>
+    <pre>
+AWS Services (EC2, RDS, Lambda, ALB...)
+        │
+        ▼
+CloudWatch Metrics + CloudWatch Logs
+        │
+        ├── Dashboards (visualise health)
+        │
+        ├── CloudWatch Alarm
+        │         │
+        │    ┌────┴────────────┐
+        │    SNS Notification   Auto Scaling Action
+        │    (email/SMS/Lambda) (add/remove instances)
+        │
+        └── Logs Insights (query and analyse logs)
+    </pre>
+
+    <h2 id="exam">AWS Solutions Architect Exam Notes</h2>
+    <ul>
+        <li>CloudWatch = <strong>monitoring and observability</strong>; CloudTrail = <strong>API audit logging</strong></li>
+        <li>EC2 does <strong>NOT</strong> report memory/disk metrics by default — install <strong>CloudWatch Agent</strong></li>
+        <li>Standard metrics = <strong>1-minute</strong> resolution; High-resolution = <strong>1-second</strong></li>
+        <li>CloudWatch Alarms trigger <strong>SNS, Auto Scaling, or EC2 actions</strong></li>
+        <li><strong>Composite alarms</strong> combine multiple alarms with AND/OR — reduces alert noise</li>
+        <li>CloudWatch Logs <strong>Insights</strong> = fast log querying — no need to export to Athena for quick analysis</li>
+        <li>Metric Filters convert log entries into <strong>CloudWatch metrics</strong> — e.g. count HTTP 500 errors</li>
+        <li>Dashboards are <strong>global</strong> — display metrics from multiple regions in one view</li>
+        <li>Log retention defaults to <strong>never expire</strong> — always set a retention policy to control costs</li>
+    </ul>
+
+    <h2 id="summary">Key Takeaways</h2>
+    <ul>
+        <li>CloudWatch is the central monitoring service for all AWS resources</li>
+        <li>Metrics, Logs, Alarms and Dashboards give full operational visibility</li>
+        <li>Install CloudWatch Agent for memory, disk and custom application metrics from EC2</li>
+        <li>Alarms trigger automated responses — scale, notify, recover</li>
+        <li>Use Logs Insights for fast ad-hoc analysis of log data without exporting</li>
+    </ul>
+
+    <div class="navigation-buttons">
+        <a href="solutions-architect.html" class="nav-btn">← Solutions Architect</a>
+        <a href="elasticache.html" class="nav-btn">Next: ElastiCache →</a>
+    </div>
+
+</section>
+
+<footer>
+    <div class="footer-container">
+        <div class="footer-logo">🚀 Tech Learning Hub</div>
+        <div class="footer-links">
+            <a href="index.html">Home</a>
+            <a href="aws-learning.html">AWS Learning</a>
+            <a href="solutions-architect.html">Solutions Architect</a>
+        </div>
+        <div class="footer-socials">
+            <a href="https://github.com/janvipatel1910" target="_blank"><i class="fa-brands fa-github"></i></a>
+            <a href="https://www.linkedin.com/in/janvipatel-data" target="_blank"><i class="fa-brands fa-linkedin"></i></a>
+            <a href="mailto:janvi001patel2001@gmail.com"><i class="fa-solid fa-envelope"></i></a>
+        </div>
+    </div>
+    <p class="footer-copy">© 2026 Tech Learning Hub | Learn • Build • Grow 🚀</p>
+</footer>
+<script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AWS Well-Architected Framework | Tech Learning Hub</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+</head>
+<body>
+<nav class="navbar">
+    <div class="logo">🚀 Tech Learning Hub</div>
+    <button id="dark-mode-toggle">🌙</button>
+    <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="aws-learning.html">AWS Learning</a></li>
+        <li><a href="solutions-architect.html">Solutions Architect</a></li>
+    </ul>
+</nav>
+
+<section class="lesson-content">
+
+    <h1>🏛️ AWS Well-Architected Framework</h1>
+
+    <div class="lesson-header">
+        <span>Architecture Best Practices</span>
+        <span>6 Pillars</span>
+        <span>AWS Solutions Architect Associate</span>
+        <span>Very High Exam Importance</span>
+    </div>
+
+    <div class="lesson-nav">
+        <a href="#overview">Overview</a>
+        <a href="#operational">Operational Excellence</a>
+        <a href="#security">Security</a>
+        <a href="#reliability">Reliability</a>
+        <a href="#performance">Performance Efficiency</a>
+        <a href="#cost">Cost Optimization</a>
+        <a href="#sustainability">Sustainability</a>
+        <a href="#exam">Exam Notes</a>
+    </div>
+
+    <h2 id="overview">What is the Well-Architected Framework?</h2>
+    <p>
+        The AWS Well-Architected Framework provides a consistent approach for evaluating
+        architectures and implementing designs that will scale over time. It is built on
+        <strong>six pillars</strong> that represent best practices for building reliable,
+        secure, efficient, cost-effective and sustainable systems in the cloud.
+    </p>
+    <p>
+        The <strong>AWS Well-Architected Tool</strong> is a free service in the console
+        that lets you review your architecture against best practices and get improvement recommendations.
+    </p>
+
+    <h2 id="operational">Pillar 1: Operational Excellence</h2>
+    <p>
+        The ability to support development and run workloads effectively,
+        gain insight into operations, and continuously improve processes.
+    </p>
+    <h3>Key Principles</h3>
+    <ul>
+        <li>Perform operations as code (Infrastructure as Code — CloudFormation, CDK)</li>
+        <li>Make frequent, small, reversible changes</li>
+        <li>Refine operations procedures frequently</li>
+        <li>Anticipate failure — game days, chaos engineering</li>
+        <li>Learn from all operational failures</li>
+    </ul>
+    <h3>Key AWS Services</h3>
+    <ul>
+        <li>AWS CloudFormation / CDK — IaC</li>
+        <li>AWS Config — track resource configuration changes</li>
+        <li>AWS CloudWatch — monitor operations</li>
+        <li>AWS Systems Manager — operational management</li>
+        <li>AWS X-Ray — distributed tracing</li>
+    </ul>
+
+    <h2 id="security">Pillar 2: Security</h2>
+    <p>
+        The ability to protect data, systems and assets while delivering
+        business value through risk assessments and mitigation strategies.
+    </p>
+    <h3>Key Principles</h3>
+    <ul>
+        <li>Implement a strong identity foundation — least privilege IAM</li>
+        <li>Enable traceability — CloudTrail, CloudWatch Logs</li>
+        <li>Apply security at all layers — network, compute, data</li>
+        <li>Automate security best practices</li>
+        <li>Protect data in transit and at rest — KMS, TLS</li>
+        <li>Keep people away from data — reduce manual access to production</li>
+        <li>Prepare for security events — incident response runbooks</li>
+    </ul>
+    <h3>Key AWS Services</h3>
+    <ul>
+        <li>IAM, AWS Organizations, SCP</li>
+        <li>AWS KMS, Secrets Manager</li>
+        <li>CloudTrail, GuardDuty, Security Hub</li>
+        <li>AWS WAF, Shield, Macie, Inspector</li>
+    </ul>
+
+    <h2 id="reliability">Pillar 3: Reliability</h2>
+    <p>
+        The ability of a workload to perform its intended function correctly
+        and consistently when expected, and to recover quickly from failures.
+    </p>
+    <h3>Key Principles</h3>
+    <ul>
+        <li>Automatically recover from failure</li>
+        <li>Test recovery procedures — know your RPO and RTO</li>
+        <li>Scale horizontally to increase aggregate workload availability</li>
+        <li>Stop guessing capacity — use Auto Scaling</li>
+        <li>Manage change through automation</li>
+    </ul>
+    <h3>Key AWS Services</h3>
+    <ul>
+        <li>Multi-AZ deployments — RDS Multi-AZ, ELB across AZs</li>
+        <li>Auto Scaling — maintain desired capacity</li>
+        <li>Route 53 — health checks and failover routing</li>
+        <li>S3, RDS, DynamoDB — built-in replication and durability</li>
+        <li>AWS Backup — centralised backup management</li>
+    </ul>
+
+    <h2 id="performance">Pillar 4: Performance Efficiency</h2>
+    <p>
+        The ability to use computing resources efficiently to meet requirements
+        and maintain efficiency as demand changes and technologies evolve.
+    </p>
+    <h3>Key Principles</h3>
+    <ul>
+        <li>Democratize advanced technologies — use managed services</li>
+        <li>Go global in minutes — deploy in multiple regions</li>
+        <li>Use serverless architectures — Lambda, Fargate</li>
+        <li>Experiment more often</li>
+        <li>Consider mechanical sympathy — choose the right tool for the job</li>
+    </ul>
+    <h3>Key AWS Services</h3>
+    <ul>
+        <li>Auto Scaling, ELB — right-size compute</li>
+        <li>CloudFront, Global Accelerator — reduce latency globally</li>
+        <li>ElastiCache — in-memory caching</li>
+        <li>Lambda, Fargate — serverless compute</li>
+        <li>Amazon Aurora — high-performance managed database</li>
+    </ul>
+
+    <h2 id="cost">Pillar 5: Cost Optimization</h2>
+    <p>
+        The ability to run systems to deliver business value at the lowest price point.
+    </p>
+    <h3>Key Principles</h3>
+    <ul>
+        <li>Implement cloud financial management</li>
+        <li>Adopt a consumption model — pay only for what you use</li>
+        <li>Measure overall efficiency</li>
+        <li>Stop spending money on undifferentiated heavy lifting — use managed services</li>
+        <li>Analyse and attribute expenditure — use Cost Allocation Tags</li>
+    </ul>
+    <h3>Key AWS Services</h3>
+    <ul>
+        <li>Reserved Instances / Savings Plans — commit for discounts</li>
+        <li>Spot Instances — up to 90% savings for flexible workloads</li>
+        <li>S3 Intelligent-Tiering — automatic cost-optimised storage</li>
+        <li>AWS Cost Explorer, Budgets, Trusted Advisor</li>
+        <li>Auto Scaling — scale in during low demand</li>
+    </ul>
+
+    <h2 id="sustainability">Pillar 6: Sustainability</h2>
+    <p>
+        The ability to minimise the environmental impact of running cloud workloads.
+        Added in 2021 as the sixth pillar.
+    </p>
+    <h3>Key Principles</h3>
+    <ul>
+        <li>Understand your impact — measure carbon footprint</li>
+        <li>Establish sustainability goals</li>
+        <li>Maximise utilisation — right-size and consolidate</li>
+        <li>Use more efficient hardware — AWS Graviton processors</li>
+        <li>Use managed services — AWS manages infrastructure efficiency</li>
+        <li>Reduce downstream impact — optimise code and assets</li>
+    </ul>
+
+    <h2 id="exam">AWS Solutions Architect Exam Notes</h2>
+    <ul>
+        <li>There are <strong>6 pillars</strong>: Operational Excellence, Security, Reliability, Performance Efficiency, Cost Optimization, Sustainability</li>
+        <li>Know the <strong>key design principles</strong> and <strong>AWS services</strong> for each pillar</li>
+        <li><strong>Reliability</strong> = Multi-AZ, Auto Scaling, health checks, backup/restore</li>
+        <li><strong>Security</strong> = least privilege IAM, encryption, audit trails, defence in depth</li>
+        <li><strong>Cost Optimization</strong> = Reserved/Spot Instances, right-sizing, Auto Scaling, S3 tiers</li>
+        <li><strong>Performance Efficiency</strong> = serverless, caching, CDN, right instance types</li>
+        <li><strong>Operational Excellence</strong> = IaC, small reversible changes, monitor and improve</li>
+        <li><strong>Sustainability</strong> = reduce footprint, right-size, use efficient hardware</li>
+        <li>The <strong>AWS Well-Architected Tool</strong> in the console helps review workloads against these pillars</li>
+        <li>Exam often asks: "which pillar does X best practice belong to?" — know the principles of each</li>
+    </ul>
+
+    <div class="navigation-buttons">
+        <a href="solutions-architect.html" class="nav-btn">← Solutions Architect</a>
+        <a href="disaster-recovery.html" class="nav-btn">Next: Disaster Recovery →</a>
+    </div>
+
+</section>
+
+<footer>
+    <div class="footer-container">
+        <div class="footer-logo">🚀 Tech Learning Hub</div>
+        <div class="footer-links">
+            <a href="index.html">Home</a>
+            <a href="aws-learning.html">AWS Learning</a>
+            <a href="solutions-architect.html">Solutions Architect</a>
+        </div>
+        <div class="footer-socials">
+            <a href="https://github.com/janvipatel1910" target="_blank"><i class="fa-brands fa-github"></i></a>
+            <a href="https://www.linkedin.com/in/janvipatel-data" target="_blank"><i class="fa-brands fa-linkedin"></i></a>
+            <a href="mailto:janvi001patel2001@gmail.com"><i class="fa-solid fa-envelope"></i></a>
+        </div>
+    </div>
+    <p class="footer-copy">© 2026 Tech Learning Hub | Learn • Build • Grow 🚀</p>
+</footer>
+<script src="script.js"></script>
+</body>
+</html>

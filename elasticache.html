@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AWS ElastiCache | Tech Learning Hub</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+</head>
+<body>
+<nav class="navbar">
+    <div class="logo">🚀 Tech Learning Hub</div>
+    <button id="dark-mode-toggle">🌙</button>
+    <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="aws-learning.html">AWS Learning</a></li>
+        <li><a href="solutions-architect.html">Solutions Architect</a></li>
+    </ul>
+</nav>
+
+<section class="lesson-content">
+
+    <h1>⚡ Amazon ElastiCache</h1>
+
+    <div class="lesson-header">
+        <span>In-Memory Cache</span>
+        <span>High Performance</span>
+        <span>AWS Solutions Architect Associate</span>
+        <span>High Exam Importance</span>
+    </div>
+
+    <div class="lesson-nav">
+        <a href="#overview">Overview</a>
+        <a href="#engines">Cache Engines</a>
+        <a href="#patterns">Caching Patterns</a>
+        <a href="#security">Security</a>
+        <a href="#architecture">Architecture</a>
+        <a href="#usecases">Use Cases</a>
+        <a href="#exam">Exam Notes</a>
+        <a href="#summary">Summary</a>
+    </div>
+
+    <h2 id="overview">Service Overview</h2>
+    <p>
+        Amazon ElastiCache is a fully managed in-memory caching service
+        that supports Redis and Memcached. It improves application performance
+        by allowing you to retrieve data from fast in-memory caches rather than
+        from slower disk-based databases, reducing read latency from milliseconds
+        to microseconds.
+    </p>
+
+    <h2 id="engines">Cache Engines: Redis vs Memcached</h2>
+
+    <h3>Redis</h3>
+    <ul>
+        <li>Supports rich data structures: strings, lists, sets, sorted sets, hashes</li>
+        <li><strong>Persistence</strong> — data can be saved to disk and restored after restart</li>
+        <li><strong>Replication</strong> — supports read replicas for high availability</li>
+        <li><strong>Multi-AZ with failover</strong> — automatic failover to replica</li>
+        <li>Supports pub/sub messaging, Lua scripting and transactions</li>
+        <li>Supports <strong>Sorted Sets</strong> — perfect for leaderboards and priority queues</li>
+        <li>Use Redis when you need persistence, replication, or complex data structures</li>
+    </ul>
+
+    <h3>Memcached</h3>
+    <ul>
+        <li>Simple key-value store — strings only</li>
+        <li><strong>No persistence</strong> — data is lost on restart</li>
+        <li><strong>No replication</strong> — no high availability built in</li>
+        <li>Multi-threaded — can utilise multiple CPU cores</li>
+        <li>Supports horizontal scaling via sharding across multiple nodes</li>
+        <li>Use Memcached for maximum simplicity and raw throughput</li>
+    </ul>
+
+    <h3>Redis vs Memcached Comparison</h3>
+    <pre>
+Feature              Redis        Memcached
+────────────────────────────────────────────
+Data types           Rich         Strings only
+Persistence          ✅ Yes       ❌ No
+Replication/HA       ✅ Yes       ❌ No
+Multi-AZ failover    ✅ Yes       ❌ No
+Pub/Sub              ✅ Yes       ❌ No
+Sorted sets          ✅ Yes       ❌ No
+Multi-threading      ❌ No        ✅ Yes
+Horizontal scaling   ✅ Yes       ✅ Yes
+    </pre>
+
+    <h2 id="patterns">Caching Patterns</h2>
+
+    <h3>Lazy Loading (Cache-Aside)</h3>
+    <p>
+        The application checks the cache first. On a cache miss, it reads from the database
+        and writes the result to the cache for future requests.
+    </p>
+    <pre>
+Application → Check ElastiCache
+    │
+    ├── Cache HIT → Return data immediately ✅
+    │
+    └── Cache MISS → Read from RDS → Write to ElastiCache → Return data
+    </pre>
+    <ul>
+        <li>Only requested data is cached — efficient memory use</li>
+        <li>Cache misses result in 3 round trips — initial latency on first request</li>
+        <li>Data can become stale — set TTL to expire old data</li>
+    </ul>
+
+    <h3>Write-Through</h3>
+    <p>
+        Every write to the database also writes to the cache.
+        Cache is always up-to-date but may store data that is rarely read.
+    </p>
+    <ul>
+        <li>Data is never stale — always consistent</li>
+        <li>More write operations and memory usage — cache may store unused data</li>
+    </ul>
+
+    <h3>Session Store</h3>
+    <p>
+        Store user session data in ElastiCache so any application server can serve
+        any user request — enables stateless EC2 instances behind a load balancer.
+    </p>
+
+    <h2 id="security">Security Considerations</h2>
+    <ul>
+        <li>Deploy ElastiCache in <strong>private subnets</strong> — never expose to the internet</li>
+        <li>Use <strong>Security Groups</strong> to allow access only from application servers</li>
+        <li>Enable <strong>Redis AUTH</strong> — password-based access control for Redis clusters</li>
+        <li>Enable <strong>encryption in transit (TLS)</strong> and <strong>encryption at rest (KMS)</strong> for Redis</li>
+        <li>Use <strong>subnet groups</strong> to control which VPC subnets the cluster is placed in</li>
+    </ul>
+
+    <h2 id="architecture">Architecture Overview</h2>
+    <pre>
+User Request
+        │
+        ▼
+Application (EC2 / Lambda)
+        │
+        ├── ElastiCache (in-memory, microseconds)
+        │         │
+        │    Cache HIT → return immediately
+        │
+        └── RDS / DynamoDB (on cache miss, milliseconds)
+                  │
+              Write result to cache
+    </pre>
+
+    <h2 id="usecases">Real-World Use Cases</h2>
+    <ul>
+        <li>Database query caching — reduce RDS read load for frequently accessed data</li>
+        <li>Session management — store user sessions across stateless web servers</li>
+        <li>Gaming leaderboards — Redis Sorted Sets for real-time rankings</li>
+        <li>Rate limiting — track API call counts per user per second</li>
+        <li>Real-time analytics — fast counters and aggregations</li>
+    </ul>
+
+    <h2 id="exam">AWS Solutions Architect Exam Notes</h2>
+    <ul>
+        <li><strong>Redis</strong> = persistence, replication, multi-AZ, rich data types, sorted sets</li>
+        <li><strong>Memcached</strong> = simple, no persistence, no replication, multi-threaded</li>
+        <li>Use ElastiCache to reduce <strong>database read load</strong> — cache frequently accessed queries</li>
+        <li><strong>Session store</strong> pattern = ElastiCache + stateless EC2 behind ALB — common exam scenario</li>
+        <li>Lazy loading = fetch on miss; Write-through = always write to cache on DB write</li>
+        <li>ElastiCache does <strong>not</strong> natively support SQL — it's a key-value store</li>
+        <li>For exam: if question mentions <strong>reducing RDS load</strong> or <strong>sub-millisecond reads</strong> → ElastiCache</li>
+        <li>For leaderboards or sorted rankings → <strong>Redis Sorted Sets</strong></li>
+    </ul>
+
+    <h2 id="summary">Key Takeaways</h2>
+    <ul>
+        <li>ElastiCache provides managed Redis and Memcached in-memory caching</li>
+        <li>Use Redis for persistence, replication, complex data types and high availability</li>
+        <li>Use Memcached for simple, high-throughput, non-persistent caching</li>
+        <li>Dramatically reduces database load and response times for read-heavy applications</li>
+        <li>Always deploy in private subnets and use Security Groups for access control</li>
+    </ul>
+
+    <div class="navigation-buttons">
+        <a href="cloudwatch.html" class="nav-btn">← CloudWatch</a>
+        <a href="global-accelerator.html" class="nav-btn">Next: Global Accelerator →</a>
+    </div>
+
+</section>
+
+<footer>
+    <div class="footer-container">
+        <div class="footer-logo">🚀 Tech Learning Hub</div>
+        <div class="footer-links">
+            <a href="index.html">Home</a>
+            <a href="aws-learning.html">AWS Learning</a>
+            <a href="solutions-architect.html">Solutions Architect</a>
+        </div>
+        <div class="footer-socials">
+            <a href="https://github.com/janvipatel1910" target="_blank"><i class="fa-brands fa-github"></i></a>
+            <a href="https://www.linkedin.com/in/janvipatel-data" target="_blank"><i class="fa-brands fa-linkedin"></i></a>
+            <a href="mailto:janvi001patel2001@gmail.com"><i class="fa-solid fa-envelope"></i></a>
+        </div>
+    </div>
+    <p class="footer-copy">© 2026 Tech Learning Hub | Learn • Build • Grow 🚀</p>
+</footer>
+<script src="script.js"></script>
+</body>
+</html>

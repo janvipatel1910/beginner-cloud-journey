@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AWS EventBridge | Tech Learning Hub</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+</head>
+<body>
+<nav class="navbar">
+    <div class="logo">🚀 Tech Learning Hub</div>
+    <button id="dark-mode-toggle">🌙</button>
+    <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="aws-learning.html">AWS Learning</a></li>
+        <li><a href="solutions-architect.html">Solutions Architect</a></li>
+    </ul>
+</nav>
+
+<section class="lesson-content">
+
+    <h1>🚌 Amazon EventBridge</h1>
+
+    <div class="lesson-header">
+        <span>Event Bus</span>
+        <span>Serverless</span>
+        <span>AWS Solutions Architect Associate</span>
+        <span>High Exam Importance</span>
+    </div>
+
+    <div class="lesson-nav">
+        <a href="#overview">Overview</a>
+        <a href="#features">Features</a>
+        <a href="#concepts">Core Concepts</a>
+        <a href="#security">Security</a>
+        <a href="#architecture">Architecture</a>
+        <a href="#usecases">Use Cases</a>
+        <a href="#exam">Exam Notes</a>
+        <a href="#summary">Summary</a>
+    </div>
+
+    <h2 id="overview">Service Overview</h2>
+    <p>
+        Amazon EventBridge is a serverless event bus service that makes it easy
+        to connect applications using events from AWS services, integrated SaaS applications
+        and your own custom applications.
+    </p>
+    <p>
+        EventBridge was previously known as CloudWatch Events. It extends that service
+        with support for SaaS integrations, a schema registry and an event archive.
+    </p>
+
+    <h2 id="features">Key Features</h2>
+    <ul>
+        <li>Receives events from AWS services, SaaS providers and custom applications</li>
+        <li>Routes events to targets based on rules (filter patterns)</li>
+        <li>Supports 20+ AWS services as targets: Lambda, SQS, SNS, Step Functions, ECS, and more</li>
+        <li>Scheduled rules — run tasks on a schedule using cron or rate expressions</li>
+        <li>Schema Registry — automatically discovers and stores event schemas</li>
+        <li>Event Archive and Replay — store events and replay them for debugging</li>
+        <li>Cross-account and cross-region event routing</li>
+    </ul>
+
+    <h2 id="concepts">Core Concepts</h2>
+
+    <h3>Event Bus</h3>
+    <p>
+        An event bus is a pipeline that receives events. There are three types:
+    </p>
+    <ul>
+        <li><strong>Default event bus</strong> — receives events from AWS services automatically</li>
+        <li><strong>Custom event bus</strong> — receives events from your own applications</li>
+        <li><strong>Partner event bus</strong> — receives events from SaaS partners (Zendesk, Datadog, etc.)</li>
+    </ul>
+
+    <h3>Rules</h3>
+    <p>
+        A rule matches incoming events based on an event pattern and routes them
+        to one or more targets. Rules can also be scheduled using cron or rate expressions.
+    </p>
+
+    <h3>Targets</h3>
+    <p>
+        Targets are the services that receive matched events. Common targets include:
+        Lambda, SQS, SNS, Step Functions, ECS tasks, API Gateway, Kinesis, and more.
+        A single rule can have up to 5 targets.
+    </p>
+
+    <h3>Event Pattern</h3>
+    <p>
+        An event pattern is a JSON filter that defines which events a rule matches.
+        Events that match the pattern are sent to the rule's targets.
+        Example: match all EC2 instance state change events where state = "stopped".
+    </p>
+
+    <h2 id="security">Security Considerations</h2>
+    <ul>
+        <li>Use <strong>IAM roles</strong> to grant EventBridge permission to invoke targets</li>
+        <li>Use <strong>resource-based policies</strong> on the event bus to control who can send events</li>
+        <li>For cross-account routing, grant explicit permission on the target account's event bus</li>
+    </ul>
+
+    <h2 id="architecture">Architecture Overview</h2>
+    <pre>
+AWS Service / Custom App / SaaS
+        │
+        ▼
+EventBridge Event Bus
+        │
+        ▼
+Event Rule (matches pattern or schedule)
+        │
+        ├── Lambda Function (process the event)
+        ├── SQS Queue (buffer for async processing)
+        ├── Step Functions (start a workflow)
+        └── SNS Topic (notify subscribers)
+    </pre>
+
+    <h3>Scheduled Task Pattern</h3>
+    <pre>
+EventBridge Rule (cron: "0 8 * * MON-FRI")
+        │
+        ▼
+Lambda Function (run daily report at 8am weekdays)
+    </pre>
+
+    <h2 id="usecases">Real-World Use Cases</h2>
+    <ul>
+        <li>Trigger Lambda when an EC2 instance enters a "stopped" state</li>
+        <li>Run a database backup Lambda every night at midnight using a cron rule</li>
+        <li>React to SaaS events — e.g. trigger a workflow when a Zendesk ticket is created</li>
+        <li>Cross-account monitoring — route security events to a central security account</li>
+        <li>Replace polling with event-driven reactions to AWS service state changes</li>
+    </ul>
+
+    <h2 id="exam">AWS Solutions Architect Exam Notes</h2>
+    <ul>
+        <li>EventBridge = modern replacement for <strong>CloudWatch Events</strong> — same underlying service, more features</li>
+        <li>Use EventBridge for <strong>scheduled tasks</strong> (cron/rate) and <strong>event-driven reactions</strong> to AWS service changes</li>
+        <li>Default event bus automatically receives <strong>all AWS service events</strong></li>
+        <li>EventBridge is the best choice when you need to react to <strong>AWS service state changes</strong> (e.g. EC2 state, S3 events, CodePipeline stages)</li>
+        <li>Supports <strong>SaaS integration</strong> — SNS does not</li>
+        <li>Schema Registry helps developers discover event structures without reading documentation</li>
+        <li>Archive and Replay is useful for <strong>debugging and testing</strong> event-driven systems</li>
+    </ul>
+
+    <h2 id="summary">Key Takeaways</h2>
+    <ul>
+        <li>EventBridge is a serverless event bus that routes events to AWS targets</li>
+        <li>Use rules to filter events by pattern and route to Lambda, SQS, Step Functions, etc.</li>
+        <li>Scheduled rules replace cron jobs on servers — fully serverless scheduling</li>
+        <li>Default bus receives AWS service events automatically — no configuration needed</li>
+        <li>EventBridge is the glue connecting event-driven AWS architectures</li>
+    </ul>
+
+    <div class="navigation-buttons">
+        <a href="sns.html" class="nav-btn">← SNS</a>
+        <a href="kinesis.html" class="nav-btn">Next: Kinesis →</a>
+    </div>
+
+</section>
+
+<footer>
+    <div class="footer-container">
+        <div class="footer-logo">🚀 Tech Learning Hub</div>
+        <div class="footer-links">
+            <a href="index.html">Home</a>
+            <a href="aws-learning.html">AWS Learning</a>
+            <a href="solutions-architect.html">Solutions Architect</a>
+        </div>
+        <div class="footer-socials">
+            <a href="https://github.com/janvipatel1910" target="_blank"><i class="fa-brands fa-github"></i></a>
+            <a href="https://www.linkedin.com/in/janvipatel-data" target="_blank"><i class="fa-brands fa-linkedin"></i></a>
+            <a href="mailto:janvi001patel2001@gmail.com"><i class="fa-solid fa-envelope"></i></a>
+        </div>
+    </div>
+    <p class="footer-copy">© 2026 Tech Learning Hub | Learn • Build • Grow 🚀</p>
+</footer>
+<script src="script.js"></script>
+</body>
+</html>

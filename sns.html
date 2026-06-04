@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AWS SNS | Tech Learning Hub</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+</head>
+<body>
+<nav class="navbar">
+    <div class="logo">🚀 Tech Learning Hub</div>
+    <button id="dark-mode-toggle">🌙</button>
+    <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="aws-learning.html">AWS Learning</a></li>
+        <li><a href="solutions-architect.html">Solutions Architect</a></li>
+    </ul>
+</nav>
+
+<section class="lesson-content">
+
+    <h1>🔔 Amazon Simple Notification Service (SNS)</h1>
+
+    <div class="lesson-header">
+        <span>Messaging Service</span>
+        <span>Pub/Sub</span>
+        <span>AWS Solutions Architect Associate</span>
+        <span>Very High Exam Importance</span>
+    </div>
+
+    <div class="lesson-nav">
+        <a href="#overview">Overview</a>
+        <a href="#features">Features</a>
+        <a href="#concepts">Core Concepts</a>
+        <a href="#fanout">SNS + SQS Fanout</a>
+        <a href="#security">Security</a>
+        <a href="#architecture">Architecture</a>
+        <a href="#usecases">Use Cases</a>
+        <a href="#exam">Exam Notes</a>
+        <a href="#summary">Summary</a>
+    </div>
+
+    <h2 id="overview">Service Overview</h2>
+    <p>
+        Amazon Simple Notification Service (SNS) is a fully managed pub/sub
+        (publish/subscribe) messaging service for application-to-application (A2A)
+        and application-to-person (A2P) communication.
+    </p>
+    <p>
+        Publishers send messages to <strong>topics</strong>. SNS immediately
+        <strong>pushes</strong> those messages to all subscribed endpoints —
+        unlike SQS where consumers must poll.
+    </p>
+
+    <h2 id="features">Key Features</h2>
+    <ul>
+        <li>Pub/Sub model — one message delivered to many subscribers simultaneously</li>
+        <li>Push-based delivery — SNS pushes messages to subscribers instantly</li>
+        <li>Supports multiple subscriber types: SQS, Lambda, HTTP/HTTPS, Email, SMS, Mobile Push</li>
+        <li>Message filtering — subscribers only receive messages matching their filter policy</li>
+        <li>Message fanout — broadcast one message to multiple SQS queues or Lambda functions</li>
+        <li>SNS FIFO topics — strict ordering and deduplication for critical workflows</li>
+        <li>Up to 12.5 million subscriptions per topic</li>
+        <li>Server-side encryption using AWS KMS</li>
+    </ul>
+
+    <h2 id="concepts">Core Concepts</h2>
+
+    <h3>Topics</h3>
+    <p>
+        A topic is a logical access point and communication channel.
+        Publishers send messages to a topic. SNS delivers that message
+        to every subscribed endpoint.
+    </p>
+
+    <h3>Subscriptions</h3>
+    <p>
+        A subscription links a topic to an endpoint. Supported protocols:
+    </p>
+    <ul>
+        <li><strong>SQS</strong> — deliver to an SQS queue (most common for system-to-system)</li>
+        <li><strong>Lambda</strong> — trigger a Lambda function</li>
+        <li><strong>HTTP/HTTPS</strong> — send to a web endpoint</li>
+        <li><strong>Email / Email-JSON</strong> — send to an email address</li>
+        <li><strong>SMS</strong> — send a text message to a phone number</li>
+        <li><strong>Mobile Push</strong> — push to iOS/Android via APNs/FCM</li>
+    </ul>
+
+    <h3>Message Filtering</h3>
+    <p>
+        Each subscription can have a filter policy — a JSON object that defines
+        which messages the subscriber receives based on message attributes.
+        This allows different consumers to receive only the messages relevant to them
+        without creating separate topics.
+    </p>
+
+    <h3>SNS FIFO Topics</h3>
+    <p>
+        Similar to SQS FIFO queues, SNS FIFO topics guarantee strict message ordering
+        and exactly-once delivery. They can only deliver to SQS FIFO queues.
+        Topic name must end in <code>.fifo</code>.
+    </p>
+
+    <h2 id="fanout">SNS + SQS Fanout Pattern</h2>
+    <p>
+        The fanout pattern is one of the most important architecture patterns
+        in the AWS exam. A single SNS message is delivered to multiple SQS queues
+        simultaneously, allowing parallel processing by different services.
+    </p>
+    <pre>
+S3 Event / Application
+        │
+        ▼
+SNS Topic
+        │
+        ├── SQS Queue A → Lambda (send email confirmation)
+        │
+        ├── SQS Queue B → EC2 Worker (process order)
+        │
+        └── SQS Queue C → Lambda (update analytics dashboard)
+    </pre>
+    <p>
+        Benefits: decoupled, fully parallel processing, no data loss
+        if one consumer is slow or fails.
+    </p>
+
+    <h2 id="security">Security Considerations</h2>
+    <ul>
+        <li>Use <strong>IAM policies</strong> and <strong>SNS resource policies</strong> to control who can publish or subscribe</li>
+        <li>Enable <strong>SSE-SNS or SSE-KMS</strong> to encrypt messages at rest</li>
+        <li>Use <strong>HTTPS endpoints</strong> only for HTTP subscriptions</li>
+        <li>Use <strong>message filtering</strong> to prevent subscribers from receiving irrelevant data</li>
+        <li>Use <strong>VPC Endpoints</strong> to keep SNS traffic within the AWS network</li>
+    </ul>
+
+    <h2 id="architecture">Architecture Overview</h2>
+    <pre>
+Publisher (EC2 / Lambda / CloudWatch Alarm)
+        │
+        ▼
+SNS Topic
+        │
+        ├── Email Subscription    → Alert to admin
+        ├── SMS Subscription      → Text to on-call engineer
+        ├── SQS Subscription      → Queue for processing
+        └── Lambda Subscription   → Serverless processing
+    </pre>
+
+    <h2 id="usecases">Real-World Use Cases</h2>
+    <ul>
+        <li>System alerts — CloudWatch alarm triggers SNS → sends SMS/email to operations team</li>
+        <li>Order notifications — new order triggers SNS fanout to fulfilment, billing and analytics queues</li>
+        <li>Mobile push notifications — send targeted alerts to iOS and Android apps</li>
+        <li>Event broadcasting — broadcast events to multiple downstream microservices simultaneously</li>
+    </ul>
+
+    <h2 id="exam">AWS Solutions Architect Exam Notes</h2>
+    <ul>
+        <li>SNS is <strong>push-based</strong>; SQS is <strong>pull/poll-based</strong> — know the difference</li>
+        <li><strong>Fanout pattern</strong> = SNS → multiple SQS queues — very common exam scenario</li>
+        <li>SNS delivers to: SQS, Lambda, HTTP/S, Email, SMS, Mobile Push</li>
+        <li><strong>Message filtering</strong> lets subscribers receive only relevant messages</li>
+        <li>SNS does <strong>not persist messages</strong> — if delivery fails and no retry succeeds, message is lost (use SQS for durability)</li>
+        <li>SNS FIFO + SQS FIFO = strict ordering with fanout</li>
+        <li>CloudWatch alarms use SNS to send notifications — know this integration</li>
+        <li>SNS cannot directly deliver to <strong>Kinesis</strong> or <strong>DynamoDB</strong></li>
+    </ul>
+
+    <h2 id="summary">Key Takeaways</h2>
+    <ul>
+        <li>SNS is a pub/sub service — one message, many subscribers</li>
+        <li>Push-based: SNS delivers to subscribers; consumers don't poll</li>
+        <li>Use SNS + SQS fanout to fan a single event out to multiple parallel workflows</li>
+        <li>Use message filtering to route specific messages to specific subscribers</li>
+        <li>SNS alone doesn't guarantee durability — pair with SQS for reliable processing</li>
+    </ul>
+
+    <div class="navigation-buttons">
+        <a href="sqs.html" class="nav-btn">← SQS</a>
+        <a href="eventbridge.html" class="nav-btn">Next: EventBridge →</a>
+    </div>
+
+</section>
+
+<footer>
+    <div class="footer-container">
+        <div class="footer-logo">🚀 Tech Learning Hub</div>
+        <div class="footer-links">
+            <a href="index.html">Home</a>
+            <a href="aws-learning.html">AWS Learning</a>
+            <a href="solutions-architect.html">Solutions Architect</a>
+        </div>
+        <div class="footer-socials">
+            <a href="https://github.com/janvipatel1910" target="_blank"><i class="fa-brands fa-github"></i></a>
+            <a href="https://www.linkedin.com/in/janvipatel-data" target="_blank"><i class="fa-brands fa-linkedin"></i></a>
+            <a href="mailto:janvi001patel2001@gmail.com"><i class="fa-solid fa-envelope"></i></a>
+        </div>
+    </div>
+    <p class="footer-copy">© 2026 Tech Learning Hub | Learn • Build • Grow 🚀</p>
+</footer>
+<script src="script.js"></script>
+</body>
+</html>

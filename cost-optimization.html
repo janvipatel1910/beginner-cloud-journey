@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AWS Cost Optimization | Tech Learning Hub</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+</head>
+<body>
+<nav class="navbar">
+    <div class="logo">🚀 Tech Learning Hub</div>
+    <button id="dark-mode-toggle">🌙</button>
+    <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="aws-learning.html">AWS Learning</a></li>
+        <li><a href="solutions-architect.html">Solutions Architect</a></li>
+    </ul>
+</nav>
+
+<section class="lesson-content">
+
+    <h1>💰 AWS Cost Optimization</h1>
+
+    <div class="lesson-header">
+        <span>Cost Management</span>
+        <span>FinOps</span>
+        <span>AWS Solutions Architect Associate</span>
+        <span>High Exam Importance</span>
+    </div>
+
+    <div class="lesson-nav">
+        <a href="#tools">Cost Management Tools</a>
+        <a href="#ec2-pricing">EC2 Pricing Models</a>
+        <a href="#storage">Storage Cost Optimization</a>
+        <a href="#architecture">Architectural Best Practices</a>
+        <a href="#support">Support Plans</a>
+        <a href="#exam">Exam Notes</a>
+        <a href="#summary">Summary</a>
+    </div>
+
+    <h2 id="tools">AWS Cost Management Tools</h2>
+
+    <h3>AWS Cost Explorer</h3>
+    <ul>
+        <li>Visualise and analyse your AWS costs and usage over time</li>
+        <li>Filter by service, region, account, tag, instance type</li>
+        <li>Forecast future spend based on historical usage</li>
+        <li>Identify Reserved Instance / Savings Plan purchase recommendations</li>
+        <li>Free to use</li>
+    </ul>
+
+    <h3>AWS Budgets</h3>
+    <ul>
+        <li>Set custom cost and usage budgets with alert notifications</li>
+        <li>Alert via email or SNS when actual or forecasted spend exceeds budget</li>
+        <li>Supports cost budgets, usage budgets, RI/Savings Plan utilisation budgets</li>
+        <li>First two budgets free; $0.02/day per budget thereafter</li>
+    </ul>
+
+    <h3>AWS Trusted Advisor</h3>
+    <ul>
+        <li>Provides real-time recommendations across five categories:</li>
+        <li><strong>Cost Optimization</strong> — identify idle resources, underutilised instances, unused EIPs</li>
+        <li><strong>Performance</strong> — identify over/under-provisioned resources</li>
+        <li><strong>Security</strong> — identify open ports, missing MFA, exposed access keys</li>
+        <li><strong>Fault Tolerance</strong> — identify lack of Multi-AZ, insufficient backups</li>
+        <li><strong>Service Limits</strong> — warn when approaching service quotas</li>
+        <li>Basic checks: free for all accounts; Full checks: require Business or Enterprise Support</li>
+    </ul>
+
+    <h3>AWS Cost and Usage Report (CUR)</h3>
+    <ul>
+        <li>Most comprehensive cost and usage data available</li>
+        <li>Delivered as CSV files to S3</li>
+        <li>Analyse with Athena, QuickSight or third-party tools</li>
+        <li>Use for detailed billing analysis and chargeback/showback</li>
+    </ul>
+
+    <h3>Cost Allocation Tags</h3>
+    <ul>
+        <li>Tag AWS resources with key-value pairs (e.g. Department=Engineering, Project=Alpha)</li>
+        <li>Activate tags in Billing console to see costs broken down by tag</li>
+        <li>Essential for attributing costs to teams, projects or environments</li>
+    </ul>
+
+    <h2 id="ec2-pricing">EC2 Pricing Models</h2>
+
+    <h3>On-Demand</h3>
+    <ul>
+        <li>Pay per second/hour — no commitment</li>
+        <li>Highest cost but maximum flexibility</li>
+        <li>Use for: unpredictable workloads, short-term needs, development</li>
+    </ul>
+
+    <h3>Reserved Instances (RI)</h3>
+    <ul>
+        <li>1 or 3 year commitment — up to <strong>72% savings</strong> vs On-Demand</li>
+        <li><strong>Standard RI</strong> — fixed instance family, OS, region; highest discount</li>
+        <li><strong>Convertible RI</strong> — can change instance type/OS; smaller discount (~54%)</li>
+        <li>Payment options: All Upfront, Partial Upfront, No Upfront (No Upfront is cheapest upfront but lowest discount)</li>
+        <li>Can sell unused Standard RIs on the <strong>Reserved Instance Marketplace</strong></li>
+    </ul>
+
+    <h3>Savings Plans</h3>
+    <ul>
+        <li>Flexible pricing model — commit to a consistent usage amount ($/hour) for 1 or 3 years</li>
+        <li><strong>Compute Savings Plans</strong> — up to 66% savings, flexible across instance family, region, OS, and compute type (EC2, Lambda, Fargate)</li>
+        <li><strong>EC2 Instance Savings Plans</strong> — up to 72%, but locked to a specific instance family in a region</li>
+        <li>Simpler than RIs — no need to specify instance type upfront for Compute plans</li>
+    </ul>
+
+    <h3>Spot Instances</h3>
+    <ul>
+        <li>Use unused EC2 capacity — up to <strong>90% savings</strong> vs On-Demand</li>
+        <li>AWS can <strong>reclaim with 2-minute notice</strong> — instances are not guaranteed</li>
+        <li>Use for: fault-tolerant batch jobs, data analysis, rendering, CI/CD</li>
+        <li>Never use for: databases, critical web servers, stateful applications</li>
+        <li><strong>Spot Fleets</strong> — mix of Spot and On-Demand instances to meet target capacity</li>
+    </ul>
+
+    <h3>Dedicated Hosts</h3>
+    <ul>
+        <li>Physical server dedicated to your use — no sharing with other customers</li>
+        <li>Required for compliance and software licensing (bring-your-own-licence — BYOL)</li>
+        <li>Most expensive EC2 option</li>
+    </ul>
+
+    <h2 id="storage">Storage Cost Optimization</h2>
+    <ul>
+        <li><strong>S3 Intelligent-Tiering</strong> — automatically moves objects between access tiers; no retrieval fees</li>
+        <li><strong>S3 Lifecycle Policies</strong> — automatically transition objects to Standard-IA, then Glacier after set periods</li>
+        <li><strong>S3 Glacier / Deep Archive</strong> — for long-term archival data (regulatory, compliance)</li>
+        <li><strong>EBS</strong> — delete unused snapshots; right-size volumes; use gp3 over gp2 (cheaper per GB)</li>
+        <li><strong>EFS Lifecycle Management</strong> — auto-move infrequent files to EFS-IA storage class</li>
+    </ul>
+
+    <h2 id="architecture">Architectural Best Practices</h2>
+    <ul>
+        <li><strong>Right-sizing</strong> — use CloudWatch metrics to identify underutilised instances and downsize</li>
+        <li><strong>Auto Scaling</strong> — scale in during off-peak hours; don't pay for idle capacity</li>
+        <li><strong>Serverless</strong> — Lambda and Fargate charge only for actual use — no idle costs</li>
+        <li><strong>Managed services</strong> — RDS, ElastiCache, SQS reduce operational overhead and infrastructure waste</li>
+        <li><strong>Stop/start non-production environments</strong> — use Lambda + EventBridge to shut down dev/test EC2 overnight</li>
+        <li><strong>Delete unattached EBS volumes and unused EIPs</strong> — both incur charges when not in use</li>
+    </ul>
+
+    <h2 id="support">AWS Support Plans</h2>
+    <pre>
+Plan          Cost          Trusted Advisor   Response Time
+──────────────────────────────────────────────────────────────
+Basic         Free          Core checks only  No tech support
+Developer     $29/month     Core checks only  Business hours email, 12-24h
+Business      $100+/month   Full checks       24/7, 1h for urgent
+Enterprise On-Ramp $5,500+  Full checks       24/7, 30min critical
+Enterprise    $15,000+      Full checks       24/7, 15min critical + TAM
+    </pre>
+
+    <h2 id="exam">AWS Solutions Architect Exam Notes</h2>
+    <ul>
+        <li><strong>Spot Instances</strong> = up to 90% savings, interruptible — use for batch/fault-tolerant work</li>
+        <li><strong>Reserved Instances / Savings Plans</strong> = up to 72% savings for predictable, steady-state workloads</li>
+        <li><strong>On-Demand</strong> = no commitment, most expensive — use for unpredictable workloads</li>
+        <li><strong>Trusted Advisor</strong> — full checks require <strong>Business or Enterprise Support</strong></li>
+        <li><strong>Cost Explorer</strong> — free, visualise costs, forecasts, RI recommendations</li>
+        <li><strong>AWS Budgets</strong> — set alerts when spend exceeds threshold</li>
+        <li>Unattached EBS volumes and <strong>unused Elastic IPs charge money</strong> — delete them</li>
+        <li><strong>Cost Allocation Tags</strong> must be activated in Billing console before they appear in reports</li>
+        <li>Convertible RIs can change instance type; Standard RIs cannot — but Standard has higher discount</li>
+        <li>gp3 EBS is <strong>cheaper and faster</strong> than gp2 — always prefer gp3 for new volumes</li>
+    </ul>
+
+    <h2 id="summary">Key Takeaways</h2>
+    <ul>
+        <li>Use Cost Explorer, Budgets and Trusted Advisor to monitor and optimise spend</li>
+        <li>Match EC2 pricing model to workload: Spot for batch, Reserved/Savings Plans for steady-state, On-Demand for variable</li>
+        <li>Use S3 Lifecycle Policies and Intelligent-Tiering to reduce storage costs automatically</li>
+        <li>Right-size instances, delete unused resources, and use Auto Scaling to eliminate waste</li>
+        <li>Serverless and managed services reduce both cost and operational overhead</li>
+    </ul>
+
+    <div class="navigation-buttons">
+        <a href="disaster-recovery.html" class="nav-btn">← Disaster Recovery</a>
+        <a href="solutions-architect.html" class="nav-btn">← Solutions Architect</a>
+    </div>
+
+</section>
+
+<footer>
+    <div class="footer-container">
+        <div class="footer-logo">🚀 Tech Learning Hub</div>
+        <div class="footer-links">
+            <a href="index.html">Home</a>
+            <a href="aws-learning.html">AWS Learning</a>
+            <a href="solutions-architect.html">Solutions Architect</a>
+        </div>
+        <div class="footer-socials">
+            <a href="https://github.com/janvipatel1910" target="_blank"><i class="fa-brands fa-github"></i></a>
+            <a href="https://www.linkedin.com/in/janvipatel-data" target="_blank"><i class="fa-brands fa-linkedin"></i></a>
+            <a href="mailto:janvi001patel2001@gmail.com"><i class="fa-solid fa-envelope"></i></a>
+        </div>
+    </div>
+    <p class="footer-copy">© 2026 Tech Learning Hub | Learn • Build • Grow 🚀</p>
+</footer>
+<script src="script.js"></script>
+</body>
+</html>

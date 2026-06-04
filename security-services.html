@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AWS Security Services | Tech Learning Hub</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+</head>
+<body>
+<nav class="navbar">
+    <div class="logo">🚀 Tech Learning Hub</div>
+    <button id="dark-mode-toggle">🌙</button>
+    <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="aws-learning.html">AWS Learning</a></li>
+        <li><a href="solutions-architect.html">Solutions Architect</a></li>
+    </ul>
+</nav>
+
+<section class="lesson-content">
+
+    <h1>🛡️ AWS Security Services</h1>
+    <p style="color:#6b7280; margin-bottom: 10px;">GuardDuty • Macie • Inspector • WAF • Shield • Config</p>
+
+    <div class="lesson-header">
+        <span>Security & Compliance</span>
+        <span>Threat Detection</span>
+        <span>AWS Solutions Architect Associate</span>
+        <span>High Exam Importance</span>
+    </div>
+
+    <div class="lesson-nav">
+        <a href="#guardduty">GuardDuty</a>
+        <a href="#macie">Macie</a>
+        <a href="#inspector">Inspector</a>
+        <a href="#waf">WAF</a>
+        <a href="#shield">Shield</a>
+        <a href="#config">Config</a>
+        <a href="#comparison">Comparison</a>
+        <a href="#exam">Exam Notes</a>
+    </div>
+
+    <h2 id="guardduty">Amazon GuardDuty</h2>
+    <p>
+        GuardDuty is a <strong>threat detection service</strong> that continuously monitors
+        your AWS accounts and workloads for malicious activity and unauthorised behaviour.
+        It uses machine learning, anomaly detection and threat intelligence feeds.
+    </p>
+    <h3>What GuardDuty Analyses</h3>
+    <ul>
+        <li><strong>CloudTrail logs</strong> — unusual API calls, suspicious console logins</li>
+        <li><strong>VPC Flow Logs</strong> — unusual network traffic patterns</li>
+        <li><strong>DNS logs</strong> — communication with known malicious domains</li>
+        <li><strong>EKS audit logs</strong> — suspicious Kubernetes activity</li>
+    </ul>
+    <h3>Key Points</h3>
+    <ul>
+        <li>Enable with one click — no agents or software to install</li>
+        <li>Generates findings with severity levels: Low, Medium, High</li>
+        <li>Findings sent to EventBridge → Lambda / SNS for automated remediation</li>
+        <li>Supports multi-account via AWS Organizations</li>
+        <li>30-day free trial</li>
+    </ul>
+
+    <h2 id="macie">Amazon Macie</h2>
+    <p>
+        Macie is a <strong>data security service</strong> that uses machine learning
+        to automatically discover, classify and protect sensitive data in Amazon S3.
+        It identifies Personally Identifiable Information (PII), financial data,
+        credentials and other sensitive content.
+    </p>
+    <h3>Key Points</h3>
+    <ul>
+        <li>Scans S3 buckets for sensitive data (PII, credit cards, AWS credentials, etc.)</li>
+        <li>Alerts on buckets that are publicly accessible, unencrypted or shared externally</li>
+        <li>Findings sent to EventBridge for automated remediation</li>
+        <li>Essential for GDPR, HIPAA and PCI-DSS compliance</li>
+        <li>Enable per-region — must be enabled in each region where you have S3 data</li>
+    </ul>
+
+    <h2 id="inspector">Amazon Inspector</h2>
+    <p>
+        Inspector is a <strong>vulnerability assessment service</strong> that automatically
+        assesses applications for security vulnerabilities and deviations from best practices.
+    </p>
+    <h3>What Inspector Scans</h3>
+    <ul>
+        <li><strong>EC2 instances</strong> — OS vulnerabilities, network accessibility</li>
+        <li><strong>Container images in ECR</strong> — scan for CVEs before deployment</li>
+        <li><strong>Lambda functions</strong> — software vulnerabilities in function code and dependencies</li>
+    </ul>
+    <h3>Key Points</h3>
+    <ul>
+        <li>Automatic and continuous scanning — not a one-time scan</li>
+        <li>Produces a risk score for each finding based on severity</li>
+        <li>Integrates with AWS Security Hub for centralised findings</li>
+        <li>No need to install agents for EC2 — uses SSM Agent</li>
+    </ul>
+
+    <h2 id="waf">AWS WAF (Web Application Firewall)</h2>
+    <p>
+        AWS WAF protects your web applications from common exploits such as
+        SQL injection and cross-site scripting (XSS). It lets you create rules
+        that control which web requests reach your application.
+    </p>
+    <h3>Key Points</h3>
+    <ul>
+        <li>Deployed in front of: <strong>CloudFront, ALB, API Gateway, AppSync</strong></li>
+        <li>Rules can allow, block or count requests based on IP, headers, body, URI, country</li>
+        <li><strong>Managed Rule Groups</strong> — pre-built rules from AWS and security vendors (OWASP Top 10)</li>
+        <li><strong>Rate-based rules</strong> — block IPs sending too many requests (DDoS mitigation)</li>
+        <li>Real-time visibility into web traffic via CloudWatch metrics</li>
+    </ul>
+
+    <h2 id="shield">AWS Shield</h2>
+    <p>
+        AWS Shield protects AWS applications against <strong>Distributed Denial of Service (DDoS) attacks</strong>.
+    </p>
+    <h3>Shield Standard</h3>
+    <ul>
+        <li>Automatically included for all AWS customers at <strong>no extra cost</strong></li>
+        <li>Protects against common, most frequently occurring network and transport layer DDoS attacks</li>
+        <li>Active on CloudFront, Route 53, ELB automatically</li>
+    </ul>
+    <h3>Shield Advanced</h3>
+    <ul>
+        <li>$3,000/month per organisation</li>
+        <li>Protection against larger and more sophisticated DDoS attacks</li>
+        <li>24/7 access to AWS DDoS Response Team (DRT)</li>
+        <li>Financial protection — AWS credits back costs incurred due to DDoS scaling</li>
+        <li>Protects: EC2, ELB, CloudFront, Route 53, Global Accelerator</li>
+        <li>Real-time attack visibility and notifications</li>
+    </ul>
+
+    <h2 id="config">AWS Config</h2>
+    <p>
+        AWS Config is a service that assesses, audits and evaluates the
+        <strong>configuration of your AWS resources</strong> over time.
+        It answers: "What did my infrastructure look like at any point in time?"
+        and "Is my infrastructure compliant with my rules?"
+    </p>
+    <h3>Key Points</h3>
+    <ul>
+        <li>Records configuration changes to AWS resources continuously</li>
+        <li><strong>Config Rules</strong> — evaluate whether resources comply with your policies</li>
+        <li>Example rules: "All EBS volumes must be encrypted", "All S3 buckets must have versioning"</li>
+        <li>Remediation actions — automatically fix non-compliant resources using SSM Automation</li>
+        <li>Per-region service — but can aggregate findings across regions and accounts</li>
+        <li>Config ≠ CloudTrail — Config tracks <em>what</em> the configuration is; CloudTrail tracks <em>who changed</em> it</li>
+    </ul>
+
+    <h2 id="comparison">Quick Comparison Table</h2>
+    <pre>
+Service       Purpose                          What It Monitors
+──────────────────────────────────────────────────────────────────
+GuardDuty     Threat detection                 CloudTrail, VPC Flow Logs, DNS
+Macie         Sensitive data discovery in S3   S3 buckets and objects
+Inspector     Vulnerability assessment         EC2, ECR images, Lambda
+WAF           Block web exploits               HTTP requests to CloudFront/ALB
+Shield        DDoS protection                  Network/transport layer attacks
+Config        Compliance and config history    Resource configuration changes
+CloudTrail    API audit logging                All AWS API calls
+    </pre>
+
+    <h2 id="exam">AWS Solutions Architect Exam Notes</h2>
+    <ul>
+        <li><strong>GuardDuty</strong> = threat detection, ML-based, analyses CloudTrail + VPC Flow Logs + DNS</li>
+        <li><strong>Macie</strong> = sensitive data in S3 (PII, credit cards, credentials)</li>
+        <li><strong>Inspector</strong> = vulnerability scanning for EC2, ECR, Lambda</li>
+        <li><strong>WAF</strong> = protect against SQL injection, XSS, rate limiting — deploys in front of CloudFront/ALB</li>
+        <li><strong>Shield Standard</strong> = free, automatic DDoS protection on CloudFront and Route 53</li>
+        <li><strong>Shield Advanced</strong> = $3,000/month, protects EC2 and ELB, 24/7 DRT support</li>
+        <li><strong>Config</strong> = resource compliance and configuration history — "was port 22 open last Tuesday?"</li>
+        <li>GuardDuty findings → EventBridge → Lambda = automated threat remediation pattern</li>
+        <li>WAF + Shield Advanced = comprehensive DDoS and application-layer protection</li>
+    </ul>
+
+    <div class="navigation-buttons">
+        <a href="secrets-manager.html" class="nav-btn">← Secrets Manager</a>
+        <a href="solutions-architect.html" class="nav-btn">← Solutions Architect</a>
+    </div>
+
+</section>
+
+<footer>
+    <div class="footer-container">
+        <div class="footer-logo">🚀 Tech Learning Hub</div>
+        <div class="footer-links">
+            <a href="index.html">Home</a>
+            <a href="aws-learning.html">AWS Learning</a>
+            <a href="solutions-architect.html">Solutions Architect</a>
+        </div>
+        <div class="footer-socials">
+            <a href="https://github.com/janvipatel1910" target="_blank"><i class="fa-brands fa-github"></i></a>
+            <a href="https://www.linkedin.com/in/janvipatel-data" target="_blank"><i class="fa-brands fa-linkedin"></i></a>
+            <a href="mailto:janvi001patel2001@gmail.com"><i class="fa-solid fa-envelope"></i></a>
+        </div>
+    </div>
+    <p class="footer-copy">© 2026 Tech Learning Hub | Learn • Build • Grow 🚀</p>
+</footer>
+<script src="script.js"></script>
+</body>
+</html>

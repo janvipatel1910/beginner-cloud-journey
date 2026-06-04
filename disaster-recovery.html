@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AWS Disaster Recovery | Tech Learning Hub</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+</head>
+<body>
+<nav class="navbar">
+    <div class="logo">🚀 Tech Learning Hub</div>
+    <button id="dark-mode-toggle">🌙</button>
+    <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="aws-learning.html">AWS Learning</a></li>
+        <li><a href="solutions-architect.html">Solutions Architect</a></li>
+    </ul>
+</nav>
+
+<section class="lesson-content">
+
+    <h1>🚨 AWS Disaster Recovery Strategies</h1>
+
+    <div class="lesson-header">
+        <span>High Availability</span>
+        <span>Business Continuity</span>
+        <span>AWS Solutions Architect Associate</span>
+        <span>Very High Exam Importance</span>
+    </div>
+
+    <div class="lesson-nav">
+        <a href="#overview">Overview</a>
+        <a href="#metrics">RTO & RPO</a>
+        <a href="#strategies">DR Strategies</a>
+        <a href="#services">Key Services</a>
+        <a href="#architecture">Architecture</a>
+        <a href="#exam">Exam Notes</a>
+        <a href="#summary">Summary</a>
+    </div>
+
+    <h2 id="overview">What is Disaster Recovery?</h2>
+    <p>
+        Disaster Recovery (DR) is the process of restoring systems and data
+        after a catastrophic failure — hardware failure, natural disaster,
+        human error or cyber attack. AWS enables DR strategies
+        ranging from simple backups to fully active multi-region deployments.
+    </p>
+
+    <h2 id="metrics">Key DR Metrics: RTO and RPO</h2>
+
+    <h3>RPO — Recovery Point Objective</h3>
+    <p>
+        <strong>How much data can you afford to lose?</strong><br>
+        RPO defines the maximum acceptable age of data that must be recovered
+        after a failure. It determines how frequently you need to back up data.
+    </p>
+    <p>Example: RPO of 1 hour means you can afford to lose at most 1 hour of data.</p>
+
+    <h3>RTO — Recovery Time Objective</h3>
+    <p>
+        <strong>How quickly must you restore service?</strong><br>
+        RTO defines the maximum acceptable downtime — the time from when a disaster
+        occurs to when the service is fully restored.
+    </p>
+    <p>Example: RTO of 4 hours means the service must be restored within 4 hours of a failure.</p>
+
+    <pre>
+Disaster Occurs
+        │
+        ▼
+        ├──── RPO ────┤← Last backup / data loss window
+        │
+Time 0                │← Restore begins
+        │
+        ├──────────────── RTO ─────────────────┤
+        │                                       │
+    Failure                              Service Restored
+    </pre>
+
+    <h2 id="strategies">DR Strategies (Cheapest → Most Expensive)</h2>
+
+    <h3>1. Backup and Restore</h3>
+    <ul>
+        <li><strong>Lowest cost</strong>, highest RTO/RPO</li>
+        <li>Back up data to S3 and restore from snapshots when needed</li>
+        <li>No running infrastructure in DR region — provision everything after failure</li>
+        <li>RTO: Hours; RPO: Hours</li>
+        <li>Use when: cost is priority and extended downtime is acceptable</li>
+    </ul>
+
+    <h3>2. Pilot Light</h3>
+    <ul>
+        <li>A minimal version of the environment runs in the DR region</li>
+        <li>Core services (database replicated via RDS Read Replica) are always on</li>
+        <li>On failure: scale up compute (EC2/ELB/Auto Scaling) around the pre-running core</li>
+        <li>RTO: Tens of minutes; RPO: Minutes</li>
+        <li>Analogy: a pilot light on a boiler — small flame always burning, can ignite quickly</li>
+    </ul>
+
+    <h3>3. Warm Standby</h3>
+    <ul>
+        <li>A scaled-down but fully functional version of the production environment runs in DR</li>
+        <li>All services running but at minimum capacity (e.g. smaller instance types)</li>
+        <li>On failure: scale up to full production capacity and redirect DNS</li>
+        <li>RTO: Minutes; RPO: Seconds to minutes</li>
+        <li>More expensive than Pilot Light but faster recovery</li>
+    </ul>
+
+    <h3>4. Multi-Site Active-Active</h3>
+    <ul>
+        <li>Full production environment running simultaneously in multiple regions</li>
+        <li>Traffic distributed across regions via Route 53 weighted/latency routing</li>
+        <li>On failure: Route 53 health checks redirect 100% of traffic to healthy region</li>
+        <li>RTO: Near zero; RPO: Near zero</li>
+        <li><strong>Most expensive</strong> — you pay for full infrastructure in multiple regions</li>
+        <li>Required for mission-critical applications with zero downtime tolerance</li>
+    </ul>
+
+    <h2 id="services">Key AWS Services for DR</h2>
+    <ul>
+        <li><strong>S3</strong> + <strong>Cross-Region Replication</strong> — replicate data across regions</li>
+        <li><strong>RDS Read Replicas</strong> (cross-region) — database replication for DR</li>
+        <li><strong>Route 53</strong> — failover routing and health checks for automatic DNS failover</li>
+        <li><strong>Aurora Global Database</strong> — sub-second RPO, under 1 minute RTO for global DB failover</li>
+        <li><strong>EC2 AMIs</strong> — copy AMIs across regions for quick instance launch in DR</li>
+        <li><strong>AWS Backup</strong> — centralised backup management across multiple AWS services</li>
+        <li><strong>CloudFormation</strong> — redeploy infrastructure from code in minutes</li>
+        <li><strong>Elastic Disaster Recovery (DRS)</strong> — replicate on-premises or cloud servers to AWS</li>
+    </ul>
+
+    <h2 id="architecture">Architecture Overview</h2>
+    <pre>
+Strategy Cost/Speed Comparison:
+
+Backup/Restore    ●───────────────────────────────────→ Hours
+Pilot Light       ●─────────────────────→ Tens of minutes
+Warm Standby      ●──────────────→ Minutes
+Multi-Site        ●───→ Seconds (near-zero RTO/RPO)
+
+Cost:             $         $$         $$$         $$$$
+    </pre>
+
+    <h2 id="exam">AWS Solutions Architect Exam Notes</h2>
+    <ul>
+        <li><strong>RPO</strong> = how much data loss is acceptable; <strong>RTO</strong> = how long downtime is acceptable</li>
+        <li>Lower RTO/RPO = more expensive strategy</li>
+        <li><strong>Backup & Restore</strong> = cheapest, longest RTO/RPO — just snapshots in S3</li>
+        <li><strong>Pilot Light</strong> = core services running (DB), compute added on failover</li>
+        <li><strong>Warm Standby</strong> = full stack running at reduced capacity, scale up on failover</li>
+        <li><strong>Multi-Site Active-Active</strong> = full production in multiple regions, near-zero RTO/RPO, most expensive</li>
+        <li><strong>Aurora Global Database</strong> = best managed DB option for near-zero RPO cross-region DR</li>
+        <li>Route 53 <strong>failover routing</strong> + health checks = automatic DNS-based DR</li>
+        <li>Use <strong>CloudFormation</strong> to redeploy infrastructure quickly in DR region</li>
+        <li>Exam often presents a scenario with RTO/RPO requirements and asks which DR strategy to use</li>
+    </ul>
+
+    <h2 id="summary">Key Takeaways</h2>
+    <ul>
+        <li>RPO = data loss tolerance; RTO = downtime tolerance</li>
+        <li>Four DR strategies from cheapest to most expensive: Backup/Restore → Pilot Light → Warm Standby → Multi-Site Active-Active</li>
+        <li>Choose strategy based on RPO/RTO requirements and budget</li>
+        <li>Route 53 failover routing automates DNS-level disaster recovery</li>
+        <li>Aurora Global Database and S3 CRR are key services for data replication across regions</li>
+    </ul>
+
+    <div class="navigation-buttons">
+        <a href="well-architected.html" class="nav-btn">← Well-Architected</a>
+        <a href="cost-optimization.html" class="nav-btn">Next: Cost Optimization →</a>
+    </div>
+
+</section>
+
+<footer>
+    <div class="footer-container">
+        <div class="footer-logo">🚀 Tech Learning Hub</div>
+        <div class="footer-links">
+            <a href="index.html">Home</a>
+            <a href="aws-learning.html">AWS Learning</a>
+            <a href="solutions-architect.html">Solutions Architect</a>
+        </div>
+        <div class="footer-socials">
+            <a href="https://github.com/janvipatel1910" target="_blank"><i class="fa-brands fa-github"></i></a>
+            <a href="https://www.linkedin.com/in/janvipatel-data" target="_blank"><i class="fa-brands fa-linkedin"></i></a>
+            <a href="mailto:janvi001patel2001@gmail.com"><i class="fa-solid fa-envelope"></i></a>
+        </div>
+    </div>
+    <p class="footer-copy">© 2026 Tech Learning Hub | Learn • Build • Grow 🚀</p>
+</footer>
+<script src="script.js"></script>
+</body>
+</html>

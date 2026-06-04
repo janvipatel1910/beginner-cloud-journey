@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AWS KMS | Tech Learning Hub</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+</head>
+<body>
+<nav class="navbar">
+    <div class="logo">🚀 Tech Learning Hub</div>
+    <button id="dark-mode-toggle">🌙</button>
+    <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="aws-learning.html">AWS Learning</a></li>
+        <li><a href="solutions-architect.html">Solutions Architect</a></li>
+    </ul>
+</nav>
+
+<section class="lesson-content">
+
+    <h1>🔑 AWS Key Management Service (KMS)</h1>
+
+    <div class="lesson-header">
+        <span>Security Service</span>
+        <span>Encryption</span>
+        <span>AWS Solutions Architect Associate</span>
+        <span>Very High Exam Importance</span>
+    </div>
+
+    <div class="lesson-nav">
+        <a href="#overview">Overview</a>
+        <a href="#features">Features</a>
+        <a href="#concepts">Core Concepts</a>
+        <a href="#encryption">Encryption Types</a>
+        <a href="#security">Best Practices</a>
+        <a href="#architecture">Architecture</a>
+        <a href="#usecases">Use Cases</a>
+        <a href="#exam">Exam Notes</a>
+        <a href="#summary">Summary</a>
+    </div>
+
+    <h2 id="overview">Service Overview</h2>
+    <p>
+        AWS Key Management Service (KMS) is a managed service that makes it easy
+        to create and control the cryptographic keys used to protect your data.
+        KMS integrates with most AWS services to encrypt data at rest and in transit.
+    </p>
+
+    <h2 id="features">Key Features</h2>
+    <ul>
+        <li>Centrally manage encryption keys across AWS services and applications</li>
+        <li>Integrated with 100+ AWS services — S3, EBS, RDS, DynamoDB, Lambda and more</li>
+        <li>Automatic key rotation for AWS-managed keys (every year)</li>
+        <li>Full audit trail via AWS CloudTrail — every key use is logged</li>
+        <li>FIPS 140-2 Level 2 validated hardware security modules (HSMs)</li>
+        <li>Cross-account and cross-region key sharing</li>
+        <li>Key policies control who can use and manage each key</li>
+    </ul>
+
+    <h2 id="concepts">Core Concepts</h2>
+
+    <h3>KMS Keys (Customer Master Keys)</h3>
+    <p>
+        A KMS key is a logical representation of a cryptographic key.
+        The key material never leaves KMS unencrypted. There are three types:
+    </p>
+    <ul>
+        <li><strong>AWS Managed Keys</strong> — created and managed by AWS on your behalf for specific services (e.g. aws/s3, aws/ebs). Free, automatic rotation every year. You cannot manage or view the key policy.</li>
+        <li><strong>Customer Managed Keys (CMK)</strong> — keys you create, manage and control. You define key policies, enable/disable rotation, and can delete them. $1/month per key.</li>
+        <li><strong>AWS Owned Keys</strong> — owned and managed entirely by AWS, shared across multiple accounts. You have no visibility or control.</li>
+    </ul>
+
+    <h3>Data Keys</h3>
+    <p>
+        KMS uses <strong>envelope encryption</strong>: KMS generates a data key,
+        which is used to encrypt your data locally. The data key itself is encrypted
+        by the KMS key. Only the encrypted data key is stored alongside your data.
+        To decrypt, KMS first decrypts the data key, then your application decrypts the data.
+    </p>
+
+    <h3>Key Policies</h3>
+    <p>
+        Key policies are the primary way to control access to KMS keys.
+        Every KMS key must have a key policy. IAM policies alone are not sufficient —
+        the key policy must also grant access.
+    </p>
+
+    <h3>Key Rotation</h3>
+    <p>
+        AWS Managed Keys rotate automatically every year.
+        Customer Managed Keys support optional automatic rotation every year.
+        When a key rotates, old key material is retained to decrypt data encrypted with it.
+    </p>
+
+    <h2 id="encryption">Encryption in AWS Services</h2>
+
+    <h3>S3 Encryption</h3>
+    <ul>
+        <li><strong>SSE-S3</strong> — S3 manages keys, AES-256. Enabled by default on all new buckets.</li>
+        <li><strong>SSE-KMS</strong> — KMS manages keys. Provides audit trail, key rotation, and access control.</li>
+        <li><strong>SSE-C</strong> — Customer provides the key. AWS does not store the key.</li>
+        <li><strong>Client-Side Encryption</strong> — encrypt before uploading; AWS never sees plaintext.</li>
+    </ul>
+
+    <h3>EBS Encryption</h3>
+    <p>
+        EBS volumes can be encrypted using KMS keys. Encryption covers data at rest,
+        data in transit between instance and volume, snapshots, and volumes created from snapshots.
+        Encrypted snapshots can be shared cross-account.
+    </p>
+
+    <h3>RDS Encryption</h3>
+    <p>
+        Must be enabled at DB creation. Encrypts the underlying storage,
+        automated backups, read replicas and snapshots.
+    </p>
+
+    <h2 id="security">Best Practices</h2>
+    <ul>
+        <li>Use <strong>Customer Managed Keys</strong> for sensitive data requiring audit, rotation control and cross-account access</li>
+        <li>Enable <strong>CloudTrail</strong> to log all KMS API calls — provides full audit history</li>
+        <li>Apply <strong>least privilege</strong> in key policies — separate key administrators from key users</li>
+        <li>Enable <strong>automatic key rotation</strong> for CMKs</li>
+        <li>Never delete a KMS key without ensuring all encrypted data has been re-encrypted or deleted — key deletion is irreversible after a 7–30 day waiting period</li>
+    </ul>
+
+    <h2 id="architecture">Architecture Overview</h2>
+    <pre>
+Application
+    │
+    ▼
+KMS GenerateDataKey API
+    │
+    ├── Returns: Plaintext Data Key (use to encrypt data)
+    └── Returns: Encrypted Data Key (store alongside data)
+
+Application encrypts data with Plaintext Data Key
+→ Discards Plaintext Data Key from memory
+→ Stores Encrypted Data Key with ciphertext
+
+To decrypt:
+Application calls KMS Decrypt API with Encrypted Data Key
+→ KMS returns Plaintext Data Key
+→ Application decrypts data
+    </pre>
+
+    <h2 id="usecases">Real-World Use Cases</h2>
+    <ul>
+        <li>Encrypt S3 buckets containing sensitive customer data</li>
+        <li>Encrypt RDS databases for compliance (HIPAA, PCI-DSS, GDPR)</li>
+        <li>Encrypt EBS volumes storing application data</li>
+        <li>Securely store and rotate application secrets</li>
+        <li>Enforce encryption policies across all AWS services from a central key store</li>
+    </ul>
+
+    <h2 id="exam">AWS Solutions Architect Exam Notes</h2>
+    <ul>
+        <li><strong>AWS Managed Keys</strong> — free, auto-rotated, but no control over key policy</li>
+        <li><strong>Customer Managed Keys</strong> — $1/month, full control, support custom key policies</li>
+        <li>KMS uses <strong>envelope encryption</strong> — data encrypted with a data key, data key encrypted with KMS key</li>
+        <li><strong>SSE-KMS</strong> provides an audit trail in CloudTrail — know when and by whom keys were used</li>
+        <li>KMS keys are <strong>regional</strong> — to share encrypted data cross-region, you must re-encrypt</li>
+        <li>Deleting a CMK has a <strong>waiting period of 7–30 days</strong> — cannot be cancelled after deletion</li>
+        <li>EBS encryption must be enabled at <strong>volume creation</strong> — cannot encrypt an existing unencrypted volume directly</li>
+        <li>To encrypt unencrypted EBS: create snapshot → copy snapshot with encryption → restore</li>
+    </ul>
+
+    <h2 id="summary">Key Takeaways</h2>
+    <ul>
+        <li>KMS centralises encryption key management across all AWS services</li>
+        <li>Use Customer Managed Keys for compliance, auditing and cross-account use cases</li>
+        <li>Envelope encryption is the mechanism behind all KMS-based encryption in AWS</li>
+        <li>CloudTrail logs every KMS API call — essential for compliance audit trails</li>
+        <li>Never hard-code encryption keys — always use KMS or Secrets Manager</li>
+    </ul>
+
+    <div class="navigation-buttons">
+        <a href="solutions-architect.html" class="nav-btn">← Solutions Architect</a>
+        <a href="cloudtrail.html" class="nav-btn">Next: CloudTrail →</a>
+    </div>
+
+</section>
+
+<footer>
+    <div class="footer-container">
+        <div class="footer-logo">🚀 Tech Learning Hub</div>
+        <div class="footer-links">
+            <a href="index.html">Home</a>
+            <a href="aws-learning.html">AWS Learning</a>
+            <a href="solutions-architect.html">Solutions Architect</a>
+        </div>
+        <div class="footer-socials">
+            <a href="https://github.com/janvipatel1910" target="_blank"><i class="fa-brands fa-github"></i></a>
+            <a href="https://www.linkedin.com/in/janvipatel-data" target="_blank"><i class="fa-brands fa-linkedin"></i></a>
+            <a href="mailto:janvi001patel2001@gmail.com"><i class="fa-solid fa-envelope"></i></a>
+        </div>
+    </div>
+    <p class="footer-copy">© 2026 Tech Learning Hub | Learn • Build • Grow 🚀</p>
+</footer>
+<script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AWS SQS | Tech Learning Hub</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+</head>
+<body>
+<nav class="navbar">
+    <div class="logo">🚀 Tech Learning Hub</div>
+    <button id="dark-mode-toggle">🌙</button>
+    <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="aws-learning.html">AWS Learning</a></li>
+        <li><a href="solutions-architect.html">Solutions Architect</a></li>
+    </ul>
+</nav>
+
+<section class="lesson-content">
+
+    <h1>📨 Amazon Simple Queue Service (SQS)</h1>
+
+    <div class="lesson-header">
+        <span>Messaging Service</span>
+        <span>Decoupling</span>
+        <span>AWS Solutions Architect Associate</span>
+        <span>Very High Exam Importance</span>
+    </div>
+
+    <div class="lesson-nav">
+        <a href="#overview">Overview</a>
+        <a href="#features">Features</a>
+        <a href="#types">Queue Types</a>
+        <a href="#concepts">Core Concepts</a>
+        <a href="#security">Security</a>
+        <a href="#architecture">Architecture</a>
+        <a href="#usecases">Use Cases</a>
+        <a href="#exam">Exam Notes</a>
+        <a href="#summary">Summary</a>
+    </div>
+
+    <h2 id="overview">Service Overview</h2>
+    <p>
+        Amazon Simple Queue Service (SQS) is a fully managed message queuing service
+        that enables you to decouple and scale microservices, distributed systems
+        and serverless applications.
+    </p>
+    <p>
+        SQS eliminates the complexity and overhead associated with managing and
+        operating message-oriented middleware. Producers send messages to the queue;
+        consumers poll the queue and process messages independently.
+    </p>
+
+    <h2 id="features">Key Features</h2>
+    <ul>
+        <li>Fully managed — no servers to provision or maintain</li>
+        <li>Unlimited throughput and unlimited number of messages in a queue</li>
+        <li>Messages retained for up to 14 days (default 4 days)</li>
+        <li>Supports messages up to 256KB in size</li>
+        <li>At-least-once delivery guaranteed</li>
+        <li>Dead Letter Queues (DLQ) for handling failed messages</li>
+        <li>Server-side encryption using AWS KMS</li>
+        <li>Long polling to reduce empty responses and cost</li>
+    </ul>
+
+    <h2 id="types">Queue Types</h2>
+
+    <h3>Standard Queue</h3>
+    <ul>
+        <li>Nearly unlimited throughput</li>
+        <li><strong>At-least-once delivery</strong> — messages may be delivered more than once</li>
+        <li><strong>Best-effort ordering</strong> — messages may arrive out of order</li>
+        <li>Best for maximum throughput where exact ordering is not required</li>
+    </ul>
+
+    <h3>FIFO Queue (First-In-First-Out)</h3>
+    <ul>
+        <li>Up to 3,000 messages per second with batching (300 without)</li>
+        <li><strong>Exactly-once processing</strong> — duplicates are eliminated</li>
+        <li><strong>Strict ordering</strong> — messages are delivered in the exact order they are sent</li>
+        <li>Best for financial transactions, order processing and any workflow requiring strict ordering</li>
+        <li>Queue name must end in <code>.fifo</code></li>
+    </ul>
+
+    <h2 id="concepts">Core Concepts</h2>
+
+    <h3>Message Visibility Timeout</h3>
+    <p>
+        When a consumer reads a message, it becomes invisible to other consumers
+        for the visibility timeout period (default 30 seconds, max 12 hours).
+        If the consumer does not delete the message within this time,
+        it becomes visible again and another consumer can process it.
+    </p>
+
+    <h3>Dead Letter Queue (DLQ)</h3>
+    <p>
+        A DLQ is a separate queue that receives messages that could not be
+        successfully processed after a maximum number of receive attempts
+        (MaxReceiveCount). Used for debugging and isolating failed messages
+        without blocking the main queue.
+    </p>
+
+    <h3>Long Polling</h3>
+    <p>
+        Long polling waits up to 20 seconds for a message to arrive before
+        returning an empty response. This reduces the number of empty API calls,
+        lowering costs and reducing latency compared to short polling.
+        Always prefer long polling in production.
+    </p>
+
+    <h3>Message Groups (FIFO)</h3>
+    <p>
+        In FIFO queues, messages with the same MessageGroupId are processed
+        in order. Different group IDs allow parallel processing while maintaining
+        order within each group.
+    </p>
+
+    <h3>Delay Queues</h3>
+    <p>
+        Delay queues postpone the delivery of new messages for a specified time
+        (0–900 seconds). Messages are invisible to consumers for the delay period.
+    </p>
+
+    <h2 id="security">Security Considerations</h2>
+    <ul>
+        <li>Use <strong>IAM policies</strong> and <strong>SQS resource policies</strong> to control access</li>
+        <li>Enable <strong>SSE-SQS or SSE-KMS</strong> to encrypt messages at rest</li>
+        <li>Use <strong>VPC Endpoints</strong> to keep SQS traffic within the AWS network</li>
+        <li>Set appropriate <strong>visibility timeouts</strong> to prevent duplicate processing</li>
+        <li>Use <strong>DLQs</strong> to capture and analyse failed messages without data loss</li>
+    </ul>
+
+    <h2 id="architecture">Architecture Overview</h2>
+    <pre>
+Producer (EC2 / Lambda / Application)
+        │
+        ▼
+SQS Queue (buffer / decoupler)
+        │
+        ▼
+Consumer (EC2 / Lambda — polls the queue)
+        │
+        ├── Success → Delete message from queue
+        │
+        └── Failure (after MaxReceiveCount)
+                    ▼
+              Dead Letter Queue (DLQ)
+    </pre>
+
+    <h3>SQS + Auto Scaling Pattern</h3>
+    <pre>
+SQS Queue (growing backlog)
+        │
+        ▼
+CloudWatch Alarm (queue depth metric)
+        │
+        ▼
+Auto Scaling Group (scale EC2 workers based on queue depth)
+    </pre>
+
+    <h2 id="usecases">Real-World Use Cases</h2>
+    <ul>
+        <li>Order processing — decouple order placement from fulfilment system</li>
+        <li>Image/video processing — queue uploaded files for background processing</li>
+        <li>Email delivery — buffer email send requests to avoid overwhelming the mail service</li>
+        <li>Microservices communication — prevent one slow service from blocking others</li>
+        <li>Auto Scaling trigger — scale workers based on SQS queue depth</li>
+    </ul>
+
+    <h2 id="exam">AWS Solutions Architect Exam Notes</h2>
+    <ul>
+        <li><strong>Standard</strong> = at-least-once, best-effort order; <strong>FIFO</strong> = exactly-once, strict order</li>
+        <li><strong>Visibility timeout</strong> — message hidden during processing; re-appears if not deleted in time</li>
+        <li><strong>Dead Letter Queue</strong> — captures messages that fail processing repeatedly</li>
+        <li><strong>Long polling</strong> (up to 20 seconds) reduces cost — always prefer over short polling</li>
+        <li>SQS is the go-to answer for <strong>decoupling</strong> components in architecture questions</li>
+        <li>SQS + Auto Scaling = scale workers dynamically based on queue depth</li>
+        <li>FIFO queue names must end in <strong>.fifo</strong></li>
+        <li>Max message size is <strong>256KB</strong> — use S3 + SQS for larger payloads (Extended Client Library)</li>
+        <li>Max retention period is <strong>14 days</strong></li>
+        <li>SQS does <strong>not</strong> push messages — consumers must <strong>poll</strong> the queue</li>
+    </ul>
+
+    <h2 id="summary">Key Takeaways</h2>
+    <ul>
+        <li>SQS decouples producers from consumers — a core pattern for resilient architectures</li>
+        <li>Use Standard for maximum throughput; FIFO for strict ordering and exactly-once delivery</li>
+        <li>Always configure a Dead Letter Queue to capture failed messages</li>
+        <li>Use long polling to reduce cost and improve responsiveness</li>
+        <li>SQS + Lambda or SQS + Auto Scaling are the most common exam architecture patterns</li>
+    </ul>
+
+    <div class="navigation-buttons">
+        <a href="solutions-architect.html" class="nav-btn">← Solutions Architect</a>
+        <a href="sns.html" class="nav-btn">Next: SNS →</a>
+    </div>
+
+</section>
+
+<footer>
+    <div class="footer-container">
+        <div class="footer-logo">🚀 Tech Learning Hub</div>
+        <div class="footer-links">
+            <a href="index.html">Home</a>
+            <a href="aws-learning.html">AWS Learning</a>
+            <a href="solutions-architect.html">Solutions Architect</a>
+        </div>
+        <div class="footer-socials">
+            <a href="https://github.com/janvipatel1910" target="_blank"><i class="fa-brands fa-github"></i></a>
+            <a href="https://www.linkedin.com/in/janvipatel-data" target="_blank"><i class="fa-brands fa-linkedin"></i></a>
+            <a href="mailto:janvi001patel2001@gmail.com"><i class="fa-solid fa-envelope"></i></a>
+        </div>
+    </div>
+    <p class="footer-copy">© 2026 Tech Learning Hub | Learn • Build • Grow 🚀</p>
+</footer>
+<script src="script.js"></script>
+</body>
+</html>
