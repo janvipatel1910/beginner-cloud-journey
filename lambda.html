@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AWS Lambda | Tech Learning Hub</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+</head>
+
+<body>
+
+<nav class="navbar">
+    <div class="logo">🚀 Tech Learning Hub</div>
+    <button id="dark-mode-toggle">🌙</button>
+    <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="aws-learning.html">AWS Learning</a></li>
+        <li><a href="solutions-architect.html">Solutions Architect</a></li>
+    </ul>
+</nav>
+
+<section class="lesson-content">
+
+    <h1>λ AWS Lambda</h1>
+
+    <div class="lesson-header">
+        <span>Serverless Compute</span>
+        <span>Event-Driven</span>
+        <span>AWS Solutions Architect Associate</span>
+        <span>High Exam Importance</span>
+    </div>
+
+    <div class="lesson-nav">
+        <a href="#overview">Overview</a>
+        <a href="#features">Features</a>
+        <a href="#concepts">Core Concepts</a>
+        <a href="#triggers">Event Triggers</a>
+        <a href="#security">Security</a>
+        <a href="#architecture">Architecture</a>
+        <a href="#usecases">Use Cases</a>
+        <a href="#exam">Exam Notes</a>
+        <a href="#summary">Summary</a>
+    </div>
+
+    <h2 id="overview">Service Overview</h2>
+
+    <p>
+        AWS Lambda is a serverless compute service that lets you run code
+        without provisioning or managing servers. You upload your code and
+        Lambda handles everything required to run and scale it with high availability.
+    </p>
+
+    <p>
+        With Lambda, you pay only for the compute time you consume —
+        there is no charge when your code is not running.
+        Lambda automatically scales from a few requests per day to thousands per second.
+    </p>
+
+    <h2 id="features">Key Features</h2>
+
+    <ul>
+        <li>No servers to manage — fully serverless</li>
+        <li>Automatic scaling — from 1 to thousands of concurrent executions</li>
+        <li>Pay per use — billed per request and per millisecond of execution time</li>
+        <li>Supports multiple runtimes — Python, Node.js, Java, Go, Ruby, .NET, and custom runtimes</li>
+        <li>Up to 15 minutes execution time per invocation</li>
+        <li>Up to 10GB memory (CPU scales proportionally)</li>
+        <li>Integrates natively with most AWS services</li>
+        <li>Lambda Layers — share common libraries and dependencies across functions</li>
+        <li>Lambda@Edge — run Lambda functions at CloudFront edge locations globally</li>
+    </ul>
+
+    <h2 id="concepts">Core Concepts</h2>
+
+    <h3>Function</h3>
+    <p>
+        A Lambda function is the unit of deployment — it contains your code
+        and configuration (runtime, memory, timeout, environment variables, IAM role).
+        Each function is stateless — it does not retain data between invocations.
+    </p>
+
+    <h3>Handler</h3>
+    <p>
+        The handler is the entry point method in your code that Lambda calls
+        when the function is invoked. It receives an event object and a context object.
+    </p>
+
+    <h3>Event Object</h3>
+    <p>
+        The event contains the data passed to the function by the invoking service
+        (e.g. an S3 upload notification, an API Gateway request, or a DynamoDB Stream record).
+    </p>
+
+    <h3>Execution Environment</h3>
+    <p>
+        Lambda creates an execution environment with your code and dependencies.
+        For repeated invocations, Lambda may reuse the same environment
+        (warm start) — objects declared outside the handler persist between invocations
+        in the same environment, which can improve performance.
+    </p>
+
+    <h3>Cold Start</h3>
+    <p>
+        A cold start occurs when Lambda creates a new execution environment
+        for the first time or after a period of inactivity. This adds latency
+        (typically 100ms–1s). Provisioned Concurrency can eliminate cold starts
+        for latency-sensitive applications.
+    </p>
+
+    <h3>Concurrency</h3>
+    <p>
+        Lambda scales by running multiple instances of your function simultaneously.
+        The default concurrency limit is 1,000 per region (can be increased).
+        You can set reserved concurrency to guarantee capacity for a function
+        or limit its maximum concurrency.
+    </p>
+
+    <h3>Layers</h3>
+    <p>
+        Lambda Layers let you manage and share common dependencies (libraries,
+        frameworks, custom runtimes) separately from your function code.
+        A function can use up to 5 layers.
+    </p>
+
+    <h2 id="triggers">Event Triggers</h2>
+
+    <p>Lambda can be triggered by many AWS services:</p>
+
+    <ul>
+        <li><strong>API Gateway</strong> — build serverless REST/HTTP APIs</li>
+        <li><strong>S3</strong> — trigger on object uploads, deletes or modifications</li>
+        <li><strong>DynamoDB Streams</strong> — process database changes in real time</li>
+        <li><strong>SNS / SQS</strong> — process messages from queues and notification topics</li>
+        <li><strong>CloudWatch Events / EventBridge</strong> — run on a schedule (cron) or in response to AWS events</li>
+        <li><strong>Kinesis</strong> — process streaming data in real time</li>
+        <li><strong>ALB</strong> — serve HTTP requests via Application Load Balancer</li>
+        <li><strong>Cognito</strong> — run custom authentication flows</li>
+    </ul>
+
+    <h2 id="security">Security Considerations</h2>
+
+    <ul>
+        <li>Assign an <strong>IAM Execution Role</strong> to each Lambda function — grant only the permissions needed</li>
+        <li>Use <strong>environment variables</strong> for configuration — store secrets in AWS Secrets Manager or Parameter Store, not in plain text</li>
+        <li>Deploy Lambda functions inside a <strong>VPC</strong> when they need to access RDS, ElastiCache or other private resources</li>
+        <li>Use <strong>resource-based policies</strong> to control which services can invoke the function</li>
+        <li>Enable <strong>AWS X-Ray</strong> tracing to monitor function performance and debug issues</li>
+    </ul>
+
+    <h2 id="architecture">Architecture Overview</h2>
+
+    <pre>
+Event Source (API Gateway / S3 / DynamoDB Streams / SQS)
+        │
+        ▼
+AWS Lambda Function
+        │
+        ├── Read from / Write to DynamoDB
+        │
+        ├── Send notification via SNS
+        │
+        └── Store result in S3
+    </pre>
+
+    <h3>Serverless API Architecture</h3>
+    <pre>
+Client (browser / mobile app)
+        │
+        ▼
+Amazon API Gateway (HTTP endpoint)
+        │
+        ▼
+AWS Lambda (business logic)
+        │
+        ▼
+Amazon DynamoDB (data storage)
+    </pre>
+
+    <h2 id="usecases">Real-World Use Cases</h2>
+
+    <ul>
+        <li>Serverless REST APIs — API Gateway + Lambda + DynamoDB</li>
+        <li>Image processing — resize/compress images automatically when uploaded to S3</li>
+        <li>Real-time data processing — process Kinesis or DynamoDB Streams records</li>
+        <li>Scheduled tasks — run cron jobs using EventBridge without managing servers</li>
+        <li>Chatbots and voice assistants — backend logic for Alexa Skills or Lex bots</li>
+        <li>ETL pipelines — transform and load data between AWS services</li>
+    </ul>
+
+    <h2 id="exam">AWS Solutions Architect Exam Notes</h2>
+
+    <ul>
+        <li>Lambda is <strong>serverless</strong> — no servers to manage, automatic scaling</li>
+        <li>Maximum execution timeout is <strong>15 minutes</strong> — not suitable for long-running processes</li>
+        <li>Lambda is <strong>stateless</strong> — do not rely on local storage between invocations</li>
+        <li><strong>Cold starts</strong> add latency — use Provisioned Concurrency to eliminate them for critical functions</li>
+        <li>Lambda functions inside a VPC need a <strong>NAT Gateway</strong> to access the internet</li>
+        <li>Use <strong>Lambda@Edge</strong> to run code at CloudFront edge locations globally</li>
+        <li><strong>API Gateway + Lambda + DynamoDB</strong> is the classic serverless architecture pattern</li>
+        <li>Lambda can be triggered <strong>synchronously</strong> (API Gateway, ALB) or <strong>asynchronously</strong> (S3, SNS)</li>
+        <li>Default concurrency limit is <strong>1,000 per region</strong> — use reserved concurrency to isolate critical functions</li>
+    </ul>
+
+    <h2 id="summary">Key Takeaways</h2>
+
+    <ul>
+        <li>Lambda lets you run code without managing any infrastructure</li>
+        <li>It is event-driven — triggered by S3, DynamoDB, API Gateway, SQS, and many more</li>
+        <li>Pay only for actual execution time — extremely cost-efficient for variable workloads</li>
+        <li>Assign least-privilege IAM Execution Roles and never hard-code credentials</li>
+        <li>Combine with API Gateway and DynamoDB for a fully serverless application stack</li>
+    </ul>
+
+    <div class="navigation-buttons">
+        <a href="dynamodb.html" class="nav-btn">← DynamoDB</a>
+        <a href="solutions-architect.html" class="nav-btn">Back to Solutions Architect →</a>
+    </div>
+
+</section>
+
+<footer>
+    <div class="footer-container">
+        <div class="footer-logo">🚀 Tech Learning Hub</div>
+        <div class="footer-links">
+            <a href="index.html">Home</a>
+            <a href="aws-learning.html">AWS Learning</a>
+            <a href="solutions-architect.html">Solutions Architect</a>
+        </div>
+        <div class="footer-socials">
+            <a href="https://github.com/janvipatel1910" target="_blank">
+                <i class="fa-brands fa-github"></i>
+            </a>
+            <a href="https://www.linkedin.com/in/janvipatel-data" target="_blank">
+                <i class="fa-brands fa-linkedin"></i>
+            </a>
+            <a href="mailto:janvi001patel2001@gmail.com">
+                <i class="fa-solid fa-envelope"></i>
+            </a>
+        </div>
+    </div>
+    <p class="footer-copy">© 2026 Tech Learning Hub | Learn • Build • Grow 🚀</p>
+</footer>
+
+<script src="script.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AWS RDS | Tech Learning Hub</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+</head>
+
+<body>
+
+<nav class="navbar">
+    <div class="logo">🚀 Tech Learning Hub</div>
+    <button id="dark-mode-toggle">🌙</button>
+    <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="aws-learning.html">AWS Learning</a></li>
+        <li><a href="solutions-architect.html">Solutions Architect</a></li>
+    </ul>
+</nav>
+
+<section class="lesson-content">
+
+    <h1>🗄️ Amazon Relational Database Service (RDS)</h1>
+
+    <div class="lesson-header">
+        <span>Database Service</span>
+        <span>Managed Service</span>
+        <span>AWS Solutions Architect Associate</span>
+        <span>High Exam Importance</span>
+    </div>
+
+    <div class="lesson-nav">
+        <a href="#overview">Overview</a>
+        <a href="#features">Features</a>
+        <a href="#engines">Database Engines</a>
+        <a href="#concepts">Core Concepts</a>
+        <a href="#security">Security</a>
+        <a href="#architecture">Architecture</a>
+        <a href="#usecases">Use Cases</a>
+        <a href="#exam">Exam Notes</a>
+        <a href="#summary">Summary</a>
+    </div>
+
+    <h2 id="overview">Service Overview</h2>
+
+    <p>
+        Amazon Relational Database Service (RDS) is a managed database service
+        that makes it easy to set up, operate and scale a relational database
+        in the cloud. RDS handles routine database tasks such as provisioning,
+        patching, backup, recovery, failure detection and repair.
+    </p>
+
+    <p>
+        With RDS, you focus on your application and data — not on managing
+        database infrastructure.
+    </p>
+
+    <h2 id="features">Key Features</h2>
+
+    <ul>
+        <li>Automated backups with point-in-time recovery (up to 35 days retention)</li>
+        <li>Multi-AZ deployments for high availability and automatic failover</li>
+        <li>Read Replicas to improve read performance and reduce load on primary</li>
+        <li>Automated software patching and maintenance windows</li>
+        <li>Storage Auto Scaling — automatically increases storage when needed</li>
+        <li>Encryption at rest and in transit</li>
+        <li>Monitoring via Amazon CloudWatch and Enhanced Monitoring</li>
+    </ul>
+
+    <h2 id="engines">Supported Database Engines</h2>
+
+    <ul>
+        <li><strong>Amazon Aurora</strong> — AWS's own MySQL/PostgreSQL-compatible engine, up to 5x faster than MySQL</li>
+        <li><strong>MySQL</strong> — most popular open-source relational database</li>
+        <li><strong>PostgreSQL</strong> — advanced open-source relational database</li>
+        <li><strong>MariaDB</strong> — community-developed MySQL fork</li>
+        <li><strong>Oracle</strong> — enterprise relational database</li>
+        <li><strong>Microsoft SQL Server</strong> — enterprise relational database from Microsoft</li>
+    </ul>
+
+    <h2 id="concepts">Core Concepts</h2>
+
+    <h3>Multi-AZ Deployment</h3>
+    <p>
+        In a Multi-AZ deployment, RDS automatically provisions and maintains
+        a <strong>synchronous standby replica</strong> in a different Availability Zone.
+        If the primary instance fails, RDS automatically fails over to the standby
+        with no manual intervention required. The standby is not used for read traffic —
+        it exists solely for failover.
+    </p>
+
+    <h3>Read Replicas</h3>
+    <p>
+        Read Replicas use <strong>asynchronous replication</strong> to create
+        read-only copies of your database. They can be used to offload read traffic
+        from the primary database and improve performance. Read Replicas can be
+        promoted to standalone databases if needed.
+    </p>
+    <ul>
+        <li>Up to 5 Read Replicas per primary instance (15 for Aurora)</li>
+        <li>Can be in the same region or a different region (cross-region Read Replica)</li>
+        <li>Read Replicas do <strong>not</strong> provide automatic failover — use Multi-AZ for that</li>
+    </ul>
+
+    <h3>Automated Backups</h3>
+    <p>
+        RDS automatically takes daily backups of your database and captures
+        transaction logs throughout the day. This enables point-in-time recovery
+        to any second within your retention period (1–35 days).
+    </p>
+
+    <h3>DB Snapshots</h3>
+    <p>
+        Manual snapshots are user-initiated backups stored in S3. Unlike automated
+        backups, manual snapshots are retained until you explicitly delete them.
+    </p>
+
+    <h3>Amazon Aurora</h3>
+    <p>
+        Aurora is AWS's cloud-native relational database engine, compatible
+        with MySQL and PostgreSQL. It features:
+    </p>
+    <ul>
+        <li>Up to 5x the throughput of standard MySQL, 3x PostgreSQL</li>
+        <li>Storage auto-scales in 10GB increments up to 128TB</li>
+        <li>Up to 15 Read Replicas with sub-10ms replica lag</li>
+        <li>Aurora Serverless — automatically scales compute capacity up and down</li>
+        <li>Multi-Master — multiple write nodes for highest write availability</li>
+    </ul>
+
+    <h2 id="security">Security Considerations</h2>
+
+    <ul>
+        <li>Always deploy RDS instances in <strong>private subnets</strong> within a VPC</li>
+        <li>Use <strong>Security Groups</strong> to allow only your application servers to connect</li>
+        <li>Enable <strong>encryption at rest</strong> using AWS KMS (must be enabled at creation)</li>
+        <li>Enable <strong>SSL/TLS encryption in transit</strong> for all database connections</li>
+        <li>Use <strong>IAM database authentication</strong> instead of password-based auth where possible</li>
+        <li>Enable <strong>deletion protection</strong> to prevent accidental database deletion</li>
+    </ul>
+
+    <h2 id="architecture">Architecture Overview</h2>
+
+    <pre>
+Application (EC2 / Lambda — private subnet)
+        │
+        ▼
+RDS Primary Instance (private subnet — AZ-A)
+        │
+        ├── Synchronous replication
+        │         ▼
+        │   RDS Standby (Multi-AZ — AZ-B) ← automatic failover only
+        │
+        └── Asynchronous replication
+                  ▼
+            Read Replica (AZ-C) ← read traffic only
+    </pre>
+
+    <h2 id="usecases">Real-World Use Cases</h2>
+
+    <ul>
+        <li>E-commerce platforms storing product catalogues, orders and customer data</li>
+        <li>Banking and financial applications requiring ACID-compliant transactions</li>
+        <li>Content management systems (WordPress, Drupal) backed by MySQL/Aurora</li>
+        <li>SaaS applications with multi-tenant relational data</li>
+        <li>Reporting databases using Read Replicas to offload heavy queries from production</li>
+    </ul>
+
+    <h2 id="exam">AWS Solutions Architect Exam Notes</h2>
+
+    <ul>
+        <li><strong>Multi-AZ</strong> = high availability and automatic failover (synchronous replication)</li>
+        <li><strong>Read Replicas</strong> = performance and scalability (asynchronous replication) — NOT for failover</li>
+        <li>Multi-AZ standby cannot be used for reads — it is for failover only</li>
+        <li>Encryption must be enabled <strong>at creation</strong> — cannot encrypt an existing unencrypted instance directly</li>
+        <li>To encrypt an unencrypted DB: take a snapshot → copy snapshot with encryption → restore from encrypted snapshot</li>
+        <li><strong>Aurora</strong> is up to 5x faster than MySQL and supports up to 15 Read Replicas</li>
+        <li>RDS is a <strong>managed service</strong> — you cannot SSH into the underlying instance</li>
+        <li>Automated backups are enabled by default and retained for 1–35 days</li>
+        <li>Manual snapshots persist <strong>indefinitely</strong> until deleted</li>
+    </ul>
+
+    <h2 id="summary">Key Takeaways</h2>
+
+    <ul>
+        <li>RDS is a managed relational database — no server management required</li>
+        <li>Multi-AZ provides automatic failover across Availability Zones</li>
+        <li>Read Replicas improve read performance — not a substitute for Multi-AZ</li>
+        <li>Always deploy in private subnets with encryption enabled</li>
+        <li>Aurora is AWS's highest-performance relational engine — consider it for new workloads</li>
+    </ul>
+
+    <div class="navigation-buttons">
+        <a href="auto-scaling.html" class="nav-btn">← Auto Scaling</a>
+        <a href="dynamodb.html" class="nav-btn">Next: DynamoDB →</a>
+    </div>
+
+</section>
+
+<footer>
+    <div class="footer-container">
+        <div class="footer-logo">🚀 Tech Learning Hub</div>
+        <div class="footer-links">
+            <a href="index.html">Home</a>
+            <a href="aws-learning.html">AWS Learning</a>
+            <a href="solutions-architect.html">Solutions Architect</a>
+        </div>
+        <div class="footer-socials">
+            <a href="https://github.com/janvipatel1910" target="_blank">
+                <i class="fa-brands fa-github"></i>
+            </a>
+            <a href="https://www.linkedin.com/in/janvipatel-data" target="_blank">
+                <i class="fa-brands fa-linkedin"></i>
+            </a>
+            <a href="mailto:janvi001patel2001@gmail.com">
+                <i class="fa-solid fa-envelope"></i>
+            </a>
+        </div>
+    </div>
+    <p class="footer-copy">© 2026 Tech Learning Hub | Learn • Build • Grow 🚀</p>
+</footer>
+
+<script src="script.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AWS Route 53 | Tech Learning Hub</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+</head>
+
+<body>
+
+<nav class="navbar">
+    <div class="logo">🚀 Tech Learning Hub</div>
+    <button id="dark-mode-toggle">🌙</button>
+    <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="aws-learning.html">AWS Learning</a></li>
+        <li><a href="solutions-architect.html">Solutions Architect</a></li>
+    </ul>
+</nav>
+
+<section class="lesson-content">
+
+    <h1>📡 Amazon Route 53</h1>
+
+    <div class="lesson-header">
+        <span>DNS Service</span>
+        <span>Global AWS Service</span>
+        <span>AWS Solutions Architect Associate</span>
+        <span>High Exam Importance</span>
+    </div>
+
+    <div class="lesson-nav">
+        <a href="#overview">Overview</a>
+        <a href="#features">Features</a>
+        <a href="#concepts">Core Concepts</a>
+        <a href="#routing">Routing Policies</a>
+        <a href="#security">Security</a>
+        <a href="#architecture">Architecture</a>
+        <a href="#usecases">Use Cases</a>
+        <a href="#exam">Exam Notes</a>
+        <a href="#summary">Summary</a>
+    </div>
+
+    <h2 id="overview">Service Overview</h2>
+
+    <p>
+        Amazon Route 53 is a highly available and scalable cloud Domain Name System (DNS)
+        web service. It translates human-readable domain names (like www.example.com)
+        into the numeric IP addresses that computers use to connect to each other.
+    </p>
+
+    <p>
+        Route 53 is named after port 53, the port used for DNS traffic.
+        It is a global AWS service — not tied to any specific region.
+    </p>
+
+    <h2 id="features">Key Features</h2>
+
+    <ul>
+        <li>Domain registration — purchase and manage domain names directly in AWS</li>
+        <li>DNS routing — route traffic to AWS resources or external endpoints</li>
+        <li>Health checks — monitor the health of endpoints and route traffic away from unhealthy ones</li>
+        <li>Multiple routing policies for different traffic management needs</li>
+        <li>100% availability SLA — guaranteed uptime for DNS resolution</li>
+        <li>Integration with AWS services — ALB, CloudFront, S3, EC2 and more</li>
+        <li>Private hosted zones — DNS resolution within a VPC</li>
+    </ul>
+
+    <h2 id="concepts">Core Concepts</h2>
+
+    <h3>Hosted Zones</h3>
+    <p>
+        A hosted zone is a container for DNS records for a specific domain.
+        There are two types:
+    </p>
+    <ul>
+        <li><strong>Public Hosted Zone</strong> — routes traffic on the public internet</li>
+        <li><strong>Private Hosted Zone</strong> — routes traffic within one or more VPCs</li>
+    </ul>
+
+    <h3>DNS Records</h3>
+    <ul>
+        <li><strong>A Record</strong> — maps a domain name to an IPv4 address</li>
+        <li><strong>AAAA Record</strong> — maps a domain name to an IPv6 address</li>
+        <li><strong>CNAME Record</strong> — maps a domain name to another domain name (cannot be used for root domain)</li>
+        <li><strong>Alias Record</strong> — AWS-specific record that maps a domain to an AWS resource (e.g. ALB, CloudFront). Can be used for root domain and is free of charge</li>
+        <li><strong>MX Record</strong> — routes email to mail servers</li>
+        <li><strong>TXT Record</strong> — stores text information, used for domain verification</li>
+    </ul>
+
+    <h3>TTL (Time to Live)</h3>
+    <p>
+        TTL defines how long a DNS resolver caches a record before
+        requesting a fresh copy from Route 53. Lower TTL means faster
+        propagation of DNS changes but more queries to Route 53.
+    </p>
+
+    <h2 id="routing">Routing Policies</h2>
+
+    <h3>Simple Routing</h3>
+    <p>
+        Routes traffic to a single resource. If multiple values are specified,
+        Route 53 returns a random one. Does not support health checks on individual records.
+    </p>
+
+    <h3>Weighted Routing</h3>
+    <p>
+        Routes a percentage of traffic to different resources based on assigned weights.
+        Useful for A/B testing or gradually shifting traffic between deployments.
+    </p>
+
+    <h3>Latency-Based Routing</h3>
+    <p>
+        Routes traffic to the AWS Region that provides the lowest latency for the user.
+        Ideal for globally distributed applications.
+    </p>
+
+    <h3>Failover Routing</h3>
+    <p>
+        Routes traffic to a primary resource when it is healthy, and automatically
+        fails over to a secondary resource when the primary becomes unhealthy.
+        Requires health checks.
+    </p>
+
+    <h3>Geolocation Routing</h3>
+    <p>
+        Routes traffic based on the geographic location of the user.
+        Useful for serving region-specific content or complying with data residency requirements.
+    </p>
+
+    <h3>Geoproximity Routing</h3>
+    <p>
+        Routes traffic based on the geographic location of resources and users.
+        You can shift traffic by adjusting a bias value. Requires Route 53 Traffic Flow.
+    </p>
+
+    <h3>Multi-Value Answer Routing</h3>
+    <p>
+        Returns multiple healthy IP addresses in response to DNS queries.
+        Similar to Simple Routing but with health checks on each record.
+        Not a substitute for a load balancer, but improves availability.
+    </p>
+
+    <h2 id="security">Security Considerations</h2>
+
+    <ul>
+        <li>Use <strong>DNSSEC</strong> to protect against DNS spoofing attacks</li>
+        <li>Use <strong>private hosted zones</strong> for internal AWS resources to keep DNS resolution off the public internet</li>
+        <li>Configure <strong>health checks</strong> to automatically remove unhealthy endpoints from DNS responses</li>
+        <li>Use IAM policies to restrict who can modify Route 53 hosted zones and records</li>
+    </ul>
+
+    <h2 id="architecture">Architecture Overview</h2>
+
+    <pre>
+User types: www.example.com
+        │
+        ▼
+DNS Resolver (ISP)
+        │
+        ▼
+Route 53 Hosted Zone
+        │
+        ├── Health Check: is endpoint healthy?
+        │
+        ▼
+Routing Policy (e.g. Latency / Weighted / Failover)
+        │
+        ▼
+Target Resource (ALB / CloudFront / EC2 / S3)
+    </pre>
+
+    <h2 id="usecases">Real-World Use Cases</h2>
+
+    <ul>
+        <li>Register and manage a custom domain for your website</li>
+        <li>Route traffic across multiple AWS regions using latency-based routing</li>
+        <li>Implement automatic failover from primary to DR site using health checks</li>
+        <li>A/B test new application versions by splitting traffic with weighted routing</li>
+        <li>Serve different content to users in different countries using geolocation routing</li>
+    </ul>
+
+    <h2 id="exam">AWS Solutions Architect Exam Notes</h2>
+
+    <ul>
+        <li>Route 53 is a <strong>global service</strong> — not region-specific</li>
+        <li><strong>Alias records</strong> are free and can point to the root domain — use over CNAME for AWS resources</li>
+        <li>CNAME records <strong>cannot</strong> be used for the root/apex domain (e.g. example.com)</li>
+        <li><strong>Failover routing</strong> requires health checks — primary/secondary setup</li>
+        <li><strong>Weighted routing</strong> is used for blue/green deployments and A/B testing</li>
+        <li><strong>Latency routing</strong> routes to the region with the lowest network latency, not geographic distance</li>
+        <li><strong>Geolocation routing</strong> is based on user location — used for compliance and localized content</li>
+        <li>Health checks can monitor HTTP, HTTPS, TCP endpoints and CloudWatch alarms</li>
+    </ul>
+
+    <h2 id="summary">Key Takeaways</h2>
+
+    <ul>
+        <li>Route 53 is AWS's highly available DNS and domain registration service</li>
+        <li>Hosted zones hold DNS records — public for internet, private for VPCs</li>
+        <li>Use Alias records for AWS resources — they're free and support the root domain</li>
+        <li>Choose the right routing policy for your use case: failover for DR, weighted for A/B, latency for global apps</li>
+        <li>Health checks enable automatic failover and keep traffic away from unhealthy endpoints</li>
+    </ul>
+
+    <div class="navigation-buttons">
+        <a href="cloudfront.html" class="nav-btn">← CloudFront</a>
+        <a href="load-balancer.html" class="nav-btn">Next: Load Balancer →</a>
+    </div>
+
+</section>
+
+<footer>
+    <div class="footer-container">
+        <div class="footer-logo">🚀 Tech Learning Hub</div>
+        <div class="footer-links">
+            <a href="index.html">Home</a>
+            <a href="aws-learning.html">AWS Learning</a>
+            <a href="solutions-architect.html">Solutions Architect</a>
+        </div>
+        <div class="footer-socials">
+            <a href="https://github.com/janvipatel1910" target="_blank">
+                <i class="fa-brands fa-github"></i>
+            </a>
+            <a href="https://www.linkedin.com/in/janvipatel-data" target="_blank">
+                <i class="fa-brands fa-linkedin"></i>
+            </a>
+            <a href="mailto:janvi001patel2001@gmail.com">
+                <i class="fa-solid fa-envelope"></i>
+            </a>
+        </div>
+    </div>
+    <p class="footer-copy">© 2026 Tech Learning Hub | Learn • Build • Grow 🚀</p>
+</footer>
+
+<script src="script.js"></script>
+
+</body>
+</html>

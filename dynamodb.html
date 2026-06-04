@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AWS DynamoDB | Tech Learning Hub</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+</head>
+
+<body>
+
+<nav class="navbar">
+    <div class="logo">🚀 Tech Learning Hub</div>
+    <button id="dark-mode-toggle">🌙</button>
+    <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="aws-learning.html">AWS Learning</a></li>
+        <li><a href="solutions-architect.html">Solutions Architect</a></li>
+    </ul>
+</nav>
+
+<section class="lesson-content">
+
+    <h1>⚡ Amazon DynamoDB</h1>
+
+    <div class="lesson-header">
+        <span>NoSQL Database</span>
+        <span>Serverless</span>
+        <span>AWS Solutions Architect Associate</span>
+        <span>High Exam Importance</span>
+    </div>
+
+    <div class="lesson-nav">
+        <a href="#overview">Overview</a>
+        <a href="#features">Features</a>
+        <a href="#concepts">Core Concepts</a>
+        <a href="#capacity">Capacity Modes</a>
+        <a href="#security">Security</a>
+        <a href="#architecture">Architecture</a>
+        <a href="#usecases">Use Cases</a>
+        <a href="#exam">Exam Notes</a>
+        <a href="#summary">Summary</a>
+    </div>
+
+    <h2 id="overview">Service Overview</h2>
+
+    <p>
+        Amazon DynamoDB is a fully managed, serverless NoSQL database service
+        that provides fast and predictable performance with seamless scalability.
+        It handles trillions of requests per day and supports single-digit millisecond
+        response times at any scale.
+    </p>
+
+    <p>
+        DynamoDB automatically manages the underlying infrastructure — you never
+        need to provision servers, manage patches or worry about capacity planning
+        for storage.
+    </p>
+
+    <h2 id="features">Key Features</h2>
+
+    <ul>
+        <li>Single-digit millisecond performance at any scale</li>
+        <li>Fully serverless — no servers to manage or provision</li>
+        <li>Automatic multi-region replication with Global Tables</li>
+        <li>DynamoDB Streams — capture item-level changes for event-driven processing</li>
+        <li>DynamoDB Accelerator (DAX) — in-memory cache for microsecond read performance</li>
+        <li>Point-in-time recovery (PITR) for up to 35 days</li>
+        <li>TTL (Time to Live) — automatically delete expired items to save cost</li>
+        <li>Transactions — ACID-compliant transactions across multiple items and tables</li>
+    </ul>
+
+    <h2 id="concepts">Core Concepts</h2>
+
+    <h3>Tables, Items and Attributes</h3>
+    <p>
+        DynamoDB organizes data in <strong>tables</strong>. Each table contains
+        <strong>items</strong> (equivalent to rows in SQL). Each item has
+        <strong>attributes</strong> (equivalent to columns), but items in the same
+        table do not need to have the same attributes — DynamoDB is schemaless.
+    </p>
+
+    <h3>Primary Key</h3>
+    <p>
+        Every item must have a unique primary key. There are two types:
+    </p>
+    <ul>
+        <li><strong>Partition Key only</strong> — a single attribute that uniquely identifies each item. DynamoDB uses the partition key's value to distribute data across partitions.</li>
+        <li><strong>Partition Key + Sort Key (Composite)</strong> — two attributes together form the primary key. Multiple items can share the same partition key as long as the sort key differs. Enables range-based queries.</li>
+    </ul>
+
+    <h3>Secondary Indexes</h3>
+    <ul>
+        <li><strong>Global Secondary Index (GSI)</strong> — an index with a different partition key and optional sort key from the base table. Allows queries on non-primary key attributes. Has its own read/write capacity.</li>
+        <li><strong>Local Secondary Index (LSI)</strong> — same partition key as the base table but a different sort key. Must be created at table creation time.</li>
+    </ul>
+
+    <h3>DynamoDB Streams</h3>
+    <p>
+        Streams capture a time-ordered sequence of item-level modifications
+        (inserts, updates, deletes). Commonly used to trigger Lambda functions
+        for event-driven processing — e.g. sending notifications or syncing data.
+    </p>
+
+    <h3>DynamoDB Accelerator (DAX)</h3>
+    <p>
+        DAX is a fully managed, in-memory cache for DynamoDB that delivers
+        up to 10x performance improvement — reducing response times from
+        milliseconds to microseconds for read-heavy workloads.
+        It is API-compatible with DynamoDB — no code changes required.
+    </p>
+
+    <h3>Global Tables</h3>
+    <p>
+        Global Tables provide multi-region, multi-active replication.
+        Your application can read and write to any region and DynamoDB
+        automatically replicates changes to all other regions — ideal for
+        globally distributed applications with low-latency requirements.
+    </p>
+
+    <h2 id="capacity">Capacity Modes</h2>
+
+    <h3>Provisioned Capacity</h3>
+    <p>
+        You specify the number of reads and writes per second (Read Capacity Units
+        and Write Capacity Units). Best when you can predict your traffic.
+        Supports Auto Scaling to adjust capacity automatically.
+    </p>
+
+    <h3>On-Demand Capacity</h3>
+    <p>
+        DynamoDB automatically scales to accommodate any workload.
+        You pay per request — no capacity planning needed.
+        Best for unpredictable or variable traffic patterns.
+    </p>
+
+    <h2 id="security">Security Considerations</h2>
+
+    <ul>
+        <li>Use <strong>IAM policies</strong> to control access to tables and items at a fine-grained level</li>
+        <li>Enable <strong>encryption at rest</strong> using AWS KMS (enabled by default)</li>
+        <li>Use <strong>VPC Endpoints</strong> to access DynamoDB without traffic leaving AWS's network</li>
+        <li>Enable <strong>Point-in-Time Recovery (PITR)</strong> to protect against accidental deletes</li>
+        <li>Use <strong>TTL</strong> to automatically expire and delete sensitive or stale data</li>
+    </ul>
+
+    <h2 id="architecture">Architecture Overview</h2>
+
+    <pre>
+Application (Lambda / EC2)
+        │
+        ├── Reads (cache hit)
+        │       ▼
+        │     DAX (in-memory cache)
+        │
+        └── Reads / Writes
+                ▼
+        DynamoDB Table
+                │
+                ├── DynamoDB Streams → Lambda → Event Processing
+                │
+                └── Global Tables → Region B, Region C (multi-region replication)
+    </pre>
+
+    <h2 id="usecases">Real-World Use Cases</h2>
+
+    <ul>
+        <li>Gaming leaderboards — real-time score updates at massive scale</li>
+        <li>Shopping cart and session storage — fast key-value lookups</li>
+        <li>IoT data ingestion — high-throughput writes from millions of devices</li>
+        <li>User profile management — flexible schema for varying user attributes</li>
+        <li>Real-time analytics dashboards — DynamoDB Streams + Lambda for live updates</li>
+        <li>Serverless backend APIs — Lambda + DynamoDB for fully serverless architecture</li>
+    </ul>
+
+    <h2 id="exam">AWS Solutions Architect Exam Notes</h2>
+
+    <ul>
+        <li>DynamoDB is a <strong>serverless</strong> NoSQL key-value and document database</li>
+        <li><strong>Primary key</strong> can be partition key only, or partition key + sort key (composite)</li>
+        <li><strong>GSI</strong> allows queries on non-primary key attributes — has its own capacity</li>
+        <li><strong>LSI</strong> must be created at table creation and uses the same partition key</li>
+        <li><strong>DAX</strong> provides microsecond read performance — use for read-heavy workloads</li>
+        <li><strong>DynamoDB Streams</strong> + Lambda is a common event-driven pattern in exam questions</li>
+        <li><strong>Global Tables</strong> = multi-region, multi-active (read and write in any region)</li>
+        <li>Use <strong>On-Demand mode</strong> for unpredictable traffic; <strong>Provisioned</strong> for predictable workloads</li>
+        <li>DynamoDB is <strong>not suitable</strong> for complex relational queries or joins — use RDS for those</li>
+    </ul>
+
+    <h2 id="summary">Key Takeaways</h2>
+
+    <ul>
+        <li>DynamoDB is a fully managed, serverless NoSQL database with single-digit millisecond performance</li>
+        <li>Design your data model around the primary key and access patterns from the start</li>
+        <li>Use DAX for read-heavy workloads requiring microsecond latency</li>
+        <li>Global Tables enable low-latency reads and writes from any AWS region</li>
+        <li>Use DynamoDB Streams with Lambda to build event-driven, reactive applications</li>
+    </ul>
+
+    <div class="navigation-buttons">
+        <a href="rds.html" class="nav-btn">← RDS</a>
+        <a href="lambda.html" class="nav-btn">Next: Lambda →</a>
+    </div>
+
+</section>
+
+<footer>
+    <div class="footer-container">
+        <div class="footer-logo">🚀 Tech Learning Hub</div>
+        <div class="footer-links">
+            <a href="index.html">Home</a>
+            <a href="aws-learning.html">AWS Learning</a>
+            <a href="solutions-architect.html">Solutions Architect</a>
+        </div>
+        <div class="footer-socials">
+            <a href="https://github.com/janvipatel1910" target="_blank">
+                <i class="fa-brands fa-github"></i>
+            </a>
+            <a href="https://www.linkedin.com/in/janvipatel-data" target="_blank">
+                <i class="fa-brands fa-linkedin"></i>
+            </a>
+            <a href="mailto:janvi001patel2001@gmail.com">
+                <i class="fa-solid fa-envelope"></i>
+            </a>
+        </div>
+    </div>
+    <p class="footer-copy">© 2026 Tech Learning Hub | Learn • Build • Grow 🚀</p>
+</footer>
+
+<script src="script.js"></script>
+
+</body>
+</html>
