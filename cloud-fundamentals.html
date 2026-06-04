@@ -5,88 +5,100 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cloud Fundamentals | Tech Learning Hub</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
 </head>
 <body>
+
 <nav class="navbar">
-    <div class="logo">Tech Learning Hub</div>
+    <div class="logo">🚀 Tech Learning Hub</div>
+    <button id="dark-mode-toggle">🌙</button>
+    <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="aws-learning.html">AWS Learning</a></li>
+        <li><a href="solutions-architect.html">Solutions Architect</a></li>
+    </ul>
 </nav>
+
 <section class="lesson-content">
-    <h1> Cloud Fundamentals</h1>
-<div class="lesson-header">
-    <span>Foundation Module</span>
-    <span>Beginner Level</span>
-    <span>AWS Solutions Architect Associate</span>
-    <span>Core Concepts</span>
-</div>
-<div class="lesson-nav">
-    <a href="#overview">Overview</a>
-    <a href="#benefits">Benefits</a>
-    <a href="#models">Service Models</a>
-    <a href="#deployment">Deployment Models</a>
-    <a href="#infrastructure">AWS Infrastructure</a>
-    <a href="#responsibility">Shared Responsibility</a>
-    <a href="#exam">Exam Notes</a>
+
+    <h1>☁️ Cloud Fundamentals</h1>
+
+    <div class="lesson-header">
+        <span>Foundation Module</span>
+        <span>Beginner Level</span>
+        <span>AWS Solutions Architect Associate</span>
+        <span>Core Concepts</span>
     </div>
+
+    <div class="lesson-nav">
+        <a href="#overview">Overview</a>
+        <a href="#benefits">Benefits</a>
+        <a href="#models">Service Models</a>
+        <a href="#deployment">Deployment Models</a>
+        <a href="#infrastructure">AWS Infrastructure</a>
+        <a href="#responsibility">Shared Responsibility</a>
+        <a href="#usecases">Use Cases</a>
+        <a href="#exam">Exam Notes</a>
+    </div>
+
     <p>
         Cloud Fundamentals is the foundation of AWS and one of the first topics
         for the AWS Solutions Architect Associate certification.
     </p>
-   <h2 id="overview">What is Cloud Computing?</h2>
+
+    <h2 id="overview">What is Cloud Computing?</h2>
+
     <p>
-        Cloud Computing is the delivery of computing services such as servers,
-        storage, databases, networking and software over the internet.
+        Cloud Computing is the delivery of computing services — including servers,
+        storage, databases, networking, software, analytics and intelligence —
+        over the internet, enabling faster innovation, flexible resources
+        and economies of scale.
     </p>
-   <h2 id="benefits">Benefits of Cloud Computing</h2>
-<h2 id="models">Cloud Service Models</h2>
-<p>
-Cloud services are commonly categorized into three models:
-Infrastructure as a Service (IaaS),
-Platform as a Service (PaaS),
-and Software as a Service (SaaS).
-</p>
-<ul>
-    <li>IaaS – Amazon EC2</li>
-    <li>PaaS – AWS Elastic Beanstalk</li>
-    <li>SaaS – Gmail, Microsoft 365</li>
-</ul>
+
+    <h2 id="benefits">Benefits of Cloud Computing</h2>
+
     <ul>
-        <li>Pay only for what you use</li>
-        <li>Scalability</li>
-        <li>High Availability</li>
-        <li>Global Reach</li>
-        <li>Improved Security</li>
+        <li><strong>Pay-as-you-go pricing</strong> — only pay for what you use</li>
+        <li><strong>Scalability</strong> — scale up or down based on demand</li>
+        <li><strong>High Availability</strong> — redundancy across multiple locations</li>
+        <li><strong>Global Reach</strong> — deploy applications worldwide in minutes</li>
+        <li><strong>Improved Security</strong> — AWS manages physical infrastructure security</li>
+        <li><strong>Elasticity</strong> — automatically adjust resources to match workload</li>
+        <li><strong>Speed and Agility</strong> — provision resources in minutes</li>
     </ul>
-<h2 id="deployment">Cloud Deployment Models</h2>
-<ul>
-<li>Public Cloud</li>
-<li>Private Cloud</li>
-<li>Hybrid Cloud</li>
-</ul>
-<h2 id="responsibility">AWS Shared Responsibility Model</h2>
 
-<p>
-AWS follows a Shared Responsibility Model.
-AWS is responsible for security <strong>of</strong> the cloud, including
-physical infrastructure, networking and hardware.
-Customers are responsible for security <strong>in</strong> the cloud,
-including IAM permissions, operating systems, applications and data.
-</p>
-<h2>Real-World Use Cases</h2>
+    <h2 id="models">Cloud Service Models</h2>
 
-<ul>
-    <li>Netflix streaming services</li>
-    <li>Online banking applications</li>
-    <li>E-commerce platforms such as Amazon</li>
-    <li>Global content delivery networks</li>
-</ul>
-   <h2 id="infrastructure">AWS Global Infrastructure</h2>
+    <p>
+        Cloud services are commonly categorized into three models:
+        Infrastructure as a Service (IaaS), Platform as a Service (PaaS),
+        and Software as a Service (SaaS).
+    </p>
+
+    <ul>
+        <li><strong>IaaS</strong> – Provides virtualized computing resources. Example: Amazon EC2</li>
+        <li><strong>PaaS</strong> – Provides a platform for developers to build applications. Example: AWS Elastic Beanstalk</li>
+        <li><strong>SaaS</strong> – Delivers software over the internet. Example: Gmail, Microsoft 365</li>
+    </ul>
+
+    <h2 id="deployment">Cloud Deployment Models</h2>
+
+    <ul>
+        <li><strong>Public Cloud</strong> – Resources owned and operated by a cloud provider (e.g. AWS)</li>
+        <li><strong>Private Cloud</strong> – Resources used exclusively by one organization</li>
+        <li><strong>Hybrid Cloud</strong> – Combination of public and private cloud environments</li>
+    </ul>
+
+    <h2 id="infrastructure">AWS Global Infrastructure</h2>
+
     <p>
         AWS provides infrastructure across the world through Regions,
         Availability Zones and Edge Locations.
     </p>
+
     <div class="diagram-box">
-<h3>🌍 AWS Global Infrastructure</h3>
-<pre>
+        <h3>🌍 AWS Global Infrastructure</h3>
+        <pre>
 AWS Region
     │
     ├── Availability Zone A
@@ -94,67 +106,108 @@ AWS Region
     ├── Availability Zone B
     │
     └── Availability Zone C
-</pre>
+        </pre>
+    </div>
 
-</div>
-
-    <h2>Region</h2>
-
+    <h3>Region</h3>
     <p>
         A Region is a geographical area containing multiple Availability Zones.
-
-        Example:
-        eu-west-2 (London)
+        Example: eu-west-2 (London), us-east-1 (N. Virginia).
     </p>
 
-    <h2>Availability Zone (AZ)</h2>
-
+    <h3>Availability Zone (AZ)</h3>
     <p>
-        An Availability Zone is one or more data centers within a Region.
-
-        Example:
-        London Region → AZ-A, AZ-B, AZ-C
+        An Availability Zone is one or more data centers within a Region,
+        each with independent power, cooling and networking.
+        Example: London Region → AZ-A, AZ-B, AZ-C.
     </p>
 
-    <h2>Edge Location</h2>
-
+    <h3>Edge Location</h3>
     <p>
         Edge Locations are used by CloudFront to cache content closer to users,
-        reducing latency and improving performance.
+        reducing latency and improving performance. There are more Edge Locations
+        than Regions.
     </p>
-<div class="diagram-box">
-<h3>⚡ CloudFront Content Delivery</h3>
-<pre>
+
+    <div class="diagram-box">
+        <h3>⚡ CloudFront Content Delivery</h3>
+        <pre>
 User
   ↓
-Edge Location
+Edge Location (cached content)
   ↓
-CloudFront
+CloudFront Distribution
   ↓
 S3 / EC2 Origin
-</pre>
+        </pre>
+    </div>
 
-</div>
-   <h2 id="exam">AWS Solutions Architect Exam Notes</h2>
-   <ul>
-    <li>Regions contain multiple Availability Zones.</li>
-    <li>Availability Zones consist of one or more data centers.</li>
-    <li>CloudFront uses Edge Locations for content caching.</li>
-    <li>AWS follows the Shared Responsibility Model.</li>
-    <li>Cloud computing provides scalability, elasticity and pay-as-you-go pricing.</li>
-</ul>
+    <h2 id="responsibility">AWS Shared Responsibility Model</h2>
 
-<div class="navigation-buttons">
-    <a href="aws-learning.html" class="nav-btn">
-    ← AWS Learning Hub
-</a>
+    <p>
+        AWS follows a Shared Responsibility Model — security responsibilities
+        are divided between AWS and the customer.
+    </p>
 
-<a href="solutions-architect.html" class="nav-btn">
-    Next: Solutions Architect →
-</a>
+    <ul>
+        <li><strong>AWS is responsible for security <em>of</em> the cloud</strong> —
+            physical infrastructure, hardware, networking, managed services</li>
+        <li><strong>Customers are responsible for security <em>in</em> the cloud</strong> —
+            IAM permissions, operating systems, applications, encryption and data</li>
+    </ul>
 
-</div>
+    <h2 id="usecases">Real-World Use Cases</h2>
+
+    <ul>
+        <li>Netflix streaming services hosted on AWS</li>
+        <li>Online banking applications with high availability requirements</li>
+        <li>E-commerce platforms such as Amazon itself</li>
+        <li>Global content delivery networks for media companies</li>
+        <li>Startups scaling from zero to millions of users without upfront hardware</li>
+    </ul>
+
+    <h2 id="exam">AWS Solutions Architect Exam Notes</h2>
+
+    <ul>
+        <li>Regions contain multiple Availability Zones (minimum of 2, typically 3)</li>
+        <li>Availability Zones consist of one or more data centers</li>
+        <li>CloudFront uses Edge Locations for content caching — there are more Edge Locations than Regions</li>
+        <li>AWS follows the Shared Responsibility Model — AWS secures the infrastructure, customers secure their data</li>
+        <li>Cloud computing provides scalability, elasticity and pay-as-you-go pricing</li>
+        <li>IaaS, PaaS and SaaS are the three cloud service models</li>
+    </ul>
+
+    <div class="navigation-buttons">
+        <a href="aws-learning.html" class="nav-btn">← AWS Learning Hub</a>
+        <a href="solutions-architect.html" class="nav-btn">Next: Solutions Architect →</a>
+    </div>
+
 </section>
+
+<footer>
+    <div class="footer-container">
+        <div class="footer-logo">🚀 Tech Learning Hub</div>
+        <div class="footer-links">
+            <a href="index.html">Home</a>
+            <a href="aws-learning.html">AWS Learning</a>
+            <a href="solutions-architect.html">Solutions Architect</a>
+        </div>
+        <div class="footer-socials">
+            <a href="https://github.com/janvipatel1910" target="_blank">
+                <i class="fa-brands fa-github"></i>
+            </a>
+            <a href="https://www.linkedin.com/in/janvipatel-data" target="_blank">
+                <i class="fa-brands fa-linkedin"></i>
+            </a>
+            <a href="mailto:janvi001patel2001@gmail.com">
+                <i class="fa-solid fa-envelope"></i>
+            </a>
+        </div>
+    </div>
+    <p class="footer-copy">© 2026 Tech Learning Hub | Learn • Build • Grow 🚀</p>
+</footer>
+
+<script src="script.js"></script>
 
 </body>
 </html>

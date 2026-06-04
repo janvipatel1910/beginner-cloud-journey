@@ -1,20 +1,18 @@
 <!DOCTYPE html>
-
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Amazon EC2 | Tech Learning Hub</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
 </head>
 
 <body>
 
-```
 <nav class="navbar">
-    <div class="logo">Tech Learning Hub</div>
-
+    <div class="logo">🚀 Tech Learning Hub</div>
+    <button id="dark-mode-toggle">🌙</button>
     <ul class="nav-links">
         <li><a href="index.html">Home</a></li>
         <li><a href="aws-learning.html">AWS Learning</a></li>
@@ -24,158 +22,175 @@
 
 <section class="lesson-content">
 
-    <h1>Amazon Elastic Compute Cloud (EC2)</h1>
+    <h1>🖥️ Amazon Elastic Compute Cloud (EC2)</h1>
 
     <div class="lesson-header">
-
         <span>Compute Service</span>
-
         <span>Core AWS Service</span>
-
         <span>AWS Solutions Architect Associate</span>
-
         <span>High Exam Importance</span>
-
     </div>
 
     <div class="lesson-nav">
-
         <a href="#overview">Overview</a>
-
         <a href="#features">Features</a>
-
         <a href="#types">Instance Types</a>
-
+        <a href="#pricing">Pricing</a>
         <a href="#storage">Storage</a>
-
         <a href="#security">Security</a>
-
         <a href="#architecture">Architecture</a>
-
+        <a href="#usecases">Use Cases</a>
         <a href="#exam">Exam Notes</a>
-
+        <a href="#summary">Summary</a>
     </div>
 
     <h2 id="overview">Service Overview</h2>
 
     <p>
         Amazon Elastic Compute Cloud (EC2) is a web service that provides
-        secure and resizable virtual servers in the AWS Cloud.
+        secure, resizable virtual servers (instances) in the AWS Cloud.
     </p>
 
     <p>
         EC2 allows organizations to deploy applications without purchasing
-        and managing physical hardware.
+        and managing physical hardware — you pay only for the compute
+        capacity you actually use.
     </p>
 
     <h2 id="features">Key Features</h2>
 
     <ul>
-        <li>On-demand virtual servers</li>
-        <li>Auto Scaling support</li>
-        <li>Elastic Load Balancer integration</li>
-        <li>Multiple operating systems</li>
-        <li>Flexible pricing options</li>
+        <li>On-demand virtual servers — launch in minutes</li>
+        <li>Auto Scaling support — scale in or out based on demand</li>
+        <li>Elastic Load Balancer integration for high availability</li>
+        <li>Multiple operating systems — Amazon Linux, Ubuntu, Windows Server</li>
+        <li>Flexible pricing options — On-Demand, Reserved, Spot</li>
+        <li>Elastic IP Addresses for static public IPs</li>
     </ul>
 
     <h2 id="types">EC2 Instance Types</h2>
 
     <p>
-        AWS provides different instance families for different workloads.
+        AWS provides different instance families optimized for different workloads.
     </p>
 
     <ul>
-        <li>General Purpose (t3, t4g, m5)</li>
-        <li>Compute Optimized (c5, c6)</li>
-        <li>Memory Optimized (r5, x1)</li>
-        <li>Storage Optimized (i3, d2)</li>
+        <li><strong>General Purpose</strong> (t3, t4g, m5) — balanced compute, memory, networking</li>
+        <li><strong>Compute Optimized</strong> (c5, c6) — high-performance processing</li>
+        <li><strong>Memory Optimized</strong> (r5, x1) — large in-memory datasets</li>
+        <li><strong>Storage Optimized</strong> (i3, d2) — high-speed local storage</li>
+        <li><strong>Accelerated Computing</strong> (p3, g4) — GPU workloads and machine learning</li>
+    </ul>
+
+    <h2 id="pricing">Pricing Models</h2>
+
+    <ul>
+        <li><strong>On-Demand</strong> — pay per hour or second, no commitment</li>
+        <li><strong>Reserved Instances</strong> — 1 or 3 year commitment, up to 75% savings</li>
+        <li><strong>Spot Instances</strong> — bid on spare capacity, up to 90% savings, can be interrupted</li>
+        <li><strong>Savings Plans</strong> — flexible commitment to usage, significant discounts</li>
     </ul>
 
     <h2 id="storage">Storage Options</h2>
 
     <ul>
-        <li>Amazon EBS (Persistent Storage)</li>
-        <li>Instance Store (Temporary Storage)</li>
-        <li>Amazon EFS (Shared File Storage)</li>
+        <li><strong>Amazon EBS</strong> — Elastic Block Store, persistent network-attached storage</li>
+        <li><strong>Instance Store</strong> — temporary storage on the physical host, lost on stop/terminate</li>
+        <li><strong>Amazon EFS</strong> — Elastic File System, shared file storage across multiple instances</li>
     </ul>
 
     <h2 id="security">Security</h2>
 
     <p>
-        Security Groups act as virtual firewalls that control inbound and outbound traffic.
+        <strong>Security Groups</strong> act as virtual firewalls that control
+        inbound and outbound traffic to EC2 instances. They are stateful —
+        if you allow inbound traffic, the response is automatically allowed.
     </p>
 
     <p>
-        IAM Roles should be used instead of storing AWS Access Keys inside EC2 instances.
+        <strong>IAM Roles</strong> should be attached to EC2 instances to grant
+        access to other AWS services — never store AWS Access Keys
+        inside an EC2 instance directly.
     </p>
 
     <h2 id="architecture">Architecture Overview</h2>
 
-
-<pre>
+    <pre>
 Internet
     │
     ▼
-Security Group
+Security Group (virtual firewall)
     │
     ▼
-EC2 Instance
+EC2 Instance (virtual server)
     │
     ▼
-EBS Volume
-</pre>
-<h2>Real-World Use Cases</h2>
+EBS Volume (persistent storage)
+    </pre>
 
-<ul>
-    <li>Website Hosting</li>
-    <li>Application Deployment</li>
-    <li>Development and Testing Environments</li>
-    <li>Machine Learning Workloads</li>
-    <li>Enterprise Applications</li>
-</ul>
-<h2>Real-World Use Cases</h2>
+    <h2 id="usecases">Real-World Use Cases</h2>
 
-<ul>
-    <li>Developer access management</li>
-    <li>Granting EC2 access to S3 using IAM Roles</li>
-    <li>Cross-account AWS access</li>
-    <li>Read-only auditor access</li>
-</ul>
+    <ul>
+        <li>Website and application hosting</li>
+        <li>Development and testing environments</li>
+        <li>Machine learning and batch processing workloads</li>
+        <li>Enterprise application migration from on-premises</li>
+        <li>Game server hosting with auto scaling</li>
+    </ul>
+
     <h2 id="exam">AWS Solutions Architect Exam Notes</h2>
 
     <ul>
-        <li>EC2 is a regional AWS service.</li>
-        <li>Security Groups are stateful.</li>
-        <li>EBS provides persistent storage.</li>
-        <li>IAM Roles are preferred over access keys.</li>
-        <li>Auto Scaling improves availability.</li>
+        <li>EC2 is a <strong>regional</strong> AWS service</li>
+        <li>Security Groups are <strong>stateful</strong> — return traffic is automatically allowed</li>
+        <li>EBS provides persistent storage that survives instance stop/start</li>
+        <li>Instance Store is <strong>ephemeral</strong> — data is lost when the instance stops</li>
+        <li>IAM Roles are preferred over access keys for EC2-to-AWS service access</li>
+        <li>Reserved Instances save up to 75% vs On-Demand for predictable workloads</li>
+        <li>Spot Instances are cheapest but can be interrupted by AWS with 2-minute notice</li>
     </ul>
 
-    <h2>Key Takeaways</h2>
+    <h2 id="summary">Key Takeaways</h2>
 
     <ul>
-        <li>EC2 provides virtual servers in AWS.</li>
-        <li>Security Groups control network traffic.</li>
-        <li>EBS stores data persistently.</li>
-        <li>IAM Roles improve security.</li>
-        <li>EC2 is a core AWS service.</li>
+        <li>EC2 provides scalable virtual servers in the AWS Cloud</li>
+        <li>Security Groups control network traffic — stateful, instance-level firewall</li>
+        <li>Choose the right instance type for the workload (compute, memory, storage, GPU)</li>
+        <li>EBS persists data; Instance Store does not</li>
+        <li>Use IAM Roles — never hard-code credentials in instances</li>
     </ul>
 
     <div class="navigation-buttons">
-
-        <a href="iam.html" class="nav-btn">
-            ← IAM
-        </a>
-
-        <a href="s3.html" class="nav-btn">
-            Next: S3 →
-        </a>
-
+        <a href="iam.html" class="nav-btn">← IAM</a>
+        <a href="s3.html" class="nav-btn">Next: S3 →</a>
     </div>
 
 </section>
-```
+
+<footer>
+    <div class="footer-container">
+        <div class="footer-logo">🚀 Tech Learning Hub</div>
+        <div class="footer-links">
+            <a href="index.html">Home</a>
+            <a href="aws-learning.html">AWS Learning</a>
+            <a href="solutions-architect.html">Solutions Architect</a>
+        </div>
+        <div class="footer-socials">
+            <a href="https://github.com/janvipatel1910" target="_blank">
+                <i class="fa-brands fa-github"></i>
+            </a>
+            <a href="https://www.linkedin.com/in/janvipatel-data" target="_blank">
+                <i class="fa-brands fa-linkedin"></i>
+            </a>
+            <a href="mailto:janvi001patel2001@gmail.com">
+                <i class="fa-solid fa-envelope"></i>
+            </a>
+        </div>
+    </div>
+    <p class="footer-copy">© 2026 Tech Learning Hub | Learn • Build • Grow 🚀</p>
+</footer>
+
+<script src="script.js"></script>
 
 </body>
-
 </html>

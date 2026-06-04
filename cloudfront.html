@@ -1,77 +1,200 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
     <meta charset="UTF-8">
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>AWS CloudFront Notes</title>
-
+    <title>AWS CloudFront | Tech Learning Hub</title>
     <link rel="stylesheet" href="style.css">
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
 </head>
 
 <body>
 
-  <nav class="navbar">
-
-    <div class="logo">☁️ Beginner Cloud Journey</div>
-
+<nav class="navbar">
+    <div class="logo">🚀 Tech Learning Hub</div>
+    <button id="dark-mode-toggle">🌙</button>
     <ul class="nav-links">
-
         <li><a href="index.html">Home</a></li>
-
-        <li><a href="iam.html">Next Topic</a></li>
-
+        <li><a href="aws-learning.html">AWS Learning</a></li>
+        <li><a href="solutions-architect.html">Solutions Architect</a></li>
     </ul>
-
 </nav>
 
-    <section class="notes">
+<section class="lesson-content">
 
-        <h2>What is AWS CloudFront?</h2>
+    <h1>⚡ Amazon CloudFront</h1>
 
-        <div class="project-box">
+    <div class="lesson-header">
+        <span>Content Delivery Network</span>
+        <span>Edge Service</span>
+        <span>AWS Solutions Architect Associate</span>
+        <span>High Exam Importance</span>
+    </div>
 
-            <p>
-                Amazon CloudFront is a CDN (Content Delivery Network)
-                that improves website speed and global delivery.
-            </p>
+    <div class="lesson-nav">
+        <a href="#overview">Overview</a>
+        <a href="#features">Features</a>
+        <a href="#concepts">Core Concepts</a>
+        <a href="#security">Security</a>
+        <a href="#architecture">Architecture</a>
+        <a href="#usecases">Use Cases</a>
+        <a href="#exam">Exam Notes</a>
+        <a href="#summary">Summary</a>
+    </div>
 
-            <br>
+    <h2 id="overview">Service Overview</h2>
 
-            <h3>Benefits of CloudFront</h3>
+    <p>
+        Amazon CloudFront is a fast content delivery network (CDN) service
+        that securely delivers data, videos, applications and APIs to customers
+        globally with low latency and high transfer speeds.
+    </p>
 
-            <br>
+    <p>
+        CloudFront uses a global network of edge locations to cache content
+        closer to end users, reducing the load on origin servers and
+        dramatically improving performance.
+    </p>
 
-            <ul style="text-align:left; line-height:2;">
+    <h2 id="features">Key Features</h2>
 
-                <li>Faster Website Loading</li>
+    <ul>
+        <li>Global edge network with 400+ points of presence in 90+ cities</li>
+        <li>Low latency delivery by caching content at edge locations</li>
+        <li>HTTPS support with free SSL/TLS certificates via AWS Certificate Manager</li>
+        <li>DDoS protection integrated with AWS Shield Standard (free)</li>
+        <li>Integration with AWS WAF for web application firewall rules</li>
+        <li>Signed URLs and Signed Cookies for restricting access to private content</li>
+        <li>Lambda@Edge — run code at edge locations to customize content delivery</li>
+    </ul>
 
-                <li>Global Content Delivery</li>
+    <h2 id="concepts">Core Concepts</h2>
 
-                <li>Improved Security</li>
+    <h3>Distribution</h3>
+    <p>
+        A CloudFront distribution is the configuration that tells CloudFront
+        where your origin is and how to deliver content. There are two types:
+        Web distributions (for websites and APIs) and RTMP (legacy streaming).
+    </p>
 
-                <li>Reduced Latency</li>
+    <h3>Origins</h3>
+    <p>
+        An origin is the source of the content that CloudFront distributes.
+        Origins can be an S3 bucket, an EC2 instance, an Elastic Load Balancer,
+        or any custom HTTP server.
+    </p>
 
-            </ul>
+    <h3>Edge Locations</h3>
+    <p>
+        Edge Locations are the data centers in CloudFront's global network
+        where content is cached. When a user requests content, CloudFront
+        routes the request to the nearest edge location.
+    </p>
 
-            <br>
+    <h3>Cache Behavior & TTL</h3>
+    <p>
+        Cache behaviors define how CloudFront handles requests for different
+        URL patterns. TTL (Time to Live) controls how long objects are cached
+        before CloudFront checks the origin for a new version.
+    </p>
 
-            <h3>My Learning</h3>
+    <h3>Invalidation</h3>
+    <p>
+        Cache invalidation removes objects from edge caches before their TTL expires.
+        Useful after deploying updated website content.
+    </p>
 
-            <br>
+    <h2 id="security">Security Considerations</h2>
 
-            <p>
-                I connected CloudFront with AWS S3 to improve my website delivery.
-            </p>
+    <ul>
+        <li>Use <strong>HTTPS</strong> for all distributions — enforce redirect from HTTP to HTTPS</li>
+        <li><strong>Signed URLs</strong> — grant time-limited access to individual files</li>
+        <li><strong>Signed Cookies</strong> — grant time-limited access to multiple files</li>
+        <li>Use <strong>Origin Access Control (OAC)</strong> to restrict S3 bucket access to CloudFront only</li>
+        <li>Integrate <strong>AWS WAF</strong> to block common web exploits at the edge</li>
+        <li><strong>AWS Shield Standard</strong> is automatically included with CloudFront</li>
+    </ul>
 
+    <h2 id="architecture">Architecture Overview</h2>
+
+    <pre>
+User (anywhere in the world)
+    │
+    ▼
+CloudFront Edge Location (nearest to user)
+    │
+    ├── Cache HIT → return cached content immediately
+    │
+    └── Cache MISS → fetch from origin
+            │
+            ▼
+    Origin (S3 Bucket / EC2 / ALB)
+    </pre>
+
+    <h2 id="usecases">Real-World Use Cases</h2>
+
+    <ul>
+        <li>Static website acceleration — serve HTML/CSS/JS from S3 via CloudFront globally</li>
+        <li>Video streaming — deliver on-demand or live video with low latency</li>
+        <li>API acceleration — cache API responses at the edge to reduce backend load</li>
+        <li>Software distribution — deliver large installer files or app updates globally</li>
+        <li>Secure content delivery — stream premium content using Signed URLs</li>
+    </ul>
+
+    <h2 id="exam">AWS Solutions Architect Exam Notes</h2>
+
+    <ul>
+        <li>CloudFront is a <strong>global service</strong> — not region-specific</li>
+        <li>There are more <strong>Edge Locations</strong> than Regions or Availability Zones</li>
+        <li>Use <strong>Origin Access Control (OAC)</strong> to ensure S3 content is only served via CloudFront</li>
+        <li>CloudFront reduces latency by serving cached content from the nearest edge location</li>
+        <li><strong>Signed URLs</strong> are for single files; <strong>Signed Cookies</strong> are for multiple files</li>
+        <li>AWS Shield Standard DDoS protection is <strong>automatically included</strong> at no extra cost</li>
+        <li>Cache invalidation costs money — use versioned file names instead where possible</li>
+        <li>CloudFront integrates with ACM for <strong>free SSL/TLS certificates</strong> (must be in us-east-1)</li>
+    </ul>
+
+    <h2 id="summary">Key Takeaways</h2>
+
+    <ul>
+        <li>CloudFront is AWS's CDN — it caches content at edge locations worldwide</li>
+        <li>Origins can be S3, EC2, ALB or any HTTP server</li>
+        <li>Use OAC to lock down S3 origins so only CloudFront can access them</li>
+        <li>Signed URLs and Cookies restrict access to private or premium content</li>
+        <li>DDoS protection via Shield Standard is included automatically</li>
+    </ul>
+
+    <div class="navigation-buttons">
+        <a href="vpc.html" class="nav-btn">← VPC</a>
+        <a href="solutions-architect.html" class="nav-btn">Next: Solutions Architect →</a>
+    </div>
+
+</section>
+
+<footer>
+    <div class="footer-container">
+        <div class="footer-logo">🚀 Tech Learning Hub</div>
+        <div class="footer-links">
+            <a href="index.html">Home</a>
+            <a href="aws-learning.html">AWS Learning</a>
+            <a href="solutions-architect.html">Solutions Architect</a>
         </div>
+        <div class="footer-socials">
+            <a href="https://github.com/janvipatel1910" target="_blank">
+                <i class="fa-brands fa-github"></i>
+            </a>
+            <a href="https://www.linkedin.com/in/janvipatel-data" target="_blank">
+                <i class="fa-brands fa-linkedin"></i>
+            </a>
+            <a href="mailto:janvi001patel2001@gmail.com">
+                <i class="fa-solid fa-envelope"></i>
+            </a>
+        </div>
+    </div>
+    <p class="footer-copy">© 2026 Tech Learning Hub | Learn • Build • Grow 🚀</p>
+</footer>
 
-    </section>
+<script src="script.js"></script>
 
 </body>
-
 </html>

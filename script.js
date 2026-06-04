@@ -56,12 +56,15 @@ function deleteEffect() {
     }
 
 }
+
 const darkModeButton = document.getElementById("dark-mode-toggle");
 
-darkModeButton.addEventListener("click", () => {
+if (darkModeButton) {
+    darkModeButton.addEventListener("click", () => {
+        document.body.classList.toggle("dark-mode");
+    });
+}
 
-    document.body.classList.toggle("dark-mode");
-
-});
-
-typeEffect();
+if (typingText) {
+    typeEffect();
+}

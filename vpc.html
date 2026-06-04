@@ -1,77 +1,205 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
     <meta charset="UTF-8">
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>AWS VPC Notes</title>
-
+    <title>AWS VPC | Tech Learning Hub</title>
     <link rel="stylesheet" href="style.css">
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
 </head>
 
 <body>
 
-   <nav class="navbar">
-
-    <div class="logo">☁️ Beginner Cloud Journey</div>
-
+<nav class="navbar">
+    <div class="logo">🚀 Tech Learning Hub</div>
+    <button id="dark-mode-toggle">🌙</button>
     <ul class="nav-links">
-
         <li><a href="index.html">Home</a></li>
-
-        <li><a href="s3.html">Start Again</a></li>
-
+        <li><a href="aws-learning.html">AWS Learning</a></li>
+        <li><a href="solutions-architect.html">Solutions Architect</a></li>
     </ul>
-
 </nav>
 
-    <section class="notes">
+<section class="lesson-content">
 
-        <h2>What is AWS VPC?</h2>
+    <h1>🌐 Amazon Virtual Private Cloud (VPC)</h1>
 
-        <div class="project-box">
+    <div class="lesson-header">
+        <span>Networking Service</span>
+        <span>Core AWS Service</span>
+        <span>AWS Solutions Architect Associate</span>
+        <span>High Exam Importance</span>
+    </div>
 
-            <p>
-                AWS VPC (Virtual Private Cloud)
-                allows users to create isolated cloud networks inside AWS.
-            </p>
+    <div class="lesson-nav">
+        <a href="#overview">Overview</a>
+        <a href="#features">Features</a>
+        <a href="#concepts">Core Concepts</a>
+        <a href="#security">Security</a>
+        <a href="#architecture">Architecture</a>
+        <a href="#usecases">Use Cases</a>
+        <a href="#exam">Exam Notes</a>
+        <a href="#summary">Summary</a>
+    </div>
 
-            <br>
+    <h2 id="overview">Service Overview</h2>
 
-            <h3>Main VPC Components</h3>
+    <p>
+        Amazon Virtual Private Cloud (VPC) lets you provision a logically isolated
+        section of the AWS Cloud where you can launch AWS resources in a virtual
+        network that you define.
+    </p>
 
-            <br>
+    <p>
+        You have full control over your virtual networking environment — including
+        selection of your IP address range, creation of subnets, and configuration
+        of route tables and network gateways.
+    </p>
 
-            <ul style="text-align:left; line-height:2;">
+    <h2 id="features">Key Features</h2>
 
-                <li>Subnets</li>
+    <ul>
+        <li>Custom IP address ranges using CIDR blocks (e.g. 10.0.0.0/16)</li>
+        <li>Public and private subnets for separating tiers of an application</li>
+        <li>Internet Gateway for public internet access</li>
+        <li>NAT Gateway for outbound internet access from private subnets</li>
+        <li>Security Groups and Network ACLs for traffic control</li>
+        <li>VPC Peering and Transit Gateway for connecting multiple VPCs</li>
+        <li>VPN and Direct Connect for hybrid cloud connectivity</li>
+    </ul>
 
-                <li>Route Tables</li>
+    <h2 id="concepts">Core Concepts</h2>
 
-                <li>Internet Gateway</li>
+    <h3>Subnets</h3>
+    <p>
+        A subnet is a range of IP addresses within a VPC.
+        <strong>Public subnets</strong> have a route to an Internet Gateway
+        and can communicate with the internet.
+        <strong>Private subnets</strong> do not have direct internet access
+        and are used for databases and application servers.
+    </p>
 
-                <li>Security Groups</li>
+    <h3>Route Tables</h3>
+    <p>
+        A route table contains rules (routes) that determine where network traffic
+        is directed. Each subnet must be associated with a route table.
+    </p>
 
-            </ul>
+    <h3>Internet Gateway (IGW)</h3>
+    <p>
+        An Internet Gateway allows resources in a public subnet to communicate
+        with the internet. It is horizontally scaled and highly available.
+    </p>
 
-            <br>
+    <h3>NAT Gateway</h3>
+    <p>
+        A Network Address Translation (NAT) Gateway allows instances in a
+        private subnet to initiate outbound connections to the internet
+        without being directly accessible from the internet.
+    </p>
 
-            <h3>My Learning</h3>
+    <h3>Security Groups</h3>
+    <p>
+        Security Groups act as virtual firewalls at the instance level.
+        They are <strong>stateful</strong> — if inbound traffic is allowed,
+        the response is automatically permitted.
+    </p>
 
-            <br>
+    <h3>Network Access Control Lists (NACLs)</h3>
+    <p>
+        NACLs are optional firewall rules at the subnet level.
+        They are <strong>stateless</strong> — both inbound and outbound rules
+        must explicitly allow traffic. Rules are evaluated in order by number.
+    </p>
 
-            <p>
-                I learned how VPC networking controls cloud infrastructure communication.
-            </p>
+    <h2 id="security">Security Considerations</h2>
 
+    <ul>
+        <li>Place databases and application servers in <strong>private subnets</strong></li>
+        <li>Use <strong>Security Groups</strong> for instance-level stateful filtering</li>
+        <li>Use <strong>NACLs</strong> for subnet-level stateless filtering as an extra layer</li>
+        <li>Use NAT Gateway for private subnet outbound access — never put databases in public subnets</li>
+        <li>Enable VPC Flow Logs to capture and monitor network traffic</li>
+    </ul>
+
+    <h2 id="architecture">Architecture Overview</h2>
+
+    <pre>
+VPC (10.0.0.0/16)
+│
+├── Public Subnet (10.0.1.0/24)
+│       │
+│       ├── Internet Gateway  ← internet traffic in/out
+│       └── EC2 (web server)
+│
+└── Private Subnet (10.0.2.0/24)
+        │
+        ├── NAT Gateway       ← outbound internet only
+        └── RDS (database)
+    </pre>
+
+    <h2 id="usecases">Real-World Use Cases</h2>
+
+    <ul>
+        <li>Three-tier web application — web tier in public subnet, app and DB in private subnets</li>
+        <li>Hybrid cloud — connect on-premises data center to AWS via VPN or Direct Connect</li>
+        <li>Multi-account environments — use VPC Peering or Transit Gateway to connect VPCs</li>
+        <li>Compliance — isolate regulated workloads in dedicated VPCs</li>
+    </ul>
+
+    <h2 id="exam">AWS Solutions Architect Exam Notes</h2>
+
+    <ul>
+        <li>A <strong>default VPC</strong> is created in every AWS Region automatically</li>
+        <li>Security Groups are <strong>stateful</strong>; NACLs are <strong>stateless</strong></li>
+        <li>A subnet can only be associated with <strong>one route table</strong> at a time</li>
+        <li>Internet Gateway enables internet access for public subnets</li>
+        <li>NAT Gateway allows private instances to initiate outbound traffic — not inbound</li>
+        <li>VPC Peering is non-transitive — A↔B and B↔C does not mean A↔C</li>
+        <li>Each VPC has a maximum of <strong>5 Elastic IPs</strong> per region by default</li>
+    </ul>
+
+    <h2 id="summary">Key Takeaways</h2>
+
+    <ul>
+        <li>VPC provides an isolated network environment in AWS</li>
+        <li>Public subnets route to an Internet Gateway; private subnets use NAT Gateway for outbound</li>
+        <li>Security Groups (stateful, instance-level) and NACLs (stateless, subnet-level) layer security</li>
+        <li>Always put databases and sensitive workloads in private subnets</li>
+        <li>VPC Flow Logs help monitor and troubleshoot network traffic</li>
+    </ul>
+
+    <div class="navigation-buttons">
+        <a href="s3.html" class="nav-btn">← S3</a>
+        <a href="cloudfront.html" class="nav-btn">Next: CloudFront →</a>
+    </div>
+
+</section>
+
+<footer>
+    <div class="footer-container">
+        <div class="footer-logo">🚀 Tech Learning Hub</div>
+        <div class="footer-links">
+            <a href="index.html">Home</a>
+            <a href="aws-learning.html">AWS Learning</a>
+            <a href="solutions-architect.html">Solutions Architect</a>
         </div>
+        <div class="footer-socials">
+            <a href="https://github.com/janvipatel1910" target="_blank">
+                <i class="fa-brands fa-github"></i>
+            </a>
+            <a href="https://www.linkedin.com/in/janvipatel-data" target="_blank">
+                <i class="fa-brands fa-linkedin"></i>
+            </a>
+            <a href="mailto:janvi001patel2001@gmail.com">
+                <i class="fa-solid fa-envelope"></i>
+            </a>
+        </div>
+    </div>
+    <p class="footer-copy">© 2026 Tech Learning Hub | Learn • Build • Grow 🚀</p>
+</footer>
 
-    </section>
+<script src="script.js"></script>
 
 </body>
-
 </html>

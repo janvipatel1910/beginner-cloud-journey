@@ -1,57 +1,49 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AWS IAM | Tech Learning Hub</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
 </head>
 
 <body>
-<!-- Navbar -->
 
 <nav class="navbar">
-
     <div class="logo">🚀 Tech Learning Hub</div>
-
+    <button id="dark-mode-toggle">🌙</button>
     <ul class="nav-links">
         <li><a href="index.html">Home</a></li>
         <li><a href="aws-learning.html">AWS Learning</a></li>
         <li><a href="solutions-architect.html">Solutions Architect</a></li>
     </ul>
-
 </nav>
 
-<!-- IAM Lesson -->
 <section class="lesson-content">
 
-    <h1>AWS Identity and Access Management (IAM)</h1>
+    <h1>🔐 AWS Identity and Access Management (IAM)</h1>
+
     <div class="lesson-header">
-    <span>Security</span>
-    <span>Global AWS Service</span>
-    <span>Solutions Architect Associate</span>
-    <span>High Exam Importance</span>
-</div>
-<div class="lesson-header">
+        <span>Security</span>
+        <span>Global AWS Service</span>
+        <span>Solutions Architect Associate</span>
+        <span>High Exam Importance</span>
+    </div>
 
-    <span>Service: IAM</span>
+    <div class="lesson-nav">
+        <a href="#overview">Overview</a>
+        <a href="#concepts">Core Concepts</a>
+        <a href="#components">IAM Components</a>
+        <a href="#security">Best Practices</a>
+        <a href="#architecture">Architecture</a>
+        <a href="#usecases">Use Cases</a>
+        <a href="#exam">Exam Notes</a>
+        <a href="#summary">Summary</a>
+    </div>
 
-    <span>Category: Security</span>
+    <h2 id="overview">Service Overview</h2>
 
-    <span>Exam Domain: High Priority</span>
-
-</div>
-<div class="lesson-nav">
-    <a href="#overview">Overview</a>
-    <a href="#concepts">Core Concepts</a>
-    <a href="#components">IAM Components</a>
-    <a href="#security">Best Practices</a>
-    <a href="#exam">Exam Notes</a>
-    <a href="#summary">Summary</a>
-
-</div>
-<h2>Core Concepts</h2>
     <p>
         AWS Identity and Access Management (IAM) is a global AWS service
         used to securely control access to AWS resources.
@@ -63,113 +55,143 @@
         to perform.
     </p>
 
-  <h2 id="concepts">Core Concepts</h2>
+    <h2 id="concepts">Core Concepts</h2>
 
     <h3>Authentication</h3>
-
     <p>
         Authentication verifies the identity of a user, application,
         or service attempting to access AWS resources.
     </p>
-
     <ul>
         <li>Username and Password</li>
-        <li>Access Keys</li>
+        <li>Access Keys (Access Key ID + Secret Access Key)</li>
         <li>Multi-Factor Authentication (MFA)</li>
     </ul>
 
     <h3>Authorization</h3>
-
     <p>
         Authorization determines which AWS resources an authenticated
         identity can access and what actions can be performed.
+        IAM uses policies to grant or deny permissions.
     </p>
-<h2 id="components">IAM Components</h2>
-    
+
+    <h2 id="components">IAM Components</h2>
 
     <h3>IAM Users</h3>
-
     <p>
         An IAM User represents an individual identity within an AWS account.
+        Each user has their own credentials and can be assigned permissions directly
+        or through group membership.
     </p>
 
     <h3>IAM Groups</h3>
-
     <p>
-        IAM Groups provide a mechanism for managing permissions
-        across multiple users.
+        IAM Groups provide a mechanism for managing permissions across multiple users.
+        A user can belong to multiple groups. Groups cannot contain other groups.
     </p>
 
     <h3>IAM Roles</h3>
-
     <p>
-        IAM Roles provide temporary security credentials.
+        IAM Roles provide temporary security credentials and are assumed by users,
+        applications or AWS services. Roles are the preferred way to grant
+        AWS services (like EC2) access to other services (like S3).
     </p>
 
     <h3>IAM Policies</h3>
-
     <p>
-        Policies are JSON documents that define permissions.
+        Policies are JSON documents that define permissions — what actions are
+        allowed or denied on which resources. They are attached to users,
+        groups or roles.
     </p>
 
-  <div class="section-title">
-  Architecture Overview
-</div>
+    <h2 id="security">Security Best Practices</h2>
+
+    <ul>
+        <li>Apply the Principle of Least Privilege — grant only the permissions required</li>
+        <li>Enable Multi-Factor Authentication (MFA) on all accounts, especially root</li>
+        <li>Never use or share the Root Account for everyday tasks</li>
+        <li>Rotate credentials and access keys regularly</li>
+        <li>Use IAM Roles instead of long-term Access Keys where possible</li>
+        <li>Monitor IAM activity using AWS CloudTrail</li>
+    </ul>
+
+    <h2 id="architecture">Architecture Overview</h2>
 
     <pre>
 AWS Account
 │
-├── IAM Users
+├── IAM Users         → individual identities
 │
-├── IAM Groups
+├── IAM Groups        → collections of users with shared permissions
 │
-├── IAM Roles
+├── IAM Roles         → temporary credentials for services or cross-account access
 │
-└── IAM Policies
+└── IAM Policies      → JSON permission documents attached to the above
     </pre>
 
-   <h2 id="security">Security Best Practices</h2>
+    <h2 id="usecases">Real-World Use Cases</h2>
 
     <ul>
-        <li>Apply the Principle of Least Privilege</li>
-        <li>Enable Multi-Factor Authentication (MFA)</li>
-        <li>Avoid using the Root Account</li>
-        <li>Rotate credentials regularly</li>
-        <li>Use IAM Roles instead of Access Keys</li>
+        <li>Developer access management — different permissions per environment (dev/staging/prod)</li>
+        <li>Granting EC2 instances access to S3 using IAM Roles (no hard-coded credentials)</li>
+        <li>Cross-account AWS access for centralized security teams</li>
+        <li>Read-only auditor access to review AWS resources</li>
+        <li>CI/CD pipeline credentials using service-specific IAM Roles</li>
     </ul>
 
     <h2 id="exam">AWS Solutions Architect Exam Notes</h2>
 
     <ul>
-        <li>IAM is a Global Service</li>
-        <li>Policies define permissions</li>
+        <li>IAM is a <strong>Global Service</strong> — not region-specific</li>
+        <li>Policies define permissions using JSON</li>
         <li>Groups cannot contain other groups</li>
-        <li>IAM Roles provide temporary credentials</li>
-        <li>Follow the Principle of Least Privilege</li>
+        <li>IAM Roles provide <strong>temporary credentials</strong> — preferred for services and cross-account access</li>
+        <li>Follow the <strong>Principle of Least Privilege</strong></li>
+        <li>Root account should be protected with MFA and rarely used</li>
+        <li>Access keys are for programmatic access — rotate regularly</li>
     </ul>
 
-   <h2 id="summary">Key Takeaways</h2>
+    <h2 id="summary">Key Takeaways</h2>
 
     <ul>
-        <li>IAM controls authentication and authorization.</li>
-        <li>Users represent identities.</li>
-        <li>Groups simplify permission management.</li>
-        <li>Roles provide temporary access.</li>
-        <li>Policies define permissions.</li>
+        <li>IAM controls authentication and authorization for AWS resources</li>
+        <li>Users represent individual identities; Groups simplify permission management</li>
+        <li>Roles provide temporary access — the preferred approach for services</li>
+        <li>Policies are JSON documents that grant or deny permissions</li>
+        <li>Always apply Least Privilege and enable MFA</li>
     </ul>
-<div class="navigation-buttons">
 
-    <a href="solutions-architect.html" class="nav-btn">
-        ← Solutions Architect
-    </a>
+    <div class="navigation-buttons">
+        <a href="solutions-architect.html" class="nav-btn">← Solutions Architect</a>
+        <a href="ec2.html" class="nav-btn">Next: EC2 →</a>
+    </div>
 
-    <a href="ec2.html" class="nav-btn">
-        Next: EC2 →
-    </a>
-
-</div>
 </section>
 
+<footer>
+    <div class="footer-container">
+        <div class="footer-logo">🚀 Tech Learning Hub</div>
+        <div class="footer-links">
+            <a href="index.html">Home</a>
+            <a href="aws-learning.html">AWS Learning</a>
+            <a href="solutions-architect.html">Solutions Architect</a>
+        </div>
+        <div class="footer-socials">
+            <a href="https://github.com/janvipatel1910" target="_blank">
+                <i class="fa-brands fa-github"></i>
+            </a>
+            <a href="https://www.linkedin.com/in/janvipatel-data" target="_blank">
+                <i class="fa-brands fa-linkedin"></i>
+            </a>
+            <a href="mailto:janvi001patel2001@gmail.com">
+                <i class="fa-solid fa-envelope"></i>
+            </a>
+        </div>
+    </div>
+    <p class="footer-copy">© 2026 Tech Learning Hub | Learn • Build • Grow 🚀</p>
+</footer>
+
+<script src="script.js"></script>
 
 </body>
 </html>
