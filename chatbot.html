@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AWS Learning Chatbot</title>
+
+<style>
+body{
+font-family:Arial,sans-serif;
+background:#f4f4f4;
+padding:40px;
+}
+
+.container{
+max-width:800px;
+margin:auto;
+background:white;
+padding:30px;
+border-radius:12px;
+box-shadow:0 0 10px rgba(0,0,0,0.1);
+}
+
+input{
+width:100%;
+padding:12px;
+margin-top:10px;
+}
+
+button{
+margin-top:10px;
+padding:12px 20px;
+cursor:pointer;
+}
+
+#response{
+margin-top:20px;
+padding:15px;
+background:#eef5ff;
+border-radius:8px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>AWS Learning Chatbot 🤖</h1>
+
+<p>Ask me about AWS services.</p>
+
+<input
+type="text"
+id="question"
+placeholder="Ask about IAM, S3, EC2..."
+>
+
+<button onclick="askBot()">
+Ask
+</button>
+
+<div id="response">
+Your answer will appear here.
+</div>
+
+</div>
+
+<script>
+
+function askBot(){
+
+const question =
+document
+.getElementById("question")
+.value
+.toLowerCase();
+
+let answer="Sorry, I don't know that yet.";
+
+if(question.includes("iam")){
+answer =
+"IAM stands for Identity and Access Management. It controls who can access AWS resources and what actions they can perform.";
+}
+
+else if(question.includes("s3")){
+answer =
+"Amazon S3 is an object storage service used to store files, images, videos, backups and static websites.";
+}
+
+else if(question.includes("ec2")){
+answer =
+"Amazon EC2 provides virtual servers in the cloud that allow you to run applications.";
+}
+
+else if(question.includes("vpc")){
+answer =
+"Amazon VPC allows you to create your own private network inside AWS.";
+}
+else if(question.includes("rds")){
+answer =
+"Amazon RDS is a managed relational database service that supports MySQL, PostgreSQL, SQL Server and more.";
+}
+
+else if(question.includes("lambda")){
+answer =
+"AWS Lambda lets you run code without managing servers. You only pay when your code runs.";
+}
+
+else if(question.includes("cloudfront")){
+answer =
+"Amazon CloudFront is a Content Delivery Network (CDN) that delivers content with low latency worldwide.";
+}
+
+else if(question.includes("cloudwatch")){
+answer =
+"Amazon CloudWatch monitors AWS resources and applications using metrics, logs and alarms.";
+}
+
+else if(question.includes("route 53") || question.includes("route53")){
+answer =
+"Amazon Route 53 is AWS's DNS service used to route users to applications.";
+}
+
+else if(question.includes("dynamodb")){
+answer =
+"Amazon DynamoDB is a fully managed NoSQL database service with fast performance.";
+}
+
+document.getElementById("response").innerHTML =
+answer;
+
+}
+
+</script>
+
+</body>
+</html>
