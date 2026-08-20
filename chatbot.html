@@ -79,13 +79,41 @@ document
 let answer="Sorry, I don't know that yet.";
 
 if(question.includes("iam")){
+
+if(question.includes("why")){
+answer =
+"We use IAM to securely control who can access AWS resources and what actions they can perform.";
+}
+
+else if(question.includes("benefit")){
+answer =
+"IAM improves security by providing authentication, authorization and least-privilege access.";
+}
+
+else{
 answer =
 "IAM stands for Identity and Access Management. It controls who can access AWS resources and what actions they can perform.";
 }
 
+}
+
 else if(question.includes("s3")){
+
+if(question.includes("why")){
 answer =
-"Amazon S3 (Simple Storage Service) is AWS object storage. We use S3 to store files, images, videos, backups, logs and static websites. It is highly durable, scalable and cost-effective.";
+"We use S3 to store files, images, videos, backups, logs and static websites in a highly durable and scalable way.";
+}
+
+else if(question.includes("benefit")){
+answer =
+"S3 offers high durability, scalability, security and low-cost storage.";
+}
+
+else{
+answer =
+"Amazon S3 (Simple Storage Service) is AWS object storage. We use S3 to store files, images, videos, backups, logs and static websites.";
+}
+
 }
 else if(question.includes("ec2")){
 answer =
