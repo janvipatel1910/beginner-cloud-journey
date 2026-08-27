@@ -3,203 +3,187 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tech Learning Hub</title>
-
+    <meta name="description" content="Beginner-friendly AWS lessons, architecture examples, exam notes and an interactive readiness checklist by Janvi Patel.">
+    <title>Beginner Cloud Journey | AWS Learning Portfolio</title>
     <link rel="stylesheet" href="style.css">
-
-    <link
-    rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
+<body class="home-page">
+    <header class="home-header">
+        <a class="home-brand" href="#home" aria-label="Beginner Cloud Journey home">
+            <span class="home-brand-mark" aria-hidden="true"><i class="fa-solid fa-cloud"></i></span>
+            <span>Beginner Cloud Journey</span>
+        </a>
+        <nav class="home-nav" aria-label="Main navigation">
+            <a href="#path">Learning path</a>
+            <a href="#topics">AWS topics</a>
+            <a href="#readiness">Exam readiness</a>
+            <a href="#project">Project</a>
+            <a class="home-nav-action" href="chatbot.html">AWS Chatbot</a>
+        </nav>
+    </header>
 
-<body>
-
-    <!-- Navbar -->
-    <nav class="navbar">
-
-        <div class="logo">🚀 Tech Learning Hub</div>
-
-        <button id="dark-mode-toggle">
-            🌙
-        </button>
-
-        <ul class="nav-links">
-            <li><a href="#home">Home</a></li>
-            <li><a href="aws-learning.html">AWS Learning</a></li>
-            <li><a href="ai-learning.html">AI Learning</a></li>
-            <li><a href="#projects">Projects</a></li>
-            <li><a href="#contact">Contact</a></li>
-            <li><a href="chatbot.html">AWS Chatbot</a></li>
-        </ul>
-
-    </nav>
-
-    <!-- Hero Section -->
-    <section class="hero" id="home">
-
-        <div class="overlay"></div>
-
-        <div class="hero-content">
-
-            <h1>
-                Learn
-                <span id="typing-text"></span>
-            </h1>
-
-            <p>
-                Learn Cloud Computing and Artificial Intelligence
-                through structured learning paths and hands-on projects.
-            </p>
-
-            <a href="#learning-paths"><button>Start Learning</button></a>
-
-        </div>
-
-    </section>
-
-    <!-- Learning Paths -->
-
-    <section class="notes" id="learning-paths">
-
-        <h2>Learning Paths</h2>
-
-        <div class="card-container">
-
-            <a href="aws-learning.html" class="card-link">
-                <div class="card">
-                    <h3>☁️ AWS Learning</h3>
-                    <p>
-                        Cloud Fundamentals, Solutions Architect,
-                        IAM, EC2, S3, VPC, CloudFront and more.
-                    </p>
+    <main>
+        <section class="home-hero" id="home">
+            <div class="home-hero-copy">
+                <p class="home-eyebrow"><span></span> Field notes for the AWS cloud</p>
+                <h1>Build your cloud<br><em>thinking system.</em></h1>
+                <p class="home-lead">
+                    A practical study notebook for understanding AWS services,
+                    connecting architecture decisions, and building exam-ready evidence.
+                </p>
+                <div class="home-actions">
+                    <a class="home-button home-button-primary" href="cloud-fundamentals.html">Start with fundamentals <i class="fa-solid fa-arrow-right"></i></a>
+                    <a class="home-button home-button-secondary" href="#topics">Explore all topics</a>
+                    <a class="home-text-action" href="#readiness">Check exam readiness <i class="fa-solid fa-bullseye"></i></a>
                 </div>
-            </a>
-
-            <a href="ai-learning.html" class="card-link">
-                <div class="card">
-                    <h3>🤖 AI Learning</h3>
-                    <p>
-                        AI Fundamentals, Machine Learning, Deep Learning,
-                        Prompt Engineering and Generative AI.
-                    </p>
+                <div class="home-stats" aria-label="Project highlights">
+                    <div><strong>32</strong><span>AWS lessons</span></div>
+                    <div><strong>1</strong><span>Guided learning path</span></div>
+                    <div><strong>100%</strong><span>Beginner focused</span></div>
                 </div>
+            </div>
+
+            <div class="home-blueprint-wrap">
+                <article class="home-blueprint" aria-label="Example AWS request architecture">
+                    <span class="home-paper-clip" aria-hidden="true"></span>
+                    <div class="home-blueprint-head">
+                        <span>Field note 01 / request path</span>
+                        <span class="home-status"><i></i> Review ready</span>
+                    </div>
+                    <div class="home-flow">
+                        <div class="home-flow-node home-flow-accent"><i class="fa-solid fa-globe"></i><div><b>Route 53</b><small>DNS routing</small></div></div>
+                        <span class="home-flow-line"></span>
+                        <div class="home-flow-node"><i class="fa-solid fa-code-branch"></i><div><b>Application Load Balancer</b><small>Distribute traffic</small></div></div>
+                        <span class="home-flow-line"></span>
+                        <div class="home-split-flow">
+                            <div class="home-flow-node home-flow-compact"><i class="fa-solid fa-server"></i><b>EC2</b></div>
+                            <div class="home-flow-node home-flow-compact"><i class="fa-solid fa-server"></i><b>EC2</b></div>
+                        </div>
+                        <span class="home-flow-line"></span>
+                        <div class="home-flow-node"><i class="fa-solid fa-database"></i><div><b>Amazon RDS</b><small>Managed relational data</small></div></div>
+                    </div>
+                    <p>Trace the request. Name the failure point. Explain the trade-off.</p>
+                </article>
+                <span class="home-blueprint-caption">Architecture before memorisation</span>
+            </div>
+        </section>
+
+        <section class="home-section home-path-section" id="path">
+            <div class="home-section-heading">
+                <div>
+                    <p class="home-eyebrow"><span></span> Recommended order</p>
+                    <h2>A path through the cloud</h2>
+                </div>
+                <p>Begin with the big picture, then move through design principles and real recovery and cost decisions.</p>
+            </div>
+            <div class="home-path-grid">
+                <a href="cloud-fundamentals.html"><span>01</span><div><h3>Cloud Fundamentals</h3><b>Open lesson →</b></div></a>
+                <a href="solutions-architect.html"><span>02</span><div><h3>Solutions Architect</h3><b>Open lesson →</b></div></a>
+                <a href="well-architected.html"><span>03</span><div><h3>Well-Architected Framework</h3><b>Open lesson →</b></div></a>
+                <a href="cost-optimization.html"><span>04</span><div><h3>Cost Optimization</h3><b>Open lesson →</b></div></a>
+                <a href="disaster-recovery.html"><span>05</span><div><h3>Disaster Recovery</h3><b>Open lesson →</b></div></a>
+            </div>
+        </section>
+
+        <section class="home-section home-topics-section" id="topics">
+            <div class="home-section-heading">
+                <div>
+                    <p class="home-eyebrow"><span></span> Core building blocks</p>
+                    <h2>Start with essential AWS services</h2>
+                </div>
+                <p>Each guide includes plain-English concepts, common use cases, architecture context and focused exam notes.</p>
+            </div>
+
+            <div class="home-service-grid">
+                <a href="iam.html"><i class="fa-solid fa-user-shield"></i><h3>IAM</h3><span>Study topic →</span></a>
+                <a href="ec2.html"><i class="fa-solid fa-server"></i><h3>EC2</h3><span>Study topic →</span></a>
+                <a href="s3.html"><i class="fa-solid fa-box-archive"></i><h3>S3</h3><span>Study topic →</span></a>
+                <a href="vpc.html"><i class="fa-solid fa-network-wired"></i><h3>VPC</h3><span>Study topic →</span></a>
+                <a href="rds.html"><i class="fa-solid fa-database"></i><h3>RDS</h3><span>Study topic →</span></a>
+                <a href="lambda.html"><i class="fa-solid fa-bolt"></i><h3>Lambda</h3><span>Study topic →</span></a>
+                <a href="dynamodb.html"><i class="fa-solid fa-table"></i><h3>DynamoDB</h3><span>Study topic →</span></a>
+                <a href="cloudfront.html"><i class="fa-solid fa-earth-europe"></i><h3>CloudFront</h3><span>Study topic →</span></a>
+            </div>
+
+            <div class="home-topic-groups">
+                <article>
+                    <h3>Networking & delivery</h3>
+                    <a href="route53.html">✓ Route 53</a><a href="load-balancer.html">✓ Load Balancer</a><a href="auto-scaling.html">✓ Auto Scaling</a><a href="global-accelerator.html">✓ Global Accelerator</a><a href="direct-connect.html">✓ Direct Connect</a>
+                </article>
+                <article>
+                    <h3>Integration & serverless</h3>
+                    <a href="sqs.html">✓ SQS</a><a href="sns.html">✓ SNS</a><a href="eventbridge.html">✓ EventBridge</a><a href="step-functions.html">✓ Step Functions</a><a href="kinesis.html">✓ Kinesis</a>
+                </article>
+                <article>
+                    <h3>Operations & security</h3>
+                    <a href="cloudwatch.html">✓ CloudWatch</a><a href="cloudtrail.html">✓ CloudTrail</a><a href="kms.html">✓ KMS</a><a href="secrets-manager.html">✓ Secrets Manager</a><a href="security-services.html">✓ Security Services</a>
+                </article>
+                <article>
+                    <h3>Compute, data & storage</h3>
+                    <a href="ecs.html">✓ ECS</a><a href="elastic-beanstalk.html">✓ Elastic Beanstalk</a><a href="elasticache.html">✓ ElastiCache</a><a href="efs.html">✓ EFS</a><a href="storage-gateway.html">✓ Storage Gateway</a>
+                </article>
+            </div>
+        </section>
+
+        <section class="home-readiness" id="readiness">
+            <div class="home-readiness-intro">
+                <p class="home-eyebrow"><span></span> Evidence, not guesswork</p>
+                <h2>Are you exam ready?</h2>
+                <p>Readiness is more than finishing lessons. Combine knowledge, hands-on practice, timed mocks and mistake review. Your selections stay only in this browser.</p>
+                <div class="home-readiness-rule">
+                    <i class="fa-solid fa-bullseye"></i>
+                    <div><b>Recommended readiness gate</b><span>Score 80%+ on two unseen timed mocks and explain why every incorrect option is wrong.</span></div>
+                </div>
+            </div>
+
+            <div class="home-readiness-tool">
+                <div class="home-score-row">
+                    <div><span>Readiness evidence</span><strong id="readiness-score">0%</strong></div>
+                    <b id="readiness-status">Building evidence</b>
+                </div>
+                <div class="home-progress" role="progressbar" aria-label="Exam readiness evidence" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><span id="readiness-bar"></span></div>
+                <div class="home-checklist">
+                    <label><input type="checkbox" data-readiness="core" data-weight="15"><span>I studied the core compute, storage, database and networking services.</span><b>+15</b></label>
+                    <label><input type="checkbox" data-readiness="security" data-weight="15"><span>I can compare IAM, encryption, network security and monitoring choices.</span><b>+15</b></label>
+                    <label><input type="checkbox" data-readiness="labs" data-weight="20"><span>I completed hands-on labs and can explain what I configured.</span><b>+20</b></label>
+                    <label><input type="checkbox" data-readiness="timed" data-weight="15"><span>I completed a full 65-question mock under timed conditions.</span><b>+15</b></label>
+                    <label><input type="checkbox" data-readiness="mocks" data-weight="25"><span>I scored 80%+ on two different unseen mock exams.</span><b>+25</b></label>
+                    <label><input type="checkbox" data-readiness="review" data-weight="10"><span>I reviewed every mistake and can reject the incorrect options.</span><b>+10</b></label>
+                </div>
+                <div class="home-tool-footer">
+                    <p>This is a self-check framework, not an AWS exam-result prediction.</p>
+                    <button type="button" id="readiness-reset"><i class="fa-solid fa-rotate-left"></i> Reset</button>
+                </div>
+            </div>
+        </section>
+
+        <section class="home-project" id="project">
+            <div>
+                <p class="home-eyebrow"><span></span> Learn by building</p>
+                <h2>More than notes—this is a working cloud portfolio.</h2>
+                <p>The site documents a hands-on learning journey across AWS services and turns technical concepts into accessible explanations.</p>
+                <ul><li>✓ Structured service-by-service notes</li><li>✓ Architecture and decision-making examples</li><li>✓ Interactive exam-readiness evidence checklist</li></ul>
+                <a class="home-button home-button-light" href="https://github.com/janvipatel1910/beginner-cloud-journey" target="_blank" rel="noreferrer"><i class="fa-brands fa-github"></i> View source on GitHub</a>
+            </div>
+            <a class="home-chatbot-card" href="chatbot.html">
+                <i class="fa-solid fa-robot"></i>
+                <p>AWS Learning Chatbot</p>
+                <h3>Ask a quick question about a core AWS service.</h3>
+                <span>Open chatbot →</span>
             </a>
+        </section>
+    </main>
 
+    <footer class="home-footer">
+        <div><a class="home-brand" href="#home"><span class="home-brand-mark"><i class="fa-solid fa-cloud"></i></span><span>Beginner Cloud Journey</span></a><p>Learn • Build • Grow</p></div>
+        <div class="home-socials">
+            <a href="https://github.com/janvipatel1910" target="_blank" rel="noreferrer" aria-label="GitHub"><i class="fa-brands fa-github"></i></a>
+            <a href="https://www.linkedin.com/in/janvipatel-data" target="_blank" rel="noreferrer" aria-label="LinkedIn"><i class="fa-brands fa-linkedin"></i></a>
+            <a href="mailto:janvi001patel2001@gmail.com" aria-label="Email"><i class="fa-solid fa-envelope"></i></a>
         </div>
-
-    </section>
-
-    <!-- Projects -->
-
-    <section class="projects" id="projects">
-
-        <h2>Hands-On Projects</h2>
-
-        <div class="project-box">
-
-            <h3>Cloud Website Hosting Project</h3>
-
-            <p>
-                Hosted and deployed a responsive website using
-                AWS S3, CloudFront and GitHub Actions.
-            </p>
-
-        </div>
-
-        <div class="project-box">
-
-            <h3>Tech Learning Hub</h3>
-
-            <p>
-                Personal learning platform documenting AWS
-                Solutions Architect and AI learning journey.
-            </p>
-
-        </div>
-    </section>
-
-    <!-- Contact -->
-
-    <section class="projects" id="contact">
-
-        <h2>Contact</h2>
-
-        <div class="project-box">
-
-            <p>
-                Email:
-                <a href="mailto:janvi001patel2001@gmail.com">
-                    janvi001patel2001@gmail.com
-                </a>
-            </p>
-
-            <br>
-
-            <p>
-                GitHub:
-                <a href="https://github.com/janvipatel1910" target="_blank">
-                    github.com/janvipatel1910
-                </a>
-            </p>
-
-            <br>
-
-            <p>
-                LinkedIn:
-                <a href="https://www.linkedin.com/in/janvipatel-data" target="_blank">
-                    linkedin.com/in/janvipatel-data
-                </a>
-            </p>
-
-        </div>
-
-    </section>
-
-    <!-- Footer -->
-
-    <footer>
-
-        <div class="footer-container">
-
-            <div class="footer-logo">
-                🚀 Tech Learning Hub
-            </div>
-
-            <div class="footer-links">
-
-                <a href="#home">Home</a>
-                <a href="aws-learning.html">AWS Learning</a>
-                <a href="ai-learning.html">AI Learning</a>
-                <a href="#projects">Projects</a>
-                <a href="#contact">Contact</a>
-
-            </div>
-
-            <div class="footer-socials">
-
-                <a href="https://github.com/janvipatel1910" target="_blank">
-                    <i class="fa-brands fa-github"></i>
-                </a>
-
-                <a href="https://www.linkedin.com/in/janvipatel-data" target="_blank">
-                    <i class="fa-brands fa-linkedin"></i>
-                </a>
-
-                <a href="mailto:janvi001patel2001@gmail.com">
-                    <i class="fa-solid fa-envelope"></i>
-                </a>
-
-            </div>
-
-        </div>
-
-        <p class="footer-copy">
-            © 2026 Tech Learning Hub | Learn • Build • Grow 🚀
-        </p>
-
     </footer>
 
     <script src="script.js"></script>
-
 </body>
 </html>

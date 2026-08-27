@@ -68,3 +68,71 @@ if (darkModeButton) {
 if (typingText) {
     typeEffect();
 }
+
+const readinessInputs = Array.from(document.querySelectorAll("[data-readiness]"));
+const readinessScore = document.getElementById("readiness-score");
+const readinessStatus = document.getElementById("readiness-status");
+const readinessBar = document.getElementById("readiness-bar");
+const readinessProgress = document.querySelector(".home-progress");
+const readinessReset = document.getElementById("readiness-reset");
+const readinessStorageKey = "beginner-cloud-journey-readiness";
+
+function getReadinessSelection() {
+    try {
+        return JSON.parse(localStorage.getItem(readinessStorageKey) || "[]");
+    } catch {
+        return [];
+    }
+}
+
+function renderReadiness() {
+    if (!readinessInputs.length) return;
+
+    const selected = readinessInputs
+        .filter((input) => input.checked)
+        .map((input) => input.dataset.readiness);
+
+    const score = readinessInputs
+        .filter((input) => input.checked)
+        .reduce((total, input) => total + Number(input.dataset.weight || 0), 0);
+
+    const status = score >= 85
+        ? "Ready to verify"
+        : score >= 60
+            ? "Nearly ready"
+            : "Building evidence";
+
+    if (readinessScore) readinessScore.textContent = `${score}%`;
+    if (readinessStatus) readinessStatus.textContent = status;
+    if (readinessBar) readinessBar.style.width = `${score}%`;
+    if (readinessProgress) readinessProgress.setAttribute("aria-valuenow", String(score));
+
+    try {
+        localStorage.setItem(readinessStorageKey, JSON.stringify(selected));
+    } catch {
+        // The checklist remains usable for the current session.
+    }
+}
+
+if (readinessInputs.length) {
+    const savedSelection = getReadinessSelection();
+    readinessInputs.forEach((input) => {
+        input.checked = savedSelection.includes(input.dataset.readiness);
+        input.addEventListener("change", renderReadiness);
+    });
+    renderReadiness();
+}
+
+if (readinessReset) {
+    readinessReset.addEventListener("click", () => {
+        readinessInputs.forEach((input) => {
+            input.checked = false;
+        });
+        try {
+            localStorage.removeItem(readinessStorageKey);
+        } catch {
+            // No additional action is needed when storage is unavailable.
+        }
+        renderReadiness();
+    });
+}
