@@ -1,0 +1,57 @@
+name: Deploy Cloud Journey Hub to AWS
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  id-token: write
+  contents: read
+
+concurrency:
+  group: beginner-cloud-journey-production
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v5
+
+      - name: Validate static site
+        run: |
+          test -f index.html
+          test -f style.css
+          test -f home-interactive.css
+          test -f script.js
+          node --check script.js
+
+      - name: Configure AWS credentials with OIDC
+        uses: aws-actions/configure-aws-credentials@v6
+        with:
+          role-to-assume: arn:aws:iam::043914965989:role/GitHubCloudJourneyDeployRole
+          role-session-name: GitHubActions-CloudJourney
+          aws-region: eu-west-2
+
+      - name: Upload website to private S3 bucket
+        run: |
+          aws s3 sync . s3://janvi-beginner-cloud-journey-uk-2026 --delete \
+            --exclude ".git/*" \
+            --exclude ".github/*" \
+            --exclude "docs/*" \
+            --exclude ".DS_Store" \
+            --exclude ".gitignore" \
+            --exclude "README.md" \
+            --exclude "*.patch" \
+            --exclude "*.zip" \
+            --cache-control "public,max-age=300"
+
+      - name: Refresh CloudFront cache
+        run: |
+          aws cloudfront create-invalidation \
+            --distribution-id E173WDYEQQSJM1 \
+            --paths "/*"
