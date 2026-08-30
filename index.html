@@ -6,9 +6,11 @@
     <meta name="description" content="Beginner-friendly AWS lessons, architecture examples, exam notes and an interactive readiness checklist by Janvi Patel.">
     <title>Beginner Cloud Journey | AWS Learning Portfolio</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="home-interactive.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 <body class="home-page">
+    <div class="home-scroll-progress" aria-hidden="true"><span id="home-scroll-bar"></span></div>
     <header class="home-header">
         <a class="home-brand" href="#home" aria-label="Beginner Cloud Journey home">
             <span class="home-brand-mark" aria-hidden="true"><i class="fa-solid fa-cloud"></i></span>
@@ -20,6 +22,7 @@
             <a href="#readiness">Exam readiness</a>
             <a href="#project">Project</a>
             <a class="home-nav-action" href="chatbot.html">AWS Chatbot</a>
+            <button class="home-theme-toggle" id="home-theme-toggle" type="button" aria-label="Switch colour theme" aria-pressed="false"><i class="fa-solid fa-moon"></i></button>
         </nav>
     </header>
 
@@ -52,18 +55,22 @@
                         <span class="home-status"><i></i> Review ready</span>
                     </div>
                     <div class="home-flow">
-                        <div class="home-flow-node home-flow-accent"><i class="fa-solid fa-globe"></i><div><b>Route 53</b><small>DNS routing</small></div></div>
+                        <button type="button" class="home-flow-node home-flow-accent home-explorer-node is-active" data-explorer="route53" aria-pressed="true"><i class="fa-solid fa-globe"></i><span><b>Route 53</b><small>DNS routing</small></span></button>
                         <span class="home-flow-line"></span>
-                        <div class="home-flow-node"><i class="fa-solid fa-code-branch"></i><div><b>Application Load Balancer</b><small>Distribute traffic</small></div></div>
+                        <button type="button" class="home-flow-node home-explorer-node" data-explorer="alb" aria-pressed="false"><i class="fa-solid fa-code-branch"></i><span><b>Application Load Balancer</b><small>Distribute traffic</small></span></button>
                         <span class="home-flow-line"></span>
                         <div class="home-split-flow">
-                            <div class="home-flow-node home-flow-compact"><i class="fa-solid fa-server"></i><b>EC2</b></div>
-                            <div class="home-flow-node home-flow-compact"><i class="fa-solid fa-server"></i><b>EC2</b></div>
+                            <button type="button" class="home-flow-node home-flow-compact home-explorer-node" data-explorer="ec2" aria-pressed="false"><i class="fa-solid fa-server"></i><b>EC2</b></button>
+                            <button type="button" class="home-flow-node home-flow-compact home-explorer-node" data-explorer="autoscaling" aria-pressed="false"><i class="fa-solid fa-arrows-left-right"></i><b>Auto Scaling</b></button>
                         </div>
                         <span class="home-flow-line"></span>
-                        <div class="home-flow-node"><i class="fa-solid fa-database"></i><div><b>Amazon RDS</b><small>Managed relational data</small></div></div>
+                        <button type="button" class="home-flow-node home-explorer-node" data-explorer="rds" aria-pressed="false"><i class="fa-solid fa-database"></i><span><b>Amazon RDS</b><small>Managed relational data</small></span></button>
                     </div>
-                    <p>Trace the request. Name the failure point. Explain the trade-off.</p>
+                    <div class="home-explorer-insight" aria-live="polite">
+                        <span id="explorer-label">REQUEST ENTRY</span>
+                        <b id="explorer-title">Route 53 chooses where traffic begins.</b>
+                        <p id="explorer-copy">It translates the domain and applies a routing policy before the request reaches the application.</p>
+                    </div>
                 </article>
                 <span class="home-blueprint-caption">Architecture before memorisation</span>
             </div>
@@ -76,6 +83,17 @@
                     <h2>A path through the cloud</h2>
                 </div>
                 <p>Begin with the big picture, then move through design principles and real recovery and cost decisions.</p>
+            </div>
+            <div class="home-path-progress" aria-live="polite">
+                <div><span>My learning progress</span><strong id="path-progress-label">0 of 5 complete</strong></div>
+                <div class="home-path-progress-bar"><span id="path-progress-bar"></span></div>
+                <div class="home-path-checks" aria-label="Mark learning checkpoints complete">
+                    <button type="button" data-path-check="fundamentals"><i class="fa-solid fa-check"></i> Fundamentals</button>
+                    <button type="button" data-path-check="architect"><i class="fa-solid fa-check"></i> Architect</button>
+                    <button type="button" data-path-check="framework"><i class="fa-solid fa-check"></i> Framework</button>
+                    <button type="button" data-path-check="cost"><i class="fa-solid fa-check"></i> Cost</button>
+                    <button type="button" data-path-check="recovery"><i class="fa-solid fa-check"></i> Recovery</button>
+                </div>
             </div>
             <div class="home-path-grid">
                 <a href="cloud-fundamentals.html"><span>01</span><div><h3>Cloud Fundamentals</h3><b>Open lesson →</b></div></a>
@@ -95,35 +113,48 @@
                 <p>Each guide includes plain-English concepts, common use cases, architecture context and focused exam notes.</p>
             </div>
 
+            <div class="home-topic-tools">
+                <label for="home-topic-search"><i class="fa-solid fa-magnifying-glass"></i><input id="home-topic-search" type="search" placeholder="Search IAM, storage, queues..." autocomplete="off"><kbd>/</kbd></label>
+                <div class="home-topic-filters" aria-label="Filter AWS topics">
+                    <button class="is-active" type="button" data-topic-filter="all" aria-pressed="true">All</button>
+                    <button type="button" data-topic-filter="core" aria-pressed="false">Core</button>
+                    <button type="button" data-topic-filter="network" aria-pressed="false">Network</button>
+                    <button type="button" data-topic-filter="security" aria-pressed="false">Security</button>
+                    <button type="button" data-topic-filter="data" aria-pressed="false">Data</button>
+                </div>
+                <span id="home-topic-count" aria-live="polite">28 topics</span>
+            </div>
+
             <div class="home-service-grid">
-                <a href="iam.html"><i class="fa-solid fa-user-shield"></i><h3>IAM</h3><span>Study topic →</span></a>
-                <a href="ec2.html"><i class="fa-solid fa-server"></i><h3>EC2</h3><span>Study topic →</span></a>
-                <a href="s3.html"><i class="fa-solid fa-box-archive"></i><h3>S3</h3><span>Study topic →</span></a>
-                <a href="vpc.html"><i class="fa-solid fa-network-wired"></i><h3>VPC</h3><span>Study topic →</span></a>
-                <a href="rds.html"><i class="fa-solid fa-database"></i><h3>RDS</h3><span>Study topic →</span></a>
-                <a href="lambda.html"><i class="fa-solid fa-bolt"></i><h3>Lambda</h3><span>Study topic →</span></a>
-                <a href="dynamodb.html"><i class="fa-solid fa-table"></i><h3>DynamoDB</h3><span>Study topic →</span></a>
-                <a href="cloudfront.html"><i class="fa-solid fa-earth-europe"></i><h3>CloudFront</h3><span>Study topic →</span></a>
+                <a class="home-topic-item" data-topic-category="core security" data-topic-search="iam identity access permissions security" href="iam.html"><i class="fa-solid fa-user-shield"></i><h3>IAM</h3><p>Control who can do what.</p><span>Study topic →</span></a>
+                <a class="home-topic-item" data-topic-category="core" data-topic-search="ec2 compute virtual server instance" href="ec2.html"><i class="fa-solid fa-server"></i><h3>EC2</h3><p>Flexible virtual compute.</p><span>Study topic →</span></a>
+                <a class="home-topic-item" data-topic-category="core data" data-topic-search="s3 object storage bucket archive" href="s3.html"><i class="fa-solid fa-box-archive"></i><h3>S3</h3><p>Durable object storage.</p><span>Study topic →</span></a>
+                <a class="home-topic-item" data-topic-category="core network" data-topic-search="vpc network subnet routing security" href="vpc.html"><i class="fa-solid fa-network-wired"></i><h3>VPC</h3><p>Your isolated AWS network.</p><span>Study topic →</span></a>
+                <a class="home-topic-item" data-topic-category="core data" data-topic-search="rds relational database sql multi az" href="rds.html"><i class="fa-solid fa-database"></i><h3>RDS</h3><p>Managed relational data.</p><span>Study topic →</span></a>
+                <a class="home-topic-item" data-topic-category="core" data-topic-search="lambda serverless function event" href="lambda.html"><i class="fa-solid fa-bolt"></i><h3>Lambda</h3><p>Event-driven code.</p><span>Study topic →</span></a>
+                <a class="home-topic-item" data-topic-category="core data" data-topic-search="dynamodb nosql key value database" href="dynamodb.html"><i class="fa-solid fa-table"></i><h3>DynamoDB</h3><p>Serverless NoSQL.</p><span>Study topic →</span></a>
+                <a class="home-topic-item" data-topic-category="core network" data-topic-search="cloudfront cdn edge cache delivery" href="cloudfront.html"><i class="fa-solid fa-earth-europe"></i><h3>CloudFront</h3><p>Global content delivery.</p><span>Study topic →</span></a>
             </div>
 
             <div class="home-topic-groups">
-                <article>
+                <article data-topic-group>
                     <h3>Networking & delivery</h3>
-                    <a href="route53.html">✓ Route 53</a><a href="load-balancer.html">✓ Load Balancer</a><a href="auto-scaling.html">✓ Auto Scaling</a><a href="global-accelerator.html">✓ Global Accelerator</a><a href="direct-connect.html">✓ Direct Connect</a>
+                    <a class="home-topic-item" data-topic-category="network" data-topic-search="route 53 dns routing" href="route53.html">✓ Route 53</a><a class="home-topic-item" data-topic-category="network" data-topic-search="load balancer alb nlb traffic" href="load-balancer.html">✓ Load Balancer</a><a class="home-topic-item" data-topic-category="network core" data-topic-search="auto scaling ec2 capacity" href="auto-scaling.html">✓ Auto Scaling</a><a class="home-topic-item" data-topic-category="network" data-topic-search="global accelerator performance" href="global-accelerator.html">✓ Global Accelerator</a><a class="home-topic-item" data-topic-category="network" data-topic-search="direct connect hybrid" href="direct-connect.html">✓ Direct Connect</a>
                 </article>
-                <article>
+                <article data-topic-group>
                     <h3>Integration & serverless</h3>
-                    <a href="sqs.html">✓ SQS</a><a href="sns.html">✓ SNS</a><a href="eventbridge.html">✓ EventBridge</a><a href="step-functions.html">✓ Step Functions</a><a href="kinesis.html">✓ Kinesis</a>
+                    <a class="home-topic-item" data-topic-category="core" data-topic-search="sqs queue message decouple" href="sqs.html">✓ SQS</a><a class="home-topic-item" data-topic-category="core" data-topic-search="sns notification pub sub" href="sns.html">✓ SNS</a><a class="home-topic-item" data-topic-category="core" data-topic-search="eventbridge event bus" href="eventbridge.html">✓ EventBridge</a><a class="home-topic-item" data-topic-category="core" data-topic-search="step functions workflow" href="step-functions.html">✓ Step Functions</a><a class="home-topic-item" data-topic-category="data" data-topic-search="kinesis streaming real time" href="kinesis.html">✓ Kinesis</a>
                 </article>
-                <article>
+                <article data-topic-group>
                     <h3>Operations & security</h3>
-                    <a href="cloudwatch.html">✓ CloudWatch</a><a href="cloudtrail.html">✓ CloudTrail</a><a href="kms.html">✓ KMS</a><a href="secrets-manager.html">✓ Secrets Manager</a><a href="security-services.html">✓ Security Services</a>
+                    <a class="home-topic-item" data-topic-category="security" data-topic-search="cloudwatch metrics logs alarms" href="cloudwatch.html">✓ CloudWatch</a><a class="home-topic-item" data-topic-category="security" data-topic-search="cloudtrail audit api activity" href="cloudtrail.html">✓ CloudTrail</a><a class="home-topic-item" data-topic-category="security" data-topic-search="kms encryption keys" href="kms.html">✓ KMS</a><a class="home-topic-item" data-topic-category="security" data-topic-search="secrets manager password rotation" href="secrets-manager.html">✓ Secrets Manager</a><a class="home-topic-item" data-topic-category="security" data-topic-search="waf shield guardduty macie inspector" href="security-services.html">✓ Security Services</a>
                 </article>
-                <article>
+                <article data-topic-group>
                     <h3>Compute, data & storage</h3>
-                    <a href="ecs.html">✓ ECS</a><a href="elastic-beanstalk.html">✓ Elastic Beanstalk</a><a href="elasticache.html">✓ ElastiCache</a><a href="efs.html">✓ EFS</a><a href="storage-gateway.html">✓ Storage Gateway</a>
+                    <a class="home-topic-item" data-topic-category="core" data-topic-search="ecs container docker" href="ecs.html">✓ ECS</a><a class="home-topic-item" data-topic-category="core" data-topic-search="elastic beanstalk deployment" href="elastic-beanstalk.html">✓ Elastic Beanstalk</a><a class="home-topic-item" data-topic-category="data" data-topic-search="elasticache redis cache" href="elasticache.html">✓ ElastiCache</a><a class="home-topic-item" data-topic-category="data" data-topic-search="efs file storage nfs" href="efs.html">✓ EFS</a><a class="home-topic-item" data-topic-category="data" data-topic-search="storage gateway hybrid" href="storage-gateway.html">✓ Storage Gateway</a>
                 </article>
             </div>
+            <div class="home-topic-empty" id="home-topic-empty" hidden><i class="fa-solid fa-magnifying-glass"></i><h3>No topic found</h3><p>Try a service name such as S3, network or security.</p></div>
         </section>
 
         <section class="home-readiness" id="readiness">
@@ -155,6 +186,7 @@
                     <p>This is a self-check framework, not an AWS exam-result prediction.</p>
                     <button type="button" id="readiness-reset"><i class="fa-solid fa-rotate-left"></i> Reset</button>
                 </div>
+                <div class="home-readiness-next" id="home-readiness-next" aria-live="polite"><i class="fa-solid fa-arrow-trend-up"></i><div><span>Best next action</span><b>Begin with the core AWS service lessons.</b></div></div>
             </div>
         </section>
 
